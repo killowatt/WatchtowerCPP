@@ -3,30 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WatchtowerClient", "Sources\WatchtowerClient\WatchtowerClient.vcxproj", "{699B324C-A93C-42DB-9237-92FA80CD7AC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Watchtower", "Projects\Watchtower\Watchtower.csproj", "{D7451CD0-ECFC-4A8C-8AF9-56929F1B8584}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WatchtowerServer", "Sources\WatchtowerServer\WatchtowerServer.vcxproj", "{11C69C91-8978-4262-A15F-8B988B17F183}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchtowerClient", "Projects\WatchtowerClient\WatchtowerClient.csproj", "{76B73155-936E-490C-8359-68C9DACD67B6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Watchtower", "Sources\Watchtower\Watchtower.vcxproj", "{8FA78BFD-5806-43DA-9D8D-908D5C9FEC40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchtowerServer", "Projects\WatchtowerServer\WatchtowerServer.csproj", "{6053E44D-B518-46CF-BCDB-E7237A62AD68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Release|x64 = Release|x64
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{699B324C-A93C-42DB-9237-92FA80CD7AC2}.Debug|x64.ActiveCfg = Debug|x64
-		{699B324C-A93C-42DB-9237-92FA80CD7AC2}.Debug|x64.Build.0 = Debug|x64
-		{699B324C-A93C-42DB-9237-92FA80CD7AC2}.Release|x64.ActiveCfg = Release|x64
-		{699B324C-A93C-42DB-9237-92FA80CD7AC2}.Release|x64.Build.0 = Release|x64
-		{11C69C91-8978-4262-A15F-8B988B17F183}.Debug|x64.ActiveCfg = Debug|x64
-		{11C69C91-8978-4262-A15F-8B988B17F183}.Debug|x64.Build.0 = Debug|x64
-		{11C69C91-8978-4262-A15F-8B988B17F183}.Release|x64.ActiveCfg = Release|x64
-		{11C69C91-8978-4262-A15F-8B988B17F183}.Release|x64.Build.0 = Release|x64
-		{8FA78BFD-5806-43DA-9D8D-908D5C9FEC40}.Debug|x64.ActiveCfg = Debug|x64
-		{8FA78BFD-5806-43DA-9D8D-908D5C9FEC40}.Debug|x64.Build.0 = Debug|x64
-		{8FA78BFD-5806-43DA-9D8D-908D5C9FEC40}.Release|x64.ActiveCfg = Release|x64
-		{8FA78BFD-5806-43DA-9D8D-908D5C9FEC40}.Release|x64.Build.0 = Release|x64
+		{D7451CD0-ECFC-4A8C-8AF9-56929F1B8584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7451CD0-ECFC-4A8C-8AF9-56929F1B8584}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7451CD0-ECFC-4A8C-8AF9-56929F1B8584}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7451CD0-ECFC-4A8C-8AF9-56929F1B8584}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76B73155-936E-490C-8359-68C9DACD67B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76B73155-936E-490C-8359-68C9DACD67B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76B73155-936E-490C-8359-68C9DACD67B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76B73155-936E-490C-8359-68C9DACD67B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6053E44D-B518-46CF-BCDB-E7237A62AD68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6053E44D-B518-46CF-BCDB-E7237A62AD68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6053E44D-B518-46CF-BCDB-E7237A62AD68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6053E44D-B518-46CF-BCDB-E7237A62AD68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

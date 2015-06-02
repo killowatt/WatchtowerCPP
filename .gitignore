@@ -186,4 +186,5 @@ FakesAssemblies/
 *.nvuser
 
 ## Exceptions
-#!/Libraries/OpenTK.dll
+#!/Libraries/OpenTK.dll (EXAMPLE)
+!/Libraries/glfw3.lib

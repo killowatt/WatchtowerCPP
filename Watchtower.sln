@@ -3,30 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Watchtower", "Watchtower\Watchtower.vcxproj", "{680C1616-3D42-4133-A49C-35F504093784}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WatchtowerClient", "Sources\WatchtowerClient\WatchtowerClient.vcxproj", "{699B324C-A93C-42DB-9237-92FA80CD7AC2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WatchtowerClient", "WatchtowerClient\WatchtowerClient.vcxproj", "{14F6FB77-4A05-44DB-A427-28E7A483EA45}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WatchtowerServer", "Sources\WatchtowerServer\WatchtowerServer.vcxproj", "{11C69C91-8978-4262-A15F-8B988B17F183}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WatchtowerServer", "WatchtowerServer\WatchtowerServer.vcxproj", "{D5A24F84-830E-463A-8672-D1C9D3A8F597}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Watchtower", "Sources\Watchtower\Watchtower.vcxproj", "{8FA78BFD-5806-43DA-9D8D-908D5C9FEC40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Release|x64 = Release|x64
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{680C1616-3D42-4133-A49C-35F504093784}.Debug|x64.ActiveCfg = Debug|x64
-		{680C1616-3D42-4133-A49C-35F504093784}.Debug|x64.Build.0 = Debug|x64
-		{680C1616-3D42-4133-A49C-35F504093784}.Release|x64.ActiveCfg = Release|x64
-		{680C1616-3D42-4133-A49C-35F504093784}.Release|x64.Build.0 = Release|x64
-		{14F6FB77-4A05-44DB-A427-28E7A483EA45}.Debug|x64.ActiveCfg = Debug|x64
-		{14F6FB77-4A05-44DB-A427-28E7A483EA45}.Debug|x64.Build.0 = Debug|x64
-		{14F6FB77-4A05-44DB-A427-28E7A483EA45}.Release|x64.ActiveCfg = Release|x64
-		{14F6FB77-4A05-44DB-A427-28E7A483EA45}.Release|x64.Build.0 = Release|x64
-		{D5A24F84-830E-463A-8672-D1C9D3A8F597}.Debug|x64.ActiveCfg = Debug|x64
-		{D5A24F84-830E-463A-8672-D1C9D3A8F597}.Debug|x64.Build.0 = Debug|x64
-		{D5A24F84-830E-463A-8672-D1C9D3A8F597}.Release|x64.ActiveCfg = Release|x64
-		{D5A24F84-830E-463A-8672-D1C9D3A8F597}.Release|x64.Build.0 = Release|x64
+		{699B324C-A93C-42DB-9237-92FA80CD7AC2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{699B324C-A93C-42DB-9237-92FA80CD7AC2}.Debug|Win32.Build.0 = Debug|Win32
+		{699B324C-A93C-42DB-9237-92FA80CD7AC2}.Release|Win32.ActiveCfg = Release|Win32
+		{699B324C-A93C-42DB-9237-92FA80CD7AC2}.Release|Win32.Build.0 = Release|Win32
+		{11C69C91-8978-4262-A15F-8B988B17F183}.Debug|Win32.ActiveCfg = Debug|Win32
+		{11C69C91-8978-4262-A15F-8B988B17F183}.Debug|Win32.Build.0 = Debug|Win32
+		{11C69C91-8978-4262-A15F-8B988B17F183}.Release|Win32.ActiveCfg = Release|Win32
+		{11C69C91-8978-4262-A15F-8B988B17F183}.Release|Win32.Build.0 = Release|Win32
+		{8FA78BFD-5806-43DA-9D8D-908D5C9FEC40}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8FA78BFD-5806-43DA-9D8D-908D5C9FEC40}.Debug|Win32.Build.0 = Debug|Win32
+		{8FA78BFD-5806-43DA-9D8D-908D5C9FEC40}.Release|Win32.ActiveCfg = Release|Win32
+		{8FA78BFD-5806-43DA-9D8D-908D5C9FEC40}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

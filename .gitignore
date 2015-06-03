@@ -186,5 +186,7 @@ FakesAssemblies/
 *.nvuser
 
 ## Exceptions
+!/Libraries/Debug
+!/Libraries/Release
 !/Libraries/Debug/OpenTK.dll
 !/Libraries/Release/OpenTK.dll

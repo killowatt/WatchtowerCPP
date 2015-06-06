@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Watchtower;
 
 namespace WatchtowerClient
 {
@@ -11,38 +12,53 @@ namespace WatchtowerClient
     }
     public struct Settings
     {
-        public int WindowWidth;
-        public int WindowHeight;
+        public int ResolutionWidth;
+        public int ResolutionHeight;
         public WindowMode WindowMode;
+        public int Display;
 
         public void Save(string path)
         {
             StreamWriter stream = new StreamWriter(path);
 
-            stream.WriteLine("[WindowWidth] " + WindowWidth);
-            stream.WriteLine("[WindowHeight] " + WindowHeight);
-            stream.WriteLine("[WindowMode] " + (int) WindowMode);
+            stream.WriteLine("[ResolutionWidth] " + ResolutionWidth);
+            stream.WriteLine("[ResolutionHeight] " + ResolutionHeight);
+            stream.WriteLine("[WindowMode] " + (int)WindowMode);
+            stream.WriteLine("[Display] " + (int)Display);
 
             stream.Close();
         }
-        public Settings Load(string path)
+        public static Settings Load(string path) // TODO: good error handling everywhere.
         {
-            Settings settings = new Settings { WindowWidth = 960, WindowHeight = 540, WindowMode = WindowMode.Window };
-            string[] lines = File.ReadAllLines(path);
+            Settings settings = new Settings { ResolutionWidth = 960, ResolutionHeight = 540, WindowMode = WindowMode.Window }; // Default Settings
+            string[] lines;
+            try
+            {
+                lines = File.ReadAllLines(path);
+            }
+            catch
+            {
+                Log.Print(MessageType.Warning, "Settings file failed to load due to error. Using default settings.");
+                return settings;
+            }
 
             foreach (string line in lines)
             {
-                if (line.StartsWith("[WindowWidth] "))
+                if (line.StartsWith("[ResolutionWidth] "))
                 {
-                    settings.WindowWidth = int.Parse(line.Replace("[WindowWidth] ", ""));
+                    settings.ResolutionWidth = int.Parse(line.Replace("[ResolutionWidth] ", ""));  // TODO: error handle
                 }
-                if (line.StartsWith("[WindowHeight] "))
+                if (line.StartsWith("[ResolutionHeight] "))
                 {
-                    settings.WindowHeight = int.Parse(line.Replace("[WindowHeight] ", ""));
+                    settings.ResolutionHeight = int.Parse(line.Replace("[ResolutionHeight] ", ""));
                 }
                 if (line.StartsWith("[WindowMode] "))
                 {
-                    settings.WindowMode = (WindowMode)Enum.Parse(typeof (WindowMode), line.Replace("[WindowMode] ", ""));
+                    settings.WindowMode = (WindowMode)Enum.Parse(typeof(WindowMode), line.Replace("[WindowMode] ", ""));
+                }
+                if (line.StartsWith("[Display] "))
+                {
+                    settings.Display = int.Parse(line.Replace("[Display] ", ""));
                 }
             }
 

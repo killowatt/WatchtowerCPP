@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WatchtowerClient</RootNamespace>
     <AssemblyName>WatchtowerClient</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,16 +34,27 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game.cs" />
-    <Compile Include="Graphics\Renderer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Lidgren.Network">
+      <HintPath>..\..\Libraries\Debug\Lidgren.Network.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK">
       <HintPath>..\..\Libraries\Debug\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Graphics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Watchtower\Watchtower.csproj">
+      <Project>{25a5456e-90fe-4a98-a24b-cbf1100c340a}</Project>
+      <Name>Watchtower</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

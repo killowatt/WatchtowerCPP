@@ -5,7 +5,7 @@ namespace WatchtowerClient.Graphics
 {
     internal struct VertexData
     {
-        public float[] Vertices; // TODO: are these initialized?
+        public float[] Vertices;
         public float[] TextureCoordinates;
         public float[] Normals;
         public uint[] Indices;

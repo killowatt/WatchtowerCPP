@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using OpenTK;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
 namespace WatchtowerClient.Graphics
@@ -16,6 +19,10 @@ namespace WatchtowerClient.Graphics
 
         public ShaderState State;
         internal bool Initialized;
+
+        protected internal Matrix4 Model; // These are updated during rendering for use during update.
+        protected internal Matrix4 View;
+        protected internal Matrix4 Projection;
 
         public abstract void Initialize();
         public abstract void Update();
@@ -57,6 +64,9 @@ namespace WatchtowerClient.Graphics
 
         public Shader(string vertexSource, string fragmentSource, ShaderState state)
         {
+            State = state;
+            Initialized = false;
+
             VertexShader = GL.CreateShader(ShaderType.VertexShader);
             GL.ShaderSource(VertexShader, vertexSource);
             GL.CompileShader(VertexShader);

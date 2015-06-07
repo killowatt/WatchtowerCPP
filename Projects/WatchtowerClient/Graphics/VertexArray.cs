@@ -3,7 +3,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace WatchtowerClient.Graphics
 {
-    internal struct VertexData
+    public struct VertexData
     {
         public float[] Vertices;
         public float[] TextureCoordinates;

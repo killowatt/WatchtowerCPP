@@ -3,6 +3,8 @@ using System.Diagnostics;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using WatchtowerClient.Assets.Shaders;
+using WatchtowerClient.Graphics;
 
 namespace WatchtowerClient
 {
@@ -14,14 +16,19 @@ namespace WatchtowerClient
         public static Stopwatch Time;
         public static bool Running;
 
-        public static double x = 0;
+        public static BasicShader TestShader;
+        public static Mesh TestMesh;
 
         static void Update()
         {
+            Window.ProcessEvents();
+            TestMesh.Transform = TestMesh.Transform * Matrix4.CreateRotationY(0.05f);
         }
         static void Render()
         {
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
+
+            TestMesh.Draw();
 
             GraphicsContext.SwapBuffers();
         }
@@ -58,6 +65,45 @@ namespace WatchtowerClient
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.ClearColor(15 / 255f, 15 / 255f, 15 / 255f, 1);
+
+
+            // TEMP
+            TestShader = new BasicShader();
+            TestMesh = new Mesh(new VertexData()
+            {
+                Vertices = new float[]
+                {
+                    -1, 1, -1,
+                    -1, 1, 1,
+                    1, 1, 1,
+                    1, 1, -1,
+                    1, -1, -1,
+                    1, -1, 1,
+                    -1, -1, 1,
+                    -1, -1, -1
+                },
+                Indices = new uint[]
+                {
+                    0, 1, 2,
+                    2, 3, 0,
+                    4, 5, 7,
+                    7, 6, 5,
+                    3, 4, 5,
+                    3, 2, 5,
+                    6, 5, 2,
+                    1, 6, 2,
+                    7, 6, 1,
+                    0, 7, 1,
+                    7, 4, 3,
+                    0, 7, 3
+                }
+            }, TestShader);
+            Console.WriteLine(TestShader.GetCompileStatus(ShaderType.VertexShader));
+            Console.WriteLine(TestShader.GetCompileStatus(ShaderType.FragmentShader));
+            Console.WriteLine(TestShader.GetCompileLog(ShaderType.VertexShader));
+            Console.WriteLine(TestShader.GetCompileLog(ShaderType.FragmentShader));
+            // TEMP
+
 
             Window.Visible = true;
             Running = true;

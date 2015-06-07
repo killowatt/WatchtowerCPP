@@ -24,13 +24,13 @@ namespace WatchtowerClient
             stream.WriteLine("[ResolutionWidth] " + ResolutionWidth);
             stream.WriteLine("[ResolutionHeight] " + ResolutionHeight);
             stream.WriteLine("[WindowMode] " + (int)WindowMode);
-            stream.WriteLine("[Display] " + (int)Display);
+            stream.WriteLine("[Display] " + Display);
 
             stream.Close();
         }
         public static Settings Load(string path) // TODO: good error handling everywhere.
         {
-            Settings settings = new Settings { ResolutionWidth = 960, ResolutionHeight = 540, WindowMode = WindowMode.Window }; // Default Settings
+            Settings settings = new Settings { ResolutionWidth = 960, ResolutionHeight = 540, WindowMode = WindowMode.Window, Display = -1 }; // Default Settings
             string[] lines;
             try
             {
@@ -38,7 +38,8 @@ namespace WatchtowerClient
             }
             catch
             {
-                Log.Print(MessageType.Warning, "Settings file failed to load due to error. Using default settings.");
+                Log.Print(MessageType.Warning, "Settings file failed to load due to an unknown error.");
+                Log.Print(MessageType.Information, "Using default settings.");
                 return settings;
             }
 

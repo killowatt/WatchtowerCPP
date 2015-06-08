@@ -16,7 +16,10 @@ namespace WatchtowerClient.Graphics
             get { return VertexArray.VertexData; }
             set { VertexArray.VertexData = value; }
         }
-
+        public Mesh Copy()
+        {
+            return (Mesh)MemberwiseClone();
+        }
         public void Draw()
         {
             GL.BindVertexArray(VertexArray.VertexArrayObject);

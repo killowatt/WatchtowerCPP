@@ -18,17 +18,28 @@ namespace WatchtowerClient
 
         public static BasicShader TestShader;
         public static Mesh TestMesh;
+        public static Mesh[,,] MeshArray;
 
         static void Update()
         {
             Window.ProcessEvents();
-            TestMesh.Transform = TestMesh.Transform * Matrix4.CreateRotationY(0.05f);
+            
         }
         static void Render()
         {
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
             TestMesh.Draw();
+            for (int x = 0; x < 16; x++)
+            {
+                for (int y = 0; y < 16; y++)
+                {
+                    for (int z = 0; z < 16; z++)
+                    {
+                        MeshArray[x, y, z].Draw();
+                    }
+                }
+            }
 
             GraphicsContext.SwapBuffers();
         }
@@ -73,14 +84,14 @@ namespace WatchtowerClient
             {
                 Vertices = new float[]
                 {
-                    -1, 1, -1,
-                    -1, 1, 1,
-                    1, 1, 1,
-                    1, 1, -1,
-                    1, -1, -1,
-                    1, -1, 1,
-                    -1, -1, 1,
-                    -1, -1, -1
+                    -0.5f, 0.5f, -0.5f,
+                    -0.5f, 0.5f, 0.5f,
+                    0.5f, 0.5f, 0.5f,
+                    0.5f, 0.5f, -0.5f,
+                    0.5f, -0.5f, -0.5f,
+                    0.5f, -0.5f, 0.5f,
+                    -0.5f, -0.5f, 0.5f,
+                    -0.5f, -0.5f, -0.5f
                 },
                 Indices = new uint[]
                 {
@@ -98,6 +109,19 @@ namespace WatchtowerClient
                     0, 7, 3
                 }
             }, TestShader);
+            MeshArray = new Mesh[32, 32, 32];
+            for (int x = 0; x < 32; x++)
+            {
+                for (int y = 0; y < 32; y++)
+                {
+                    for (int z = 0; z < 32; z++)
+                    {
+                        MeshArray[x, y, z] = TestMesh.Copy();
+                        MeshArray[x, y, z].Transform = Matrix4.CreateTranslation(x, y, z);
+                    }
+                }
+            }
+
             Console.WriteLine(TestShader.GetCompileStatus(ShaderType.VertexShader));
             Console.WriteLine(TestShader.GetCompileStatus(ShaderType.FragmentShader));
             Console.WriteLine(TestShader.GetCompileLog(ShaderType.VertexShader));

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using Lidgren.Network;
+using OpenTK;
+using WatchtowerClient.Graphics;
 
 namespace WatchtowerClient
 {
@@ -34,6 +36,24 @@ namespace WatchtowerClient
             //
             //Console.ReadKey();
             #endregion
+
+
+             float[] x = new float[]
+                {
+                    0.5f, 0.5f, -0.5f,
+                    0.5f, 0.5f, 0.5f,
+                    0.5f, -0.5f, -0.5f,
+                    0.5f, -0.5f, 0.5f,
+                    -0.5f, 0.5f, -0.5f,
+                    -0.5f, 0.5f, 0.5f,
+                    -0.5f, -0.5f, 0.5f,
+                    -0.5f, -0.5f, 0.5f
+                };
+            VertexData xyzd = new VertexData();
+            xyzd.Vertices = x;
+            xyzd.Add(xyzd);
+            
+
 
             Settings settings = Settings.Load("Settings.txt");
             if (!File.Exists("Settings.txt"))

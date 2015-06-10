@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using OpenTK.Graphics.OpenGL;
 
 namespace WatchtowerClient.Graphics
@@ -9,6 +11,26 @@ namespace WatchtowerClient.Graphics
         public float[] TextureCoordinates;
         public float[] Normals;
         public uint[] Indices;
+
+        public void Add(VertexData data)
+        {
+            //Array.Copy(data.Vertices, 0, Vertices, Vertices.Length, data.Vertices.Length);
+        }
+        public void Translate(float x, float y, float z)
+        {
+            for (int posX = 0; posX < Vertices.Length; posX += 3)
+            {
+                Vertices[posX] = Vertices[posX] + x;
+            }
+            for (int posY = 1; posY < Vertices.Length; posY += 3)
+            {
+                Vertices[posY] = Vertices[posY] + y;
+            }
+            for (int posZ = 2; posZ < Vertices.Length; posZ += 3)
+            {
+                Vertices[posZ] = Vertices[posZ] + z;
+            }
+        }
     }
     internal sealed class VertexArray
     {

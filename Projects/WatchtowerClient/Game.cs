@@ -18,28 +18,18 @@ namespace WatchtowerClient
 
         public static BasicShader TestShader;
         public static Mesh TestMesh;
-        public static Mesh[,,] MeshArray;
+        public static Chunk chunk;
 
         static void Update()
         {
             Window.ProcessEvents();
-            
         }
         static void Render()
         {
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
-            TestMesh.Draw();
-            for (int x = 0; x < 16; x++)
-            {
-                for (int y = 0; y < 16; y++)
-                {
-                    for (int z = 0; z < 16; z++)
-                    {
-                        MeshArray[x, y, z].Draw();
-                    }
-                }
-            }
+            chunk.Mesh.Draw();
+           // TestMesh.Draw();
 
             GraphicsContext.SwapBuffers();
         }
@@ -77,50 +67,20 @@ namespace WatchtowerClient
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.ClearColor(15 / 255f, 15 / 255f, 15 / 255f, 1);
 
-
             // TEMP
             TestShader = new BasicShader();
-            TestMesh = new Mesh(new VertexData()
+            chunk = new Chunk();
+            chunk.Blocks[0, 2, 0].Active = false;
+            for (int i = 0; i < 128; i++)
             {
-                Vertices = new float[]
-                {
-                    -0.5f, 0.5f, -0.5f,
-                    -0.5f, 0.5f, 0.5f,
-                    0.5f, 0.5f, 0.5f,
-                    0.5f, 0.5f, -0.5f,
-                    0.5f, -0.5f, -0.5f,
-                    0.5f, -0.5f, 0.5f,
-                    -0.5f, -0.5f, 0.5f,
-                    -0.5f, -0.5f, -0.5f
-                },
-                Indices = new uint[]
-                {
-                    0, 1, 2,
-                    2, 3, 0,
-                    4, 5, 7,
-                    7, 6, 5,
-                    3, 4, 5,
-                    3, 2, 5,
-                    6, 5, 2,
-                    1, 6, 2,
-                    7, 6, 1,
-                    0, 7, 1,
-                    7, 4, 3,
-                    0, 7, 3
-                }
-            }, TestShader);
-            MeshArray = new Mesh[32, 32, 32];
-            for (int x = 0; x < 32; x++)
-            {
-                for (int y = 0; y < 32; y++)
-                {
-                    for (int z = 0; z < 32; z++)
-                    {
-                        MeshArray[x, y, z] = TestMesh.Copy();
-                        MeshArray[x, y, z].Transform = Matrix4.CreateTranslation(x, y, z);
-                    }
-                }
+                chunk.Blocks[15, i, 15].Active = false;
+                chunk.Blocks[14, i, 15].Active = false;
+                chunk.Blocks[13, i, 15].Active = false;
             }
+            chunk.Update(TestShader);
+
+          //  TestMesh = new Mesh(Block.BuildCube(true, true, false, true, false, true), TestShader);
+          //  TestMesh.Transform = Matrix4.CreateTranslation(22, 22, 22);
 
             Console.WriteLine(TestShader.GetCompileStatus(ShaderType.VertexShader));
             Console.WriteLine(TestShader.GetCompileStatus(ShaderType.FragmentShader));

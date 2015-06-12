@@ -34,29 +34,29 @@ namespace WatchtowerClient
                         {
                             continue;
                         }
-                        bool positiveX = true;
-                        if (x < ChunkSize.X - 1)
-                            positiveX = Blocks[x + 1, y, z].Active; // TODO: acting strangely, replace
-                        bool negativeX = true;
-                        if (x > 0)
-                            negativeX = Blocks[x - 1, y, z].Active;
+                        //bool positiveX = true;
+                        //if (x < ChunkSize.X - 1)
+                        //    positiveX = Blocks[x + 1, y, z].Active; // TODO: acting strangely, replace
+                        //bool negativeX = true;
+                        //if (x > 0)
+                        //    negativeX = Blocks[x - 1, y, z].Active;
 
-                        bool positiveY = true;
-                        if (y < ChunkSize.Y - 1)
-                            positiveY = Blocks[x, y + 1, z].Active;
-                        bool negativeY = true;
-                        if (y > 0)
-                            negativeY = Blocks[x, y - 1, z].Active;
+                        //bool positiveY = true;
+                        //if (y < ChunkSize.Y - 1)
+                        //    positiveY = Blocks[x, y + 1, z].Active;
+                        //bool negativeY = true;
+                        //if (y > 0)
+                        //    negativeY = Blocks[x, y - 1, z].Active;
 
-                        bool positiveZ = true;
-                        if (z < ChunkSize.Z - 1)
-                            positiveZ = Blocks[x, y, z + 1].Active;
-                        bool negativeZ = true;
-                        if (z > 0)
-                            negativeZ = Blocks[x, y, z - 1].Active;
+                        //bool positiveZ = true;
+                        //if (z < ChunkSize.Z - 1)
+                        //    positiveZ = Blocks[x, y, z + 1].Active;
+                        //bool negativeZ = true;
+                        //if (z > 0)
+                        //    negativeZ = Blocks[x, y, z - 1].Active;
 
-                        block = Block.BuildCube(positiveX, negativeX, positiveY, negativeY, positiveZ, negativeZ);
-                        //block = Block.BuildCube(true, true, true, true, true, true);
+                        //block = Block.BuildCube(positiveX, negativeX, positiveY, negativeY, positiveZ, negativeZ);
+                        block = Block.BuildCube(true, true, true, true, true, true);
                         block.Translate(x, y, z);
 
                         foreach (float v in block.Vertices)

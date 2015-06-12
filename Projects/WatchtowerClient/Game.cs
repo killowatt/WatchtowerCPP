@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Dynamic;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
+using Watchtower;
 using WatchtowerClient.Assets.Shaders;
 using WatchtowerClient.Graphics;
 
@@ -16,13 +19,79 @@ namespace WatchtowerClient
         public static Stopwatch Time;
         public static bool Running;
 
+        public static Camera Camera;
+
         public static BasicShader TestShader;
         public static Mesh TestMesh;
         public static Chunk chunk;
 
-        static void Update()
+        private static Vector2 lastMouse;
+        public static Matrix4 VIEWTEMP;
+
+        static void Update(double deltaTime)
         {
             Window.ProcessEvents();
+
+            if (Keyboard.GetState().IsKeyDown(Key.Escape))
+            {
+                Running = false;
+            }
+            if (Keyboard.GetState().IsKeyDown(Key.F1))
+            {
+                Log.Print(MessageType.System, "Break");
+            }
+
+            MouseState mouseState = Mouse.GetCursorState();
+            int x = mouseState.X;
+            int y = mouseState.Y;
+            Mouse.SetPosition(1920f / 2, 1080f / 2);
+
+            float mouseSpeed = 0.005f;
+
+
+            Vector3 direction = new Vector3(
+                (float)(Math.Cos(Camera.Pitch * (Math.PI / 180)) * Math.Sin(Camera.Yaw * (Math.PI / 180))),
+                (float)(Math.Sin(Camera.Pitch * (Math.PI / 180))),
+                (float)(Math.Cos(Camera.Pitch * (Math.PI / 180)) * Math.Cos(Camera.Yaw * (Math.PI / 180)))
+                );
+
+            direction.Normalize();
+
+            Vector3 right = new Vector3(
+                (float)(Math.Sin((Camera.Yaw * (Math.PI / 180)) - 3.14f / 2.0f)),
+                0,
+                (float)(Math.Cos((Camera.Yaw * (Math.PI / 180)) - 3.14f / 2.0f))
+                );
+
+            Vector3 up = Vector3.Cross(right, direction);
+
+            right.Normalize();
+
+           // if (mouseState.IsButtonDown(MouseButton.Left))
+           // {
+                Camera.Yaw += mouseSpeed * (float)16 * (1920f / 2f - x);
+                Camera.Pitch += mouseSpeed * (float)16 * (1080f / 2f - y);
+            //}
+
+            float speed = 0.025f;
+
+            KeyboardState state = Keyboard.GetState();
+            if (Keyboard.GetState().IsKeyDown(Key.W))
+            {
+                Camera.Position += direction * (float)deltaTime * speed;
+            }
+            if (Keyboard.GetState().IsKeyDown(Key.S))
+            {
+                Camera.Position -= direction * (float)deltaTime * speed;
+            }
+            if (Keyboard.GetState().IsKeyDown(Key.D))
+            {
+                Camera.Position += right * (float)deltaTime * speed;
+            }
+            if (Keyboard.GetState().IsKeyDown(Key.A))
+            {
+                Camera.Position -= right * (float)deltaTime * speed;
+            }
         }
         static void Render()
         {
@@ -67,15 +136,22 @@ namespace WatchtowerClient
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.ClearColor(15 / 255f, 15 / 255f, 15 / 255f, 1);
 
+            Camera = new Camera();
+            Camera.Position = new Vector3(0, -60, -60);
+
             // TEMP
             TestShader = new BasicShader();
             chunk = new Chunk();
             chunk.Blocks[0, 2, 0].Active = false;
-            for (int i = 0; i < 128; i++)
+            for (int x = 0; x < 16; x += 2)
             {
-                chunk.Blocks[15, i, 15].Active = false;
-                chunk.Blocks[14, i, 15].Active = false;
-                chunk.Blocks[13, i, 15].Active = false;
+                for (int y = 0; y < 128; y += 2)
+                {
+                    for (int z = 0; z < 16; z ++)
+                    {
+                        chunk.Blocks[x, y, z].Active = false;
+                    }
+                }
             }
             chunk.Update(TestShader);
 
@@ -93,27 +169,39 @@ namespace WatchtowerClient
             Running = true;
             Time.Start();
 
-            int tickRate = 16;
-            double millisecondsPerUpdate = 1000.0 / tickRate;
             double previous = Time.Elapsed.TotalMilliseconds;
-            double lag = 0;
             while (Running)
             {
                 double current = Time.Elapsed.TotalMilliseconds;
                 double elapsed = current - previous;
-                previous = current;
-                lag += elapsed;
-
-                // processinput
-
-                while (lag >= millisecondsPerUpdate) // temp
-                {
-                    Update();
-                    lag -= millisecondsPerUpdate;
-                }
-
+                // processInput?
+                Update(elapsed);
                 Render();
+                previous = current;
             }
+            //int tickRate = 512;
+            //double millisecondsPerUpdate = 1000.0 / tickRate;
+            //double previous = Time.Elapsed.TotalMilliseconds;
+            //double lag = 0;
+            // Old loop
+            //while (Running) 
+            //{
+            //    double current = Time.Elapsed.TotalMilliseconds;
+            //    double elapsed = current - previous;
+            //    previous = current;
+            //    lag += elapsed;
+
+            //    // processinput
+
+            //    while (lag >= millisecondsPerUpdate) // temp
+            //    {
+            //        Update(lag / millisecondsPerUpdate);
+            //        lag -= millisecondsPerUpdate;
+            //    }
+
+            //    Render();
+            //}
+
         }
     }
 }

@@ -16,7 +16,7 @@ namespace WatchtowerClient.Graphics
             get { return VertexArray.VertexData; }
             set { VertexArray.VertexData = value; }
         }
-        public Mesh Copy()
+        public Mesh Copy() 
         {
             return (Mesh)MemberwiseClone();
         }
@@ -28,8 +28,8 @@ namespace WatchtowerClient.Graphics
             if (!Shader.Initialized || Shader.State == ShaderState.Dynamic)
             {
                 Shader.Model = Transform;
-                Shader.View = Camera.View; // TODO: replace
-                Shader.Projection = Camera.Projection;
+                Shader.View = Game.Camera.View; // TODO: replace
+                Shader.Projection = Game.Camera.Projection;
             }
             if (!Shader.Initialized)
             {

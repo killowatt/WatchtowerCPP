@@ -8,7 +8,7 @@ using WatchtowerClient.Graphics;
 
 namespace WatchtowerClient
 {
-    public class Chunk
+    public class Chunk // TODO: clean up/finalise class~~
     {
         public Block[,,] Blocks;
         public Mesh Mesh;
@@ -21,6 +21,7 @@ namespace WatchtowerClient
         {
             VertexData chunk = new VertexData { Vertices = new float[0], Indices = new uint[0] };
             List<float> Vertices = new List<float>();
+            List<float> Normals = new List<float>();
             List<uint> Indices = new List<uint>();
             VertexData block;
             int currentindoffset = 0;
@@ -56,24 +57,30 @@ namespace WatchtowerClient
                         if (z > 0)
                             negativeZ = !Blocks[x, y, z - 1].Active;
 
-                        block = Block.BuildCube(positiveX, negativeX, positiveY, negativeY, positiveZ, negativeZ);
-                        //block = Block.BuildCube(true, true, true, true, true, true);
+                        block = Block.BuildCube(positiveX, negativeX, positiveY, negativeY, positiveZ, negativeZ,
+                            Blocks[x, y, z].Color);
+                        //block = Block.BuildCube(true, true, true, true, true, true, Blocks[x, y, z].Color);
                         block.Translate(x, y, z);
 
                         foreach (float v in block.Vertices)
                         {
                             Vertices.Add(v);
                         }
+                        foreach (float n in block.Normals)
+                        {
+                            Normals.Add(n);
+                        }
                         for (int i = 0; i < block.Indices.Length; i++)
                         {
                             Indices.Add(block.Indices[i] + (uint)currentindoffset);
                         }
-                        currentindoffset += 8;
+                        currentindoffset += block.Vertices.Length / 3;
                     }
                 }
             }
 
             chunk.Vertices = Vertices.ToArray();
+            chunk.Normals = Normals.ToArray();
             chunk.Indices = Indices.ToArray();
             Mesh = new Mesh(chunk, shader);
             Updated = true;

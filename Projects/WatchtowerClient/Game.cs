@@ -48,6 +48,11 @@ namespace WatchtowerClient
             if (Window.Focused)
             {
                 Mouse.SetPosition(1920f / 2, 1080f / 2);
+                Window.CursorVisible = false;
+            }
+            if (!Window.Focused)
+            {
+                Window.CursorVisible = true;
             }
 
             float mouseSpeed = 0.005f;
@@ -156,9 +161,19 @@ namespace WatchtowerClient
             {
                 for (int y = 0; y < 128; y += 2)
                 {
-                    for (int z = 0; z < 16; z ++)
+                    for (int z = 0; z < 16; z++)
                     {
                         chunk.Blocks[x, y, z].Active = false;
+                    }
+                }
+            }
+            for (int x = 0; x < 16; x++)
+            {
+                for (int y = 0; y < 128; y++)
+                {
+                    for (int z = 0; z < 16; z++)
+                    {
+                        chunk.Blocks[x, y, z].Color = new Vector3((y / 127f), 40 / 255f, 94 / 255f);
                     }
                 }
             }

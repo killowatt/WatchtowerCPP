@@ -32,6 +32,7 @@ namespace WatchtowerClient
         {
             Window.ProcessEvents();
 
+            // p. much everything here is temp test
             if (Keyboard.GetState().IsKeyDown(Key.Escape))
             {
                 Running = false;
@@ -44,7 +45,10 @@ namespace WatchtowerClient
             MouseState mouseState = Mouse.GetCursorState();
             int x = mouseState.X;
             int y = mouseState.Y;
-            Mouse.SetPosition(1920f / 2, 1080f / 2);
+            if (Window.Focused)
+            {
+                Mouse.SetPosition(1920f / 2, 1080f / 2);
+            }
 
             float mouseSpeed = 0.005f;
 
@@ -69,8 +73,12 @@ namespace WatchtowerClient
 
            // if (mouseState.IsButtonDown(MouseButton.Left))
            // {
+            if (Window.Focused)
+            {
                 Camera.Yaw += mouseSpeed * (float)16 * (1920f / 2f - x);
                 Camera.Pitch += mouseSpeed * (float)16 * (1080f / 2f - y);
+            }
+
             //}
 
             float speed = 0.025f;
@@ -137,7 +145,8 @@ namespace WatchtowerClient
             GL.ClearColor(15 / 255f, 15 / 255f, 15 / 255f, 1);
 
             Camera = new Camera();
-            Camera.Position = new Vector3(0, -60, -60);
+            Camera.Position = new Vector3(0, 60, 60);
+            Camera.Yaw = 180;
 
             // TEMP
             TestShader = new BasicShader();

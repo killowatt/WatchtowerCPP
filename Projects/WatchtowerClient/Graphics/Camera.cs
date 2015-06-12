@@ -8,7 +8,7 @@ namespace WatchtowerClient.Graphics
     {
         private Matrix4 _view;
         private Matrix4 _projection;
-        private Quaternion _quaternion;
+        //private Quaternion _quaternion;
         private bool _viewCalculated;
         private bool _projectionCalculated;
         private bool _rotationCalculated;
@@ -38,9 +38,10 @@ namespace WatchtowerClient.Graphics
 
                     Vector3 up = Vector3.Cross(right, direction);
 
-                    //_quaternion = Quaternion.FromEulerAngles(_rotation);
-                   // _view = Matrix4.CreateTranslation(_position) *
-                           // Matrix4.CreateFromQuaternion(_quaternion);
+                    //up.Normalize();
+                    //_quaternion = Quaternion.FromEulerAngles(_rotation * up);
+                    //_view = Matrix4.CreateTranslation(_position) *
+                    //        Matrix4.CreateFromQuaternion(_quaternion);
                     _view = Matrix4.LookAt(_position, _position + direction, up);
                 }
                 return _view;

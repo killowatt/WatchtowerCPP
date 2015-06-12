@@ -82,8 +82,6 @@ namespace WatchtowerClient
                 indices.Add(4);
                 indices.Add(6);
             }
-
-            Quaternion x = new Quaternion(5, 5, 5, 5);
             #endregion
 
             data.Indices = indices.ToArray();

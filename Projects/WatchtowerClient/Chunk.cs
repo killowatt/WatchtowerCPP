@@ -38,7 +38,7 @@ namespace WatchtowerClient
                         //Removes unnecessary tris.
                         bool positiveX = true;
                         if (x < ChunkSize.X - 1)
-                            positiveX = Blocks[x + 1, y, z].Active; // TODO: is this working 100%?
+                            positiveX = !Blocks[x + 1, y, z].Active; // TODO: is this working 100%?
                         bool negativeX = true;
                         if (x > 0)
                             negativeX = !Blocks[x - 1, y, z].Active;

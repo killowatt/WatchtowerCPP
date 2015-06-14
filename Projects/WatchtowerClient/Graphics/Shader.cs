@@ -71,7 +71,7 @@ namespace WatchtowerClient.Graphics
             GL.ShaderSource(VertexShader, vertexSource);
             GL.CompileShader(VertexShader);
 
-            FragmentShader = GL.CreateShader(OpenTK.Graphics.OpenGL.ShaderType.FragmentShader);
+            FragmentShader = GL.CreateShader(ShaderType.FragmentShader);
             GL.ShaderSource(FragmentShader, fragmentSource);
             GL.CompileShader(FragmentShader);
 

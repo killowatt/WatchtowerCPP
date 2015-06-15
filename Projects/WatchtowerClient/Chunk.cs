@@ -61,6 +61,7 @@ namespace WatchtowerClient
                             Blocks[x, y, z].Color);
                         //block = Block.BuildCube(true, true, true, true, true, true, Blocks[x, y, z].Color);
                         block.Translate(x, y, z);
+                        block.Translate(0.5f, 0.5f, 0.5f); // fixes the problem with block problems
 
                         foreach (float v in block.Vertices)
                         {

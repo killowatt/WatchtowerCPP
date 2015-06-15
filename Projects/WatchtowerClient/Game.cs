@@ -29,6 +29,8 @@ namespace WatchtowerClient
         private static Vector2 lastMouse;
         public static Matrix4 VIEWTEMP;
 
+        private static Vector3 tempass;
+
         #region RAYCAST 2.0
         #endregion
         #region RAYCAST TEST
@@ -38,40 +40,18 @@ namespace WatchtowerClient
             {
                 if (chunk.Blocks[xCopy, yCopy, zCopy].Active)
                 {
-
-
-
-                    direction.Normalize();
-
-                    face = new Vector3(0, 1, 0);
-
-                    int theX = xCopy + (int)Math.Round(Math.Max((Math.Max(direction.X, direction.Y)), direction.Z));
-                    int theY = yCopy + (int)Math.Round(Math.Max((Math.Max(direction.X, direction.Y)), direction.Z));
-                    int theZ = zCopy + (int)Math.Round(Math.Max((Math.Max(direction.X, direction.Y)), direction.Z));
-                    theX = xCopy + (int)face.X;
-                    theY = yCopy + (int)face.Y;
-                    theZ = zCopy + (int)face.Z;
-
-                    if ((theX > 0 && theX < 16) && (theY > 0 && theY < 128) && (theZ > 0 && theZ < 16))
+                    if (!active)
                     {
-                        if (!active)
-                        {
-                            chunk.Blocks[xCopy, yCopy, zCopy].Active = false;
-                        }
-                        if (active)
-                        {
-                            chunk.Blocks[xCopy + (int)face.X, yCopy + (int)face.Y, zCopy + (int)face.Z].Active = true;
-                            chunk.Blocks[xCopy + (int)face.X, yCopy + (int)face.Y, zCopy + (int)face.Z].Color =
-                                Vector3.One;
-                        }
-                        return true;
+                        chunk.Blocks[xCopy, yCopy, zCopy].Active = false;
                     }
+                    return true;
                 }
             }
             return false;
         }
         private static float mod(float value, float modulus) // So temporary
         {
+            //return value % modulus;
             return (value % modulus + modulus) % modulus;
         }
         private static float intbound(float s, float ds)
@@ -91,39 +71,35 @@ namespace WatchtowerClient
         {
             GL.Begin(BeginMode.Quads);
 
-            GL.PopMatrix();
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.PushMatrix();
-            GL.Translate(pos);
-            GL.Vertex3(0.0, 0.0, 0.0);
-            GL.Vertex3(0.5, 0.0, 0.0);
-            GL.Vertex3(0.5, 0.5, 0.0);
-            GL.Vertex3(0.0, 0.5, 0.0);
+            GL.Vertex3(new Vector3(0.5f, 0.0f, 0.0f) + pos);
+            GL.Vertex3(new Vector3(0.5f, 0.0f, 0.0f) + pos);
+            GL.Vertex3(new Vector3(0.5f, 0.5f, 0.0f) + pos);
+            GL.Vertex3(new Vector3(0.0f, 0.5f, 0.0f) + pos);
 
-            GL.Vertex3(0.0, 0.0, -0.5);
-            GL.Vertex3(0.5, 0.0, -0.5);
-            GL.Vertex3(0.5, 0.5, -0.5);
-            GL.Vertex3(0.0, 0.5, -0.5);
+            GL.Vertex3(new Vector3(0.0f, 0.0f, -0.5f) + pos);
+            GL.Vertex3(new Vector3(0.5f, 0.0f, -0.5f) + pos);
+            GL.Vertex3(new Vector3(0.5f, 0.5f, -0.5f) + pos);
+            GL.Vertex3(new Vector3(0.0f, 0.5f, -0.5f) + pos);
 
-            GL.Vertex3(0.5, 0.0, 0.0);
-            GL.Vertex3(0.5, 0.0, -0.5);
-            GL.Vertex3(0.5, 0.5, -0.5);
-            GL.Vertex3(0.5, 0.5, 0.0);
+            GL.Vertex3(new Vector3(0.5f, 0.0f, 0.0f) + pos);
+            GL.Vertex3(new Vector3(0.5f, 0.0f, -0.5f) + pos);
+            GL.Vertex3(new Vector3(0.5f, 0.5f, -0.5f) + pos);
+            GL.Vertex3(new Vector3(0.5f, 0.5f, 0.0f) + pos);
 
-            GL.Vertex3(0.0, 0.0, 0.0);
-            GL.Vertex3(0.0, 0.0, -0.5);
-            GL.Vertex3(0.0, 0.5, -0.5);
-            GL.Vertex3(0.0, 0.5, 0.0);
+            GL.Vertex3(new Vector3(0.0f, 0.0f, 0.0f) + pos);
+            GL.Vertex3(new Vector3(0.0f, 0.0f, -0.5f) + pos);
+            GL.Vertex3(new Vector3(0.0f, 0.5f, -0.5f) + pos);
+            GL.Vertex3(new Vector3(0.0f, 0.5f, 0.0f) + pos);
 
-            GL.Vertex3(0.0, 0.5, 0.0);
-            GL.Vertex3(0.5, 0.5, 0.0);
-            GL.Vertex3(0.5, 0.5, -0.5);
-            GL.Vertex3(0.0, 0.5, -0.5);
+            GL.Vertex3(new Vector3(0.0f, 0.5f, 0.0f) + pos);
+            GL.Vertex3(new Vector3(0.5f, 0.5f, 0.0f) + pos);
+            GL.Vertex3(new Vector3(0.5f, 0.5f, -0.5f) + pos);
+            GL.Vertex3(new Vector3(0.0f, 0.5f, -0.5f) + pos);
 
-            GL.Vertex3(0.0, 0.0, 0.0);
-            GL.Vertex3(0.5, 0.0, 0.0);
-            GL.Vertex3(0.5, 0.0, -0.5);
-            GL.Vertex3(0.0, 0.0, -0.5);
+            GL.Vertex3(new Vector3(0.0f, 0.0f, 0.0f) + pos);
+            GL.Vertex3(new Vector3(0.5f, 0.0f, 0.0f) + pos);
+            GL.Vertex3(new Vector3(0.5f, 0.0f, -0.5f) + pos);
+            GL.Vertex3(new Vector3(0.0f, 0.0f, -0.5f) + pos);
 
             GL.End();
         }
@@ -174,14 +150,17 @@ namespace WatchtowerClient
                 // Invoke the callback, unless we are not *yet* within the bounds of the
                 // world.
                 if (!(x < 0 || y < 0 || z < 0 || x >= wx || y >= wy || z >= wz))
+                {
                     if (callback(x, y, z, face, direction, active))
                         break;
+                }
 
                 if (tMaxX < tMaxY)
                 {
                     if (tMaxX < tMaxZ)
                     {
-                        if (tMaxX > radius) break;
+                        if (tMaxX > radius)
+                            break;
                         // Update which cube we are now in.
                         x += stepX;
                         // Adjust tMaxX to the next X-oriented boundary crossing.
@@ -193,7 +172,8 @@ namespace WatchtowerClient
                     }
                     else
                     {
-                        if (tMaxZ > radius) break;
+                        if (tMaxZ > radius)
+                            break;
                         z += stepZ;
                         tMaxZ += tDeltaZ;
                         face.X = 0;
@@ -205,7 +185,8 @@ namespace WatchtowerClient
                 {
                     if (tMaxY < tMaxZ)
                     {
-                        if (tMaxY > radius) break;
+                        if (tMaxY > radius)
+                            break;
                         y += stepY;
                         tMaxY += tDeltaY;
                         face.X = 0;
@@ -216,7 +197,8 @@ namespace WatchtowerClient
                     {
                         // Identical to the second case, repeated for simplicity in
                         // the conditionals.
-                        if (tMaxZ > radius) break;
+                        if (tMaxZ > radius)
+                            break;
                         z += stepZ;
                         tMaxZ += tDeltaZ;
                         face.X = 0;

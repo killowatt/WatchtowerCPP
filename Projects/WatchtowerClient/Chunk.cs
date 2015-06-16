@@ -96,7 +96,7 @@ namespace WatchtowerClient
                     for (int z = 0; z < ChunkSize.Z; z++)
                     {
                         Blocks[x, y, z] = new Block();
-                        Blocks[x, y, z].Active = true;
+                        Blocks[x, y, z].Active = false;
                     }
                 }
             }

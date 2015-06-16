@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Dynamic;
+using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -9,6 +12,7 @@ using OpenTK.Input;
 using Watchtower;
 using WatchtowerClient.Assets.Shaders;
 using WatchtowerClient.Graphics;
+using PixelFormat = System.Drawing.Imaging.PixelFormat;
 
 namespace WatchtowerClient
 {
@@ -26,12 +30,74 @@ namespace WatchtowerClient
         public static Mesh TestMesh;
         public static Chunk chunk;
 
+        public static Chunk[,] WORLDCHUNKS;
+
         private static Vector2 lastMouse;
         public static Matrix4 VIEWTEMP;
 
         private static Vector3 tempass;
 
-        #region RAYCAST 2.0
+        #region MAP LOADER 2015
+        private static void GenerateChunksFromThatMapYouKnow() // TODO: the loading of this needs to be not bad
+        {
+            Bitmap bitmap = new Bitmap("terrain.png");
+            BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+
+            IntPtr ptr = bitmapData.Scan0;
+
+            int bytes = bitmapData.Stride * bitmap.Height;
+            byte[] rgbValues = new byte[bytes];
+            byte[] r = new byte[bytes / 3];
+            byte[] g = new byte[bytes / 3];
+            byte[] b = new byte[bytes / 3];
+
+            Marshal.Copy(ptr, rgbValues, 0, bytes);
+
+            int count = 0;
+            int stride = bitmapData.Stride;
+
+            for (int row = 0; row < bitmapData.Height; row++)
+            {
+                for (int column = 0; column < bitmapData.Width; column++)
+                {
+                    b[count] = (byte)(rgbValues[(row * stride) + (column * 3)]);
+                    g[count] = (byte)(rgbValues[(row * stride) + (column * 3) + 1]);
+                    r[count++] = (byte)(rgbValues[(row * stride) + (column * 3) + 2]);
+                }
+            }
+
+            WORLDCHUNKS = new Chunk[16,16];
+            for (int x = 0; x < 16; x++)
+            {
+                for (int y = 0; y < 16; y++)
+                {
+                    WORLDCHUNKS[x, y] = new Chunk();
+                }
+            }
+
+
+            for (int cx = 0; cx < 16; cx++)
+            {
+                for (int cy = 0; cy < 16; cy++)
+                {
+                    for (int bx = 0; bx < 16; bx++)
+                    {
+                        for (int by = 0; by < 16; by++)
+                        {
+                            for (int bz = 0; bz < r[(bx + (cx * 16)) * (by + (cy * 16))]; bz++)
+                            {
+                                WORLDCHUNKS[cx, cy].Blocks[bx, bz, by].Active = true;
+                                WORLDCHUNKS[cx, cy].Blocks[bx, bz, by].Color =
+                                    new Vector3(r[(bx + (cx * 16)) * (by + (cy * 16))]);
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        }
         #endregion
         #region RAYCAST TEST
         public static bool callback(int xCopy, int yCopy, int zCopy, Vector3 face, Vector3 direction, bool active)
@@ -388,9 +454,9 @@ namespace WatchtowerClient
             {
                 for (int y = 0; y < 128; y += 2)
                 {
-                    for (int z = 0; z < 16; z++)
+                    for (int z = 0; z < 16; z+= 2)
                     {
-                        chunk.Blocks[x, y, z].Active = false;
+                        chunk.Blocks[x, y, z].Active = true;
                     }
                 }
             }
@@ -405,6 +471,8 @@ namespace WatchtowerClient
                 }
             }
             chunk.Update(TestShader);
+
+            GenerateChunksFromThatMapYouKnow();
 
             //  TestMesh = new Mesh(Block.BuildCube(true, true, false, true, false, true), TestShader);
             //  TestMesh.Transform = Matrix4.CreateTranslation(22, 22, 22);

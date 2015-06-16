@@ -36,13 +36,22 @@ namespace WatchtowerClient
         #region RAYCAST TEST
         public static bool callback(int xCopy, int yCopy, int zCopy, Vector3 face, Vector3 direction, bool active)
         {
-            if ((xCopy > 0 && xCopy < 16) && (yCopy > 0 && yCopy < 128) && (zCopy > 0 && zCopy < 16))
+            if ((xCopy > -1 && xCopy < 16) && (yCopy > -1 && yCopy < 128) && (zCopy > -1 && zCopy < 16))
             {
                 if (chunk.Blocks[xCopy, yCopy, zCopy].Active)
                 {
                     if (!active)
                     {
                         chunk.Blocks[xCopy, yCopy, zCopy].Active = false;
+                    }
+                    if (active)
+                    {
+                        if ((xCopy + (int)face.X > -1 && xCopy + (int)face.X < 16) && (yCopy + (int)face.Y > -1 && yCopy + (int)face.Y < 128) && (zCopy + (int)face.Z > -1 && zCopy + (int)face.Z < 16))
+                        {
+                            chunk.Blocks[xCopy + (int)face.X, yCopy + (int)face.Y, zCopy + (int)face.Z].Active = true;
+                            chunk.Blocks[xCopy + (int)face.X, yCopy + (int)face.Y, zCopy + (int)face.Z].Color =
+                                Vector3.One;
+                        }
                     }
                     return true;
                 }
@@ -296,6 +305,11 @@ namespace WatchtowerClient
             if (Mouse.GetState().IsButtonDown(MouseButton.Left))
             {
                 Raycast(direction, 8, false);
+                chunk.Update(TestShader);
+            }
+            if (Mouse.GetState().IsButtonDown(MouseButton.Right))
+            {
+                Raycast(direction, 8, true);
                 chunk.Update(TestShader);
             }
             //if (Mouse.GetState().IsButtonDown(MouseButton.Right))

@@ -40,7 +40,7 @@ namespace WatchtowerClient
         #region MAP LOADER 2015
         private static void GenerateChunksFromThatMapYouKnow() // TODO: the loading of this needs to be not bad
         {
-            Bitmap bitmap = new Bitmap("gradients.png");
+            Bitmap bitmap = new Bitmap("terrain.png");
             BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                 ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 
@@ -85,17 +85,17 @@ namespace WatchtowerClient
                     {
                         for (int by = 0; by < 16; by++)
                         {
-                            for (int bz = 0; bz < r[(bx + (cx * 16)) * (by + (cy * 16))]; bz++)
+                            for (int bz = 0; bz < r[(bitmap.Width * (bx + (cx * 16))) + (by + (cy * 16))] / 4; bz++)
                             {
                                 WORLDCHUNKS[cx, cy].Blocks[bx, bz, by].Active = true;
                                 WORLDCHUNKS[cx, cy].Blocks[bx, bz, by].Color =
-                                    new Vector3(r[(bx + (cx * 16)) * (by + (cy * 16))] / 127f);
+                                    new Vector3(bz / 127f);
                             }
                         }
                     }
                 }
             }
-
+            // these arent put together since i need some mental clarity y'know yea
             for (int x = 0; x < 16; x++)
             {
                 for (int y = 0; y < 16; y++)

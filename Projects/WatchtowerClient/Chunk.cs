@@ -83,12 +83,15 @@ namespace WatchtowerClient
             chunk.Vertices = Vertices.ToArray();
             chunk.Normals = Normals.ToArray();
             chunk.Indices = Indices.ToArray();
+            Matrix4 oldtransform = Mesh.Transform; // TODO: do this better
             Mesh = new Mesh(chunk, shader);
+            Mesh.Transform = oldtransform;
             Updated = true;
         }
         public Chunk()
         {
             Blocks = new Block[(int)ChunkSize.X, (int)ChunkSize.Y, (int)ChunkSize.Z]; // TODO: stop
+            Mesh = new Mesh(default(VertexData), null); // TODO: do we do this?
             for (int x = 0; x < ChunkSize.X; x++)
             {
                 for (int y = 0; y < ChunkSize.Y; y++)

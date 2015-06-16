@@ -40,7 +40,7 @@ namespace WatchtowerClient
         #region MAP LOADER 2015
         private static void GenerateChunksFromThatMapYouKnow() // TODO: the loading of this needs to be not bad
         {
-            Bitmap bitmap = new Bitmap("terrain.png");
+            Bitmap bitmap = new Bitmap("gradients.png");
             BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                 ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 
@@ -89,13 +89,25 @@ namespace WatchtowerClient
                             {
                                 WORLDCHUNKS[cx, cy].Blocks[bx, bz, by].Active = true;
                                 WORLDCHUNKS[cx, cy].Blocks[bx, bz, by].Color =
-                                    new Vector3(r[(bx + (cx * 16)) * (by + (cy * 16))]);
+                                    new Vector3(r[(bx + (cx * 16)) * (by + (cy * 16))] / 127f);
                             }
                         }
                     }
                 }
             }
 
+            for (int x = 0; x < 16; x++)
+            {
+                for (int y = 0; y < 16; y++)
+                {
+                    WORLDCHUNKS[x, y].Mesh.Transform = Matrix4.CreateTranslation(x * 16, 0, y * 16);
+                }
+            }
+
+            foreach (Chunk c in WORLDCHUNKS)
+            {
+                c.Update(TestShader);
+            }
 
         }
         #endregion
@@ -395,16 +407,21 @@ namespace WatchtowerClient
         {
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
-            chunk.Mesh.Draw();
+            //chunk.Mesh.Draw();
             // TestMesh.Draw();
-            GL.Begin(PrimitiveType.Lines);
-            GL.Vertex3(tempfirst);
-            GL.Vertex3(tempsecond);
-            GL.Color3(255, 0, 0);
-            GL.Color3(255, 0, 0);
-            GL.End();
+           // GL.Begin(PrimitiveType.Lines);
+           // GL.Vertex3(tempfirst);
+           // GL.Vertex3(tempsecond);
+           // GL.Color3(255, 0, 0);
+           // GL.Color3(255, 0, 0);
+           // GL.End();
 
-            DrawACube(new Vector3(80, 80, 80));
+            foreach (Chunk c in WORLDCHUNKS)
+            {
+                c.Mesh.Draw();
+            }
+
+            //DrawACube(new Vector3(80, 80, 80));
 
             GraphicsContext.SwapBuffers();
         }
@@ -449,7 +466,6 @@ namespace WatchtowerClient
             // TEMP
             TestShader = new BasicShader();
             chunk = new Chunk();
-            chunk.Blocks[0, 2, 0].Active = false;
             for (int x = 0; x < 16; x += 2)
             {
                 for (int y = 0; y < 128; y += 2)

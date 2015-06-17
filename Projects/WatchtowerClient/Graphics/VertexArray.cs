@@ -8,7 +8,7 @@ namespace WatchtowerClient.Graphics
     public struct VertexData
     {
         public float[] Vertices;
-        public float[] TextureCoordinates;
+        public float[] Colors;
         public float[] Normals;
         public uint[] Indices;
 
@@ -58,19 +58,19 @@ namespace WatchtowerClient.Graphics
                 GL.BindVertexArray(0);
             }
         }
-        public float[] TextureCoordinates
+        public float[] Colors
         {
-            get { return _vertexData.TextureCoordinates; }
+            get { return _vertexData.Colors; }
             set
             {
                 if (value == null)
                     value = new float[0];
-                _vertexData.TextureCoordinates = value;
+                _vertexData.Colors = value;
                 GL.BindVertexArray(VertexArrayObject);
                 GL.BindBuffer(BufferTarget.ArrayBuffer, _textureCoordinateBuffer);
-                GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(sizeof (float) * _vertexData.TextureCoordinates.Length),
-                    _vertexData.TextureCoordinates, BufferUsageHint.DynamicDraw);
-                GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 0, 0);
+                GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(sizeof (float) * _vertexData.Colors.Length),
+                    _vertexData.Colors, BufferUsageHint.DynamicDraw);
+                GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 0, 0);
                 GL.EnableVertexAttribArray(1);
                 GL.BindVertexArray(0);
             }
@@ -115,7 +115,7 @@ namespace WatchtowerClient.Graphics
             {
                 _vertexData = value;
                 Vertices = _vertexData.Vertices;
-                TextureCoordinates = _vertexData.TextureCoordinates;
+                Colors = _vertexData.Colors;
                 Normals = _vertexData.Normals;
                 Indices = _vertexData.Indices;
             }

@@ -21,7 +21,7 @@ namespace WatchtowerClient
         {
             VertexData chunk = new VertexData { Vertices = new float[0], Indices = new uint[0] };
             List<float> Vertices = new List<float>();
-            List<float> Normals = new List<float>();
+            List<float> Colors = new List<float>();
             List<uint> Indices = new List<uint>();
             VertexData block;
             int currentindoffset = 0;
@@ -67,9 +67,9 @@ namespace WatchtowerClient
                         {
                             Vertices.Add(v);
                         }
-                        foreach (float n in block.Normals)
+                        foreach (float n in block.Colors)
                         {
-                            Normals.Add(n);
+                            Colors.Add(n);
                         }
                         for (int i = 0; i < block.Indices.Length; i++)
                         {
@@ -81,7 +81,7 @@ namespace WatchtowerClient
             }
 
             chunk.Vertices = Vertices.ToArray();
-            chunk.Normals = Normals.ToArray();
+            chunk.Colors = Colors.ToArray();
             chunk.Indices = Indices.ToArray();
             Matrix4 oldtransform = Mesh.Transform; // TODO: do this better
             Mesh = new Mesh(chunk, shader);

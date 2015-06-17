@@ -29,7 +29,7 @@ namespace WatchtowerClient
                     -0.5f, -0.5f, 0.5f
                 };
             List<Vector3> vertices = new List<Vector3>();
-            List<Vector3> normals = new List<Vector3>();
+            List<Vector3> colors = new List<Vector3>();
 
             #region Index
             //if (positiveX)
@@ -193,11 +193,11 @@ namespace WatchtowerClient
             #endregion
 
             //List<Vector3> nodupe = vertices.Distinct().ToList();
-            List<float> denorms = new List<float>();
+            List<float> colorexp = new List<float>();
 
             for (int i = 0; i < vertices.Count; i++)
             {
-                normals.Add(Color);
+                colors.Add(Color);
             }
 
             List<float> vert = new List<float>();
@@ -207,15 +207,15 @@ namespace WatchtowerClient
                 vert.Add(v.Y);
                 vert.Add(v.Z);
             }
-            foreach (Vector3 n in normals)
+            foreach (Vector3 n in colors)
             {
-                denorms.Add(n.X);
-                denorms.Add(n.Y);
-                denorms.Add(n.Z);
+                colorexp.Add(n.X);
+                colorexp.Add(n.Y);
+                colorexp.Add(n.Z);
             }
             data.Vertices = vert.ToArray();
             data.Indices = indices.ToArray();
-            data.Normals = denorms.ToArray();
+            data.Colors = colorexp.ToArray();
             
             return data;
         }

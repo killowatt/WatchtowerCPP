@@ -40,7 +40,7 @@ namespace WatchtowerClient
         #region MAP LOADER 2015
         private static void GenerateChunksFromThatMapYouKnow() // TODO: the loading of this needs to be not bad
         {
-            Bitmap bitmap = new Bitmap("terrain.png");
+            Bitmap bitmap = new Bitmap("Textures/terrain.png");
             BitmapData bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                 ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 

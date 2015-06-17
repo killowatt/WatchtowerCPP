@@ -30,7 +30,8 @@ namespace WatchtowerClient
         }
         public static Settings Load(string path) // TODO: good error handling everywhere.
         {
-            Settings settings = new Settings { ResolutionWidth = 960, ResolutionHeight = 540, WindowMode = WindowMode.Window, Display = -1 }; // Default Settings
+            Settings settings = new Settings { ResolutionWidth = 1280, ResolutionHeight = 720, WindowMode = WindowMode.Window, Display = -1 };
+            //Settings settings = new Settings { ResolutionWidth = 960, ResolutionHeight = 540, WindowMode = WindowMode.Window, Display = -1 }; // Default Settings
             string[] lines;
             try
             {

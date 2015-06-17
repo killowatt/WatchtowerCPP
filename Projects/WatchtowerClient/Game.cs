@@ -84,12 +84,12 @@ namespace WatchtowerClient
                     for (int bx = 0; bx < 16; bx++)
                     {
                         for (int by = 0; by < 16; by++)
-                        {
-                            for (int bz = 0; bz < r[(bitmap.Width * (bx + (cx * 16))) + (by + (cy * 16))] / 4; bz++)
+                        {                                                                                // V THIS IS TO SCALE IT DOWN
+                            for (int bz = 0; bz < r[(bitmap.Width * (bx + (cx * 16))) + (by + (cy * 16))] / 1; bz++)
                             {
                                 WORLDCHUNKS[cx, cy].Blocks[bx, bz, by].Active = true;
                                 WORLDCHUNKS[cx, cy].Blocks[bx, bz, by].Color =
-                                    new Vector3(bz / 127f);
+                                    new Vector3((bz / 127f), 40 / 255f, 94 / 255f);
                             }
                         }
                     }
@@ -114,21 +114,39 @@ namespace WatchtowerClient
         #region RAYCAST TEST
         public static bool callback(int xCopy, int yCopy, int zCopy, Vector3 face, Vector3 direction, bool active)
         {
-            if ((xCopy > -1 && xCopy < 16) && (yCopy > -1 && yCopy < 128) && (zCopy > -1 && zCopy < 16))
+
+            int cx = (int)Math.Floor(xCopy / 16f);
+            int cy = (int)Math.Floor(zCopy / 16f);
+            int bx = (int)mod(xCopy, 16);
+            int by = (int)mod(yCopy, 128);
+            int bz = (int)mod(zCopy, 16);
+           // bx = xCopy % 16;
+           // by = yCopy % 16;
+           // bz = zCopy % 16;
+
+            Console.WriteLine("TESTING");
+
+            if ((bx > -1 && bx < 16) && (by > -1 && by < 128) && (bz > -1 && bz < 16))
             {
-                if (chunk.Blocks[xCopy, yCopy, zCopy].Active)
+                if (WORLDCHUNKS[cx, cy].Blocks[bx, by, bz].Active)
                 {
                     if (!active)
                     {
-                        chunk.Blocks[xCopy, yCopy, zCopy].Active = false;
+                        WORLDCHUNKS[cx, cy].Blocks[bx, by, bz].Active = false;
+                        WORLDCHUNKS[cx, cy].Update(TestShader);
+                        Console.WriteLine("CX " + cx + " CY " + cy);
+                        Console.WriteLine("BX " + cx + " BY " + cy);
                     }
                     if (active)
                     {
-                        if ((xCopy + (int)face.X > -1 && xCopy + (int)face.X < 16) && (yCopy + (int)face.Y > -1 && yCopy + (int)face.Y < 128) && (zCopy + (int)face.Z > -1 && zCopy + (int)face.Z < 16))
+                        if ((bx + (int)face.X > -1 && bx + (int)face.X < 16) && (by + (int)face.Y > -1 && by + (int)face.Y < 128) && (bz + (int)face.Z > -1 && bz + (int)face.Z < 16))
                         {
-                            chunk.Blocks[xCopy + (int)face.X, yCopy + (int)face.Y, zCopy + (int)face.Z].Active = true;
-                            chunk.Blocks[xCopy + (int)face.X, yCopy + (int)face.Y, zCopy + (int)face.Z].Color =
+                            WORLDCHUNKS[cx, cy].Blocks[bx + (int)face.X, by + (int)face.Y, bz + (int)face.Z].Active = true;
+                            WORLDCHUNKS[cx, cy].Blocks[bx + (int)face.X, by + (int)face.Y, bz + (int)face.Z].Color =
                                 Vector3.One;
+                            WORLDCHUNKS[cx, cy].Update(TestShader);
+                            Console.WriteLine("CX " + cx + " CY " + cy);
+                            Console.WriteLine("BX " + cx + " BY " + cy);
                         }
                     }
                     return true;
@@ -383,12 +401,10 @@ namespace WatchtowerClient
             if (Mouse.GetState().IsButtonDown(MouseButton.Left))
             {
                 Raycast(direction, 8, false);
-                chunk.Update(TestShader);
             }
             if (Mouse.GetState().IsButtonDown(MouseButton.Right))
             {
                 Raycast(direction, 8, true);
-                chunk.Update(TestShader);
             }
             //if (Mouse.GetState().IsButtonDown(MouseButton.Right))
             //{
@@ -460,7 +476,7 @@ namespace WatchtowerClient
             GL.ClearColor(15 / 255f, 15 / 255f, 15 / 255f, 1);
 
             Camera = new Camera();
-            Camera.Position = new Vector3(0, 60, 60);
+            Camera.Position = new Vector3(0, 128, 0);
             Camera.Yaw = 180;
 
             // TEMP

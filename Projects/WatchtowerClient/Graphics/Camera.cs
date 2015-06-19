@@ -11,7 +11,7 @@ namespace WatchtowerClient.Graphics
         //private Quaternion _quaternion;
         private bool _viewCalculated;
         private bool _projectionCalculated;
-        private bool _rotationCalculated;
+        //private bool _rotationCalculated;
 
         private Vector3 _position;
         private Vector3 _rotation;
@@ -113,7 +113,6 @@ namespace WatchtowerClient.Graphics
             {
                 _rotation.X = (float)(value * (Math.PI / 180));
                 _viewCalculated = false;
-                _rotationCalculated = false;
             }
         }
         public float Yaw
@@ -123,7 +122,6 @@ namespace WatchtowerClient.Graphics
             {
                 _rotation.Y = (float)(value * (Math.PI / 180));
                 _viewCalculated = false;
-                _rotationCalculated = false;
             }
         }
         public float Pitch
@@ -133,7 +131,6 @@ namespace WatchtowerClient.Graphics
             {
                 _rotation.Z = (float)(value * (Math.PI / 180));
                 _viewCalculated = false;
-                _rotationCalculated = false;
             }
         }
         public float FieldOfView

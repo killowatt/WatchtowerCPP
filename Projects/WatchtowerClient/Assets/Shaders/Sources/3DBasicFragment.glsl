@@ -1,13 +1,57 @@
 #version 430
+#define PI 3.14159265359
 
 in vec3 Color;
-in vec3 xxx;
+in vec3 Normal;
 
 out vec4 color;
 
+uniform vec3 cameraVector;
+
+in vec3 FragPos;
+
+vec3 lightVector = -vec3(0.5, -0.5, 0); // vector direction
+vec3 lightPos = vec3(64, 128, 64);
+
+float roughness = 0.2; // alpha
+vec3 h;
+
+vec3 diffuse() // Lambert Diffuse
+{
+	return Color / PI;
+}
+float D()
+{
+	return pow(roughness, 2) / (PI * pow(pow(dot(Normal, h), 2) * (pow(roughness, 2) - 1) + 1, 2));
+}
+float Gx(vec3 v)
+{
+	float k = pow((roughness + 1), 2) / 8;
+	return dot(Normal, v) / (dot(Normal, v) * (1 - k) + k);
+}
+float G()
+{
+	return Gx(lightVector) * Gx(cameraVector);
+}
+float F()
+{
+	float f0 = 1.0; // unknown constant? problem                    v should we multiply?
+	return f0 + (1 - f0) * pow(2, (-5.55473 * (dot(cameraVector, h))-6.98316) * (dot(cameraVector, h)));
+}
+float BRDF()
+{
+	return (D() * F() * G()) / (4 * dot(Normal, lightVector) * dot(Normal, cameraVector));
+}
+float lambertDiffuse(vec3 lightVec, vec3 norm)
+{
+	return max(dot(norm, lightVec), 0.0);
+}
+
 void main()
 {
-	color = vec4(Color.x / 16, Color.y / 128, Color.z / 16, 1.0);
-    //color = vec4(xxx.x / 16, xxx.y / 128, xxx.z / 16, 1.0);
-    color = vec4(Color, 1.0);
+	vec3 ambient = (0.35 * vec3(1.0, 1.0, 1.0)) * Color; // ambient strength * light color * color
+	vec3 diffuse = max(dot(Normal, lightVector), 0.0) * vec3(1.0, 1.0, 1.0); // diff * lightcolor
+	color = vec4((ambient + diffuse) * Color, 1.0);
+	//color = vec4(diffuse, 1.0);
+	//color = vec4(Color, 1.0);
 }

@@ -80,8 +80,9 @@ namespace WatchtowerClient.Graphics
             GL.AttachShader(ShaderProgram, FragmentShader);
 
             GL.BindAttribLocation(ShaderProgram, 0, "vertex");
-            GL.BindAttribLocation(ShaderProgram, 1, "textureCoordinate");
-            GL.BindAttribLocation(ShaderProgram, 2, "normal");
+            GL.BindAttribLocation(ShaderProgram, 1, "color");
+            GL.BindAttribLocation(ShaderProgram, 2, "textureCoordinate");
+            GL.BindAttribLocation(ShaderProgram, 3, "normal");
 
             GL.LinkProgram(ShaderProgram);
         }

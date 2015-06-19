@@ -32,10 +32,11 @@ namespace WatchtowerClient
 
         public static Chunk[,] WORLDCHUNKS;
 
-        private static Vector2 lastMouse;
+        //private static Vector2 lastMouse;
         public static Matrix4 VIEWTEMP;
+        public static Vector3 direction;
 
-        private static Vector3 tempass;
+        //private static Vector3 tempasset;
 
         #region MAP LOADER 2015
         private static void GenerateChunksFromThatMapYouKnow() // TODO: the loading of this needs to be not bad
@@ -76,7 +77,6 @@ namespace WatchtowerClient
                 }
             }
 
-
             for (int cx = 0; cx < 16; cx++)
             {
                 for (int cy = 0; cy < 16; cy++)
@@ -89,6 +89,7 @@ namespace WatchtowerClient
                             {
                                 WORLDCHUNKS[cx, cy].Blocks[bx, bz, by].Active = true;
                                 WORLDCHUNKS[cx, cy].Blocks[bx, bz, by].Color =
+                                    //new Vector3((234 / 255f), (181 / 255f), (65 / 255f));
                                     new Vector3((bz / 127f), 40 / 255f, 94 / 255f);
                             }
                         }
@@ -124,7 +125,6 @@ namespace WatchtowerClient
            // by = yCopy % 16;
            // bz = zCopy % 16;
 
-            Console.WriteLine("TESTING");
 
             if ((bx > -1 && bx < 16) && (by > -1 && by < 128) && (bz > -1 && bz < 16))
             {
@@ -134,8 +134,6 @@ namespace WatchtowerClient
                     {
                         WORLDCHUNKS[cx, cy].Blocks[bx, by, bz].Active = false;
                         WORLDCHUNKS[cx, cy].Update(TestShader);
-                        Console.WriteLine("CX " + cx + " CY " + cy);
-                        Console.WriteLine("BX " + cx + " BY " + cy);
                     }
                     if (active)
                     {
@@ -145,8 +143,6 @@ namespace WatchtowerClient
                             WORLDCHUNKS[cx, cy].Blocks[bx + (int)face.X, by + (int)face.Y, bz + (int)face.Z].Color =
                                 Vector3.One;
                             WORLDCHUNKS[cx, cy].Update(TestShader);
-                            Console.WriteLine("CX " + cx + " CY " + cy);
-                            Console.WriteLine("BX " + cx + " BY " + cy);
                         }
                     }
                     return true;
@@ -172,42 +168,42 @@ namespace WatchtowerClient
         {
             return x > 0 ? 1 : x < 0 ? -1 : 0;
         }
-        public static void DrawACube(Vector3 pos)
-        {
-            GL.Begin(BeginMode.Quads);
+        //public static void DrawACube(Vector3 pos)
+        //{
+        //    GL.Begin(BeginMode.Quads);
 
-            GL.Vertex3(new Vector3(0.5f, 0.0f, 0.0f) + pos);
-            GL.Vertex3(new Vector3(0.5f, 0.0f, 0.0f) + pos);
-            GL.Vertex3(new Vector3(0.5f, 0.5f, 0.0f) + pos);
-            GL.Vertex3(new Vector3(0.0f, 0.5f, 0.0f) + pos);
+        //    GL.Vertex3(new Vector3(0.5f, 0.0f, 0.0f) + pos);
+        //    GL.Vertex3(new Vector3(0.5f, 0.0f, 0.0f) + pos);
+        //    GL.Vertex3(new Vector3(0.5f, 0.5f, 0.0f) + pos);
+        //    GL.Vertex3(new Vector3(0.0f, 0.5f, 0.0f) + pos);
 
-            GL.Vertex3(new Vector3(0.0f, 0.0f, -0.5f) + pos);
-            GL.Vertex3(new Vector3(0.5f, 0.0f, -0.5f) + pos);
-            GL.Vertex3(new Vector3(0.5f, 0.5f, -0.5f) + pos);
-            GL.Vertex3(new Vector3(0.0f, 0.5f, -0.5f) + pos);
+        //    GL.Vertex3(new Vector3(0.0f, 0.0f, -0.5f) + pos);
+        //    GL.Vertex3(new Vector3(0.5f, 0.0f, -0.5f) + pos);
+        //    GL.Vertex3(new Vector3(0.5f, 0.5f, -0.5f) + pos);
+        //    GL.Vertex3(new Vector3(0.0f, 0.5f, -0.5f) + pos);
 
-            GL.Vertex3(new Vector3(0.5f, 0.0f, 0.0f) + pos);
-            GL.Vertex3(new Vector3(0.5f, 0.0f, -0.5f) + pos);
-            GL.Vertex3(new Vector3(0.5f, 0.5f, -0.5f) + pos);
-            GL.Vertex3(new Vector3(0.5f, 0.5f, 0.0f) + pos);
+        //    GL.Vertex3(new Vector3(0.5f, 0.0f, 0.0f) + pos);
+        //    GL.Vertex3(new Vector3(0.5f, 0.0f, -0.5f) + pos);
+        //    GL.Vertex3(new Vector3(0.5f, 0.5f, -0.5f) + pos);
+        //    GL.Vertex3(new Vector3(0.5f, 0.5f, 0.0f) + pos);
 
-            GL.Vertex3(new Vector3(0.0f, 0.0f, 0.0f) + pos);
-            GL.Vertex3(new Vector3(0.0f, 0.0f, -0.5f) + pos);
-            GL.Vertex3(new Vector3(0.0f, 0.5f, -0.5f) + pos);
-            GL.Vertex3(new Vector3(0.0f, 0.5f, 0.0f) + pos);
+        //    GL.Vertex3(new Vector3(0.0f, 0.0f, 0.0f) + pos);
+        //    GL.Vertex3(new Vector3(0.0f, 0.0f, -0.5f) + pos);
+        //    GL.Vertex3(new Vector3(0.0f, 0.5f, -0.5f) + pos);
+        //    GL.Vertex3(new Vector3(0.0f, 0.5f, 0.0f) + pos);
 
-            GL.Vertex3(new Vector3(0.0f, 0.5f, 0.0f) + pos);
-            GL.Vertex3(new Vector3(0.5f, 0.5f, 0.0f) + pos);
-            GL.Vertex3(new Vector3(0.5f, 0.5f, -0.5f) + pos);
-            GL.Vertex3(new Vector3(0.0f, 0.5f, -0.5f) + pos);
+        //    GL.Vertex3(new Vector3(0.0f, 0.5f, 0.0f) + pos);
+        //    GL.Vertex3(new Vector3(0.5f, 0.5f, 0.0f) + pos);
+        //    GL.Vertex3(new Vector3(0.5f, 0.5f, -0.5f) + pos);
+        //    GL.Vertex3(new Vector3(0.0f, 0.5f, -0.5f) + pos);
 
-            GL.Vertex3(new Vector3(0.0f, 0.0f, 0.0f) + pos);
-            GL.Vertex3(new Vector3(0.5f, 0.0f, 0.0f) + pos);
-            GL.Vertex3(new Vector3(0.5f, 0.0f, -0.5f) + pos);
-            GL.Vertex3(new Vector3(0.0f, 0.0f, -0.5f) + pos);
+        //    GL.Vertex3(new Vector3(0.0f, 0.0f, 0.0f) + pos);
+        //    GL.Vertex3(new Vector3(0.5f, 0.0f, 0.0f) + pos);
+        //    GL.Vertex3(new Vector3(0.5f, 0.0f, -0.5f) + pos);
+        //    GL.Vertex3(new Vector3(0.0f, 0.0f, -0.5f) + pos);
 
-            GL.End();
-        }
+        //    GL.End();
+        //}
         private static void Raycast(Vector3 direction, float radius, bool active)
         {
             Vector3 origin = new Vector3(0, 0, 0);
@@ -349,7 +345,7 @@ namespace WatchtowerClient
             float mouseSpeed = 0.005f;
 
 
-            Vector3 direction = new Vector3(
+            direction = new Vector3(
                 (float)(Math.Cos(Camera.Pitch * (Math.PI / 180)) * Math.Sin(Camera.Yaw * (Math.PI / 180))),
                 (float)(Math.Sin(Camera.Pitch * (Math.PI / 180))),
                 (float)(Math.Cos(Camera.Pitch * (Math.PI / 180)) * Math.Cos(Camera.Yaw * (Math.PI / 180)))
@@ -412,6 +408,7 @@ namespace WatchtowerClient
             //    Raycast(dirfixed, 8, true);
             //    chunk.Update(TestShader);
             //}
+            Window.Title = direction.ToString();
             if (Keyboard.GetState().IsKeyDown(Key.E))
             {
                 tempfirst = Camera.Position;
@@ -481,6 +478,12 @@ namespace WatchtowerClient
 
             // TEMP
             TestShader = new BasicShader();
+
+            Console.WriteLine(TestShader.GetCompileStatus(ShaderType.VertexShader));
+            Console.WriteLine(TestShader.GetCompileStatus(ShaderType.FragmentShader));
+            Console.WriteLine(TestShader.GetCompileLog(ShaderType.VertexShader));
+            Console.WriteLine(TestShader.GetCompileLog(ShaderType.FragmentShader));
+
             chunk = new Chunk();
             for (int x = 0; x < 16; x += 2)
             {
@@ -509,10 +512,7 @@ namespace WatchtowerClient
             //  TestMesh = new Mesh(Block.BuildCube(true, true, false, true, false, true), TestShader);
             //  TestMesh.Transform = Matrix4.CreateTranslation(22, 22, 22);
 
-            Console.WriteLine(TestShader.GetCompileStatus(ShaderType.VertexShader));
-            Console.WriteLine(TestShader.GetCompileStatus(ShaderType.FragmentShader));
-            Console.WriteLine(TestShader.GetCompileLog(ShaderType.VertexShader));
-            Console.WriteLine(TestShader.GetCompileLog(ShaderType.FragmentShader));
+
             // TEMP
 
 

@@ -24,6 +24,8 @@ namespace WatchtowerClient
         public static Stopwatch Time;
         public static bool Running;
 
+        public static Mesh FramebufferMesh;
+
         public static Camera Camera;
 
         public static BasicShader TestShader;
@@ -36,6 +38,9 @@ namespace WatchtowerClient
         public static Matrix4 VIEWTEMP;
         public static Vector3 direction;
 
+        public static Framebuffer NormalBuffer;
+        public static Framebuffer ColorBuffer;
+        public static FramebufferShader fbshader;
         //private static Vector3 tempasset;
 
         #region MAP LOADER 2015
@@ -416,10 +421,27 @@ namespace WatchtowerClient
             }
             //Draw3DLine((int)Camera.X, (int)Camera.Y, (int)Camera.Z, (int)diradd.X, (int)diradd.Y, (int)diradd.Z);
         }
+        public static NormalShader normalShader;
+        public static SSAOShader SSAOShader;
         static void Render()
         {
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, NormalBuffer.FramebufferObject);
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
+            foreach (Chunk c in WORLDCHUNKS)
+            {
+                c.Mesh.Shader = normalShader;
+                c.Mesh.Draw();
+            }
+
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, ColorBuffer.FramebufferObject);
+            GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
+
+            foreach (Chunk c in WORLDCHUNKS)
+            {
+                c.Mesh.Shader = TestShader;
+                c.Mesh.Draw();
+            }
             //chunk.Mesh.Draw();
             // TestMesh.Draw();
            // GL.Begin(PrimitiveType.Lines);
@@ -429,13 +451,13 @@ namespace WatchtowerClient
            // GL.Color3(255, 0, 0);
            // GL.End();
 
-            foreach (Chunk c in WORLDCHUNKS)
-            {
-                c.Mesh.Draw();
-            }
-
             //DrawACube(new Vector3(80, 80, 80));
 
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+            GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
+            fbshader.Texture = ColorBuffer.ColorTexture;
+            FramebufferMesh.Shader = fbshader;
+            FramebufferMesh.Draw();
             GraphicsContext.SwapBuffers();
         }
         public static void Initialize(Settings settings)
@@ -471,6 +493,37 @@ namespace WatchtowerClient
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.ClearColor(15 / 255f, 15 / 255f, 15 / 255f, 1);
+
+            fbshader = new FramebufferShader();
+            NormalBuffer = new Framebuffer(1280, 720);
+            ColorBuffer = new Framebuffer(1280, 720);
+
+            SSAOShader = new SSAOShader();
+            normalShader = new NormalShader();
+
+            FramebufferMesh = new Mesh(new VertexData
+            {
+                Vertices = new float[]
+                {
+                    -1, -1, 0,
+                    1, -1, 0,
+                    1, 1, 0,
+                    -1, 1, 0
+                },
+                TextureCoordinates = new float[]
+                {
+                    0, 0,
+                    1, 0,
+                    1, 1,
+                    0, 1
+                },
+                Indices = new uint[]
+                {
+                    0, 1, 2,
+                    2, 3, 0
+                }
+
+            }, new FramebufferShader()); 
 
             Camera = new Camera();
             Camera.Position = new Vector3(0, 128, 0);

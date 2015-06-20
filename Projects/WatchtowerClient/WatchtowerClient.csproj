@@ -77,6 +77,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Shaders\BasicShader.cs" />
+    <Compile Include="Assets\Shaders\FramebufferShader.cs" />
+    <Compile Include="Assets\Shaders\NormalShader.cs" />
+    <Compile Include="Assets\Shaders\SSAOShader.cs" />
     <Compile Include="Block.cs" />
     <Compile Include="Chunk.cs" />
     <Compile Include="Game.cs" />

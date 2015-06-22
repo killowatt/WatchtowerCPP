@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Assets\Shaders\BasicShader.cs" />
     <Compile Include="Assets\Shaders\FramebufferShader.cs" />
+    <Compile Include="Assets\Shaders\LinearDepthShader.cs" />
     <Compile Include="Assets\Shaders\NormalShader.cs" />
     <Compile Include="Assets\Shaders\SSAOShader.cs" />
     <Compile Include="Block.cs" />
@@ -107,10 +108,47 @@
       <Name>Watchtower</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Shaders\Sources\basic old fs.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Shaders\Sources\Basic.fs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Shaders\Sources\Framebuffer.fs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Shaders\Sources\LinearDepth.fs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Shaders\Sources\Normal.fs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Shaders\Sources\SSAO.fs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Shaders\Sources\Basic.vs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Shaders\Sources\Framebuffer.vs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Shaders\Sources\LinearDepth.vs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Shaders\Sources\Normal.vs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Shaders\Sources\SSAO.vs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /s /r /y $(ProjectDir)Assets\Shaders\Sources $(ProjectDir)$(OutDir)Shaders\
-xcopy /s /r /y $(ProjectDir)Assets\Textures $(ProjectDir)$(OutDir)Textures\</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

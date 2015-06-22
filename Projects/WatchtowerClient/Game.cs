@@ -40,6 +40,7 @@ namespace WatchtowerClient
 
         public static Framebuffer NormalBuffer;
         public static Framebuffer ColorBuffer;
+        public static Framebuffer DepthBuffer;
         public static FramebufferShader fbshader;
         //private static Vector3 tempasset;
 
@@ -423,6 +424,7 @@ namespace WatchtowerClient
         }
         public static NormalShader normalShader;
         public static SSAOShader SSAOShader;
+        public static LinearDepthShader ldshader;
         static void Render()
         {
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, NormalBuffer.FramebufferObject);
@@ -434,14 +436,20 @@ namespace WatchtowerClient
                 c.Mesh.Draw();
             }
 
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, DepthBuffer.FramebufferObject);
+            GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
+
+            ldshader.DepthTexture = NormalBuffer.DepthTexture;
+            FramebufferMesh.Shader = ldshader;
+            FramebufferMesh.Draw();
+
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, ColorBuffer.FramebufferObject);
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
-            foreach (Chunk c in WORLDCHUNKS)
-            {
-                c.Mesh.Shader = TestShader;
-                c.Mesh.Draw();
-            }
+            SSAOShader.DepthTexture = NormalBuffer.DepthTexture;
+            SSAOShader.NormalTexture = NormalBuffer.ColorTexture;
+            FramebufferMesh.Shader = SSAOShader;
+            FramebufferMesh.Draw();
             //chunk.Mesh.Draw();
             // TestMesh.Draw();
            // GL.Begin(PrimitiveType.Lines);
@@ -497,9 +505,11 @@ namespace WatchtowerClient
             fbshader = new FramebufferShader();
             NormalBuffer = new Framebuffer(1280, 720);
             ColorBuffer = new Framebuffer(1280, 720);
+            DepthBuffer = new Framebuffer(1280, 720);
 
             SSAOShader = new SSAOShader();
             normalShader = new NormalShader();
+            ldshader = new LinearDepthShader();
 
             FramebufferMesh = new Mesh(new VertexData
             {
@@ -532,10 +542,29 @@ namespace WatchtowerClient
             // TEMP
             TestShader = new BasicShader();
 
+            Console.WriteLine("TESTSHADER");
             Console.WriteLine(TestShader.GetCompileStatus(ShaderType.VertexShader));
             Console.WriteLine(TestShader.GetCompileStatus(ShaderType.FragmentShader));
             Console.WriteLine(TestShader.GetCompileLog(ShaderType.VertexShader));
             Console.WriteLine(TestShader.GetCompileLog(ShaderType.FragmentShader));
+
+            Console.WriteLine("NORMALSHADER");
+            Console.WriteLine(normalShader.GetCompileStatus(ShaderType.VertexShader));
+            Console.WriteLine(normalShader.GetCompileStatus(ShaderType.FragmentShader));
+            Console.WriteLine(normalShader.GetCompileLog(ShaderType.VertexShader));
+            Console.WriteLine(normalShader.GetCompileLog(ShaderType.FragmentShader));
+
+            Console.WriteLine("LINEARDEPTHSHADER");
+            Console.WriteLine(ldshader.GetCompileStatus(ShaderType.VertexShader));
+            Console.WriteLine(ldshader.GetCompileStatus(ShaderType.FragmentShader));
+            Console.WriteLine(ldshader.GetCompileLog(ShaderType.VertexShader));
+            Console.WriteLine(ldshader.GetCompileLog(ShaderType.FragmentShader));
+
+            Console.WriteLine("SSAOSHADER");
+            Console.WriteLine(SSAOShader.GetCompileStatus(ShaderType.VertexShader));
+            Console.WriteLine(SSAOShader.GetCompileStatus(ShaderType.FragmentShader));
+            Console.WriteLine(SSAOShader.GetCompileLog(ShaderType.VertexShader));
+            Console.WriteLine(SSAOShader.GetCompileLog(ShaderType.FragmentShader));
 
             chunk = new Chunk();
             for (int x = 0; x < 16; x += 2)
@@ -565,9 +594,10 @@ namespace WatchtowerClient
             //  TestMesh = new Mesh(Block.BuildCube(true, true, false, true, false, true), TestShader);
             //  TestMesh.Transform = Matrix4.CreateTranslation(22, 22, 22);
 
-
+            Camera.Yaw = 90;
             // TEMP
-
+            Vector3 posssssssss = new Vector3(141.4232f, 103.7891f, 35.3471f);
+            Camera.Position = posssssssss;
 
             Window.Visible = true;
             Running = true;

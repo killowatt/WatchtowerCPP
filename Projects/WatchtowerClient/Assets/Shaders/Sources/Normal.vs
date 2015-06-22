@@ -13,6 +13,6 @@ out vec3 Normal;
 
 void main()
 {
-	Normal = normal;
+	Normal = mat3(Model * View) * normal;
 	gl_Position = Projection * View * Model * vec4(vertex, 1.0);
 }

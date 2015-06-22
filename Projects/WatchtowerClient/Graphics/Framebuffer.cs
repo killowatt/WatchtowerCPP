@@ -28,12 +28,13 @@ namespace WatchtowerClient.Graphics
                 TextureTarget.Texture2D, ColorTexture, 0);
 
             GL.BindTexture(TextureTarget.Texture2D, DepthTexture);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.DepthComponent24, width, height, 0,
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.DepthComponent32, width, height, 0,
                 PixelFormat.DepthComponent, PixelType.UnsignedByte, IntPtr.Zero);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter,
                 (float)TextureMagFilter.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter,
                 (float)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureCompareMode, 0); // TODO: is this needed?
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment,
                 TextureTarget.Texture2D, DepthTexture, 0);
 

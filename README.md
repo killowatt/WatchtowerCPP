@@ -1,3 +1,3 @@
 # Watchtower
 
-A work-in-progress Ace of Spades clone.
+A work-in-progress voxel first-person shooter.

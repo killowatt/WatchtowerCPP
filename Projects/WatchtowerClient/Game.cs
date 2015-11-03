@@ -41,6 +41,7 @@ namespace WatchtowerClient
         public static Framebuffer NormalBuffer;
         public static Framebuffer ColorBuffer;
         public static Framebuffer DepthBuffer;
+        public static Framebuffer FinalBuffer;
         public static FramebufferShader fbshader;
         //private static Vector3 tempasset;
 
@@ -452,14 +453,18 @@ namespace WatchtowerClient
             FramebufferMesh.Draw();
             //chunk.Mesh.Draw();
             // TestMesh.Draw();
-           // GL.Begin(PrimitiveType.Lines);
-           // GL.Vertex3(tempfirst);
-           // GL.Vertex3(tempsecond);
-           // GL.Color3(255, 0, 0);
-           // GL.Color3(255, 0, 0);
-           // GL.End();
+            // GL.Begin(PrimitiveType.Lines);
+            // GL.Vertex3(tempfirst);
+            // GL.Vertex3(tempsecond);
+            // GL.Color3(255, 0, 0);
+            // GL.Color3(255, 0, 0);
+            // GL.End();
 
             //DrawACube(new Vector3(80, 80, 80));
+
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, FinalBuffer.FramebufferObject);
+            GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
+
 
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
@@ -506,6 +511,7 @@ namespace WatchtowerClient
             NormalBuffer = new Framebuffer(1280, 720);
             ColorBuffer = new Framebuffer(1280, 720);
             DepthBuffer = new Framebuffer(1280, 720);
+            FinalBuffer = new Framebuffer(1280, 720);
 
             SSAOShader = new SSAOShader();
             normalShader = new NormalShader();

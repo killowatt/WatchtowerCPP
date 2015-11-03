@@ -12,11 +12,14 @@ namespace WatchtowerClient.Assets.Shaders
 {
     public class SSAOShader : Shader
     {
-       // private int _modelLocation;
-       // private int _viewLocation;
+        // private int _modelLocation;
+        // private int _viewLocation;
         private int _projectionLocation;
         private int _depthLocation;
-        private int _normalLocation; // TODO: what if this shader moves from one mesh to the other, are these still valid? have we set that up?
+
+        private int _normalLocation;
+            // TODO: what if this shader moves from one mesh to the other, are these still valid? have we set that up?
+
         private int _kernelLocation;
         private int _noiseLocation;
 
@@ -30,6 +33,34 @@ namespace WatchtowerClient.Assets.Shaders
         private const int NoiseSize = 16;
         private Vector3[] _kernel;
         private Vector3[] _noise;
+
+        private static Vector3[] Kernel
+        {
+            get
+            {
+                return new Vector3[]
+                {
+                    new Vector3(0, 0.33333333333f, -1), 
+                    new Vector3(-0.28867513459f, -0.16666666666f, -1), 
+                    new Vector3(0.28867513459f, -0.16666666666f, -1), 
+
+                    new Vector3(0, 0.66666666666f, -.75f), 
+                    new Vector3(-0.63403767753f, 0.20601132958f, -.75f), 
+                    new Vector3(-0.39185683486f, -0.53934466291f, -.75f), 
+                    new Vector3(0.39185683486f, -0.53934466291f, -.75f), 
+                    new Vector3(0.63403767753f, 0.20601132958f, -.75f),
+
+                    new Vector3(0, 1, -0.5f),
+                    new Vector3(-0.70710678118f, 0.70710678118f, -0.5f), 
+                    new Vector3(-1, 0, -0.5f),
+                    new Vector3(-0.70710678118f, -0.70710678118f, -0.5f), 
+                    new Vector3(0, -1, -0.5f),
+                    new Vector3(0.70710678118f, -0.70710678118f, -0.5f), 
+                    new Vector3(1, 0, -0.5f), 
+                    new Vector3(0.70710678118f, 0.70710678118f, -0.5f)
+                };
+            }
+        }
 
         public float Rand(float minimum, float maximum)
         {
@@ -60,6 +91,7 @@ namespace WatchtowerClient.Assets.Shaders
                     Rand(-1.0f, 1.0f),
                     Rand(-1.0f, 1.0f),
                     -1.0f);
+                _kernel[i] = Kernel[i];
 
                 //_kernel[i] = new Vector3(0.0f, 0.0f, -1.0f);
 
@@ -69,6 +101,7 @@ namespace WatchtowerClient.Assets.Shaders
                 scale = Lerp(0.1f, 1.0f, scale * scale);
                 _kernel[i] *= scale;
             }
+            //_kernel = Kernel;
             _noise = new Vector3[NoiseSize];
             for (int i = 0; i < NoiseSize; i++)
             {

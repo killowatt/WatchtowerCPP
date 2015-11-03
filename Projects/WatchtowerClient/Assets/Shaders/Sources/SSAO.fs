@@ -15,8 +15,8 @@ uniform sampler2D NoiseTexture;
 uniform mat4 Projection;
 
 // Settings -- Can be changed for either better performance or nicer result.
-int KernelSize = 1; // 16
-float Radius = 0.05;
+int KernelSize = 16; // 16
+float Radius = 0.0005; // 0.0005 PRETTY
 // Variables
 
 void main()
@@ -27,20 +27,24 @@ void main()
 	float tanFoV = tan(1.57079633 / 2.0); // FOV IN RADIANS
 	float aspect = 1.77777777778; // ASPECT RATIO (16 / 9)
 	ViewRay = vec3(
-		ndc.x * tanFoV * aspect,
-		ndc.y * tanFoV,
+		-ndc.x * tanFoV * aspect,
+		-ndc.y * tanFoV,
 		1.0);
 	// END
 
 
-	vec3 origin = ViewRay * texture(DepthTexture, TextureCoordinate).r;
+float f = 1024.0; // YO
+float n = 0.5; // PASS THESE IN
+float z = (2 * n) / (f + n - texture(DepthTexture, TextureCoordinate).x * (f - n));
 
-	vec3 normal = texture(NormalTexture, TextureCoordinate).xyz; // * 2.0 - 1.0;
+	vec3 origin = ViewRay * z;
+
+	vec3 normal = texture(NormalTexture, TextureCoordinate).xyz * vec3(2.0f) - vec3(1.0f);
 	normal = normalize(normal);
 
 	vec2 noiseScale = vec2(1280 / 4, 720 / 4); // RENDER(X/Y) / NOISESIZE(sqrt length) -- THIS NEEDS TO BE PASSED IN
 
-	vec3 rvec = texture(NoiseTexture, TextureCoordinate * noiseScale).xyz * 2.0 - 1.0;
+	vec3 rvec = texture(NoiseTexture, TextureCoordinate * noiseScale).xyz;
 	vec3 tangent = normalize(rvec - normal * dot(rvec, normal));
 	vec3 bitangent = cross(normal, tangent);
 	mat3 tbn = mat3(tangent, bitangent, normal);
@@ -50,26 +54,26 @@ void main()
 	float sampleDepth;
 
 	float occlusion = 0.0;
-	//for (int i = 0; i < KernelSize; i++)
-	//{
-		vec3 samplePosition = tbn * KernelSample[0];
+	for (int i = 0; i < KernelSize; i++)
+	{
+		vec3 samplePosition = tbn * KernelSample[i];
 		samplePosition = samplePosition * Radius + origin;
 
-		offset = vec4(samplePosition, 1.0);
-		//offset = Projection * offset;
+		//vec3 samplePosition = origin;
+
+		offset = Projection * vec4(samplePosition, 1.0);
 		offset.xy /= offset.w;
 		offset.xy = offset.xy * 0.5 + 0.5;
-		//offset.y = 1.0 - offset.y;
-		//offset.xy = -offset.xy;
 
-		sampleDepth = texture(DepthTexture, offset.xy).r;
+		sampleDepth = (2 * n) / (f + n - texture(DepthTexture, offset.xy).x * (f - n));
 
-		//float rangeCheck = abs(origin.z - sampleDepth) < Radius ? 1.0 : 0.0;
-		occlusion += (sampleDepth <= samplePosition.z ? 1.0 : 0.0); //* rangeCheck;
-	//}
+
+		float rangeCheck = abs(origin.z - sampleDepth) < Radius ? 1.0 : 0.0;
+		occlusion += (sampleDepth <= samplePosition.z ? 1.0 : 0.0) * rangeCheck;
+	}
 	occlusion = 1.0 - (occlusion / KernelSize);
-	color = vec4(offset.x, offset.y, 0, 1.0);
-	//color = vec4(occlusion, occlusion, occlusion, 1.0);
+	//color = vec4(offset.x, offset.y, 0, 1.0);
+	color = vec4(occlusion, occlusion, occlusion, 1.0);
 	//color = vec4(texture(NoiseTexture, TextureCoordinate).xyz, 1.0);
 	//color = vec4(normal, 1.0);
 	//color = vec4(origin, 1.0);

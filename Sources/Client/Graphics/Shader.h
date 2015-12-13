@@ -35,8 +35,8 @@ namespace Graphics
 
 	protected:
 		Shader() = delete;
-		Shader(std::string vertexShader, std::string fragmentShader);
-		Shader(const char* vertexShader, const char* fragmentShader);
+		Shader(std::string vertexSource, std::string fragmentSource);
+		Shader(const char* vertexSource, const char* fragmentSource);
 	public:
 		~Shader();
 	};

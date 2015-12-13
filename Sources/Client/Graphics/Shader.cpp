@@ -42,11 +42,26 @@ std::string Shader::GetCompileLog(ShaderType type)
 		return std::string("The shader reported no errors or warnings.");
 }
 
-Shader::Shader(std::string vertexShader, std::string fragmentShader)
-	: Shader::Shader(vertexShader.c_str(), fragmentShader.c_str()) {}
+Shader::Shader(std::string vertexSource, std::string fragmentSource)
+	: Shader::Shader(vertexSource.c_str(), fragmentSource.c_str()) {}
 
-Shader::Shader(const char* vertexShader, const char* fragmentShader)
+Shader::Shader(const char* vertexSource, const char* fragmentSource)
 {
+	vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vertexSource, nullptr);
+	glCompileShader(vertexShader);
+
+	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fragmentSource, nullptr);
+}
+Shader::~Shader()
+{
+	glDetachShader(shaderProgram, vertexShader);
+	glDetachShader(shaderProgram, fragmentShader);
+
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+	glDeleteShader(shaderProgram);
 }
 
 

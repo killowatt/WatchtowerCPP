@@ -34,11 +34,11 @@ void VertexArray::RemoveIndexBuffer()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindVertexArray(0); 
 }
-std::vector<unsigned int> VertexArray::GetIndexBuffer()
+std::vector<unsigned int> VertexArray::GetIndexBuffer() const
 {
 	return std::vector<unsigned int>(indexBuffer);
 }
-std::size_t VertexArray::GetIndexBufferSize()
+std::size_t VertexArray::GetIndexBufferSize() const
 {
 	return indexBuffer.size();
 }

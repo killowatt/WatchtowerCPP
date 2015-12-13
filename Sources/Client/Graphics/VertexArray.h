@@ -17,8 +17,8 @@ namespace Graphics
 
 		void SetIndexBuffer(const std::vector<unsigned int>& data);
 		void RemoveIndexBuffer();
-		std::vector<unsigned int> GetIndexBuffer();
-		std::size_t GetIndexBufferSize();
+		std::vector<unsigned int> GetIndexBuffer() const;
+		std::size_t GetIndexBufferSize() const;
 
 		VertexArray& operator=(const VertexArray&) = delete;
 

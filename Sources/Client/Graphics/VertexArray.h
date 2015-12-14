@@ -15,6 +15,7 @@ namespace Graphics
 		void AttachBuffer(VertexBuffer& buffer, int index);
 		void RemoveBuffer(int index);
 
+		unsigned int GetVertexArrayObject() const;
 		void SetIndexBuffer(const std::vector<unsigned int>& data);
 		void RemoveIndexBuffer();
 		std::vector<unsigned int> GetIndexBuffer() const;

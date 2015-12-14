@@ -18,6 +18,11 @@ void VertexArray::RemoveBuffer(int index)
 	glBindVertexArray(0);
 }
 
+
+unsigned int VertexArray::GetVertexArrayObject() const
+{
+	return vertexArrayObject;
+}
 void VertexArray::SetIndexBuffer(const std::vector<unsigned int>& data)
 {
 	indexBuffer = data;
@@ -50,6 +55,7 @@ std::size_t VertexArray::GetIndexBufferSize() const
 VertexArray::VertexArray()
 {
 	glGenVertexArrays(1, &vertexArrayObject);
+	glGenBuffers(1, &indexBufferObject);
 }
 //VertexArray::VertexArray(const VertexArray& v)
 //{

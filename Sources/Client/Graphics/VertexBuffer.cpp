@@ -14,18 +14,14 @@ void VertexBuffer::SetBufferData(const std::vector<float>& data, int vertSize, M
 	memoryHint = hint;
 
 	GLenum usage; // TODO: find a better solution to this without polluting everything that includes VertexBuffer.h
-	switch (hint)
-	{
-	case MemoryHint::Stream:
+	if (hint == MemoryHint::Stream)
 		usage = GL_STREAM_DRAW;
-		break;
-	case MemoryHint::Static:
+	else if (hint == MemoryHint::Static)
 		usage = GL_STATIC_DRAW;
-		break;
-	case MemoryHint::Dynamic:
+	else if (hint == MemoryHint::Dynamic)
 		usage = GL_DYNAMIC_DRAW;
-		break;
-	}
+	else
+		return; // TODO: exception.
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
 	glBufferData(GL_ARRAY_BUFFER, bufferData.size() * sizeof(float), &bufferData[0], usage);

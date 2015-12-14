@@ -16,6 +16,7 @@ namespace Graphics
 	};
 	class Shader
 	{
+	protected:
 		unsigned int shaderProgram;
 		unsigned int vertexShader;
 		unsigned int fragmentShader;
@@ -27,16 +28,20 @@ namespace Graphics
 		glm::mat4 View;
 		glm::mat4 Projection;
 
-		bool GetCompileStatus(ShaderType type);
-		std::string GetCompileLog(ShaderType type);
+		unsigned int GetProgram() const;
+		unsigned int GetShader(ShaderType type) const;
 
-		virtual void Initialize() = 0;
+		bool GetCompileStatus(ShaderType type) const;
+		std::string GetCompileLog(ShaderType type) const;
+
+		virtual void Initialize() = 0; // TODO: should these be () const = 0;? probably?
 		virtual void Update() = 0;
 
 	protected:
 		Shader() = delete;
-		Shader(std::string vertexSource, std::string fragmentSource);
-		Shader(const char* vertexSource, const char* fragmentSource);
+		Shader(const std::string& vertexSource, const std::string& fragmentSource,
+			ShaderState state);
+		Shader(const char* vertexSource, const char* fragmentSource, ShaderState state);
 	public:
 		~Shader();
 	};

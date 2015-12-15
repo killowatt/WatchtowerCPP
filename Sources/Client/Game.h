@@ -30,7 +30,7 @@ public:
 	}
 	void Update()
 	{
-		Model = Model * glm::translate(glm::mat4(1.0), glm::vec3(0.01f, 0, 0));
+		//Model = Model * glm::translate(glm::mat4(1.0), glm::vec3(0.01f, 0, 0));
 		glUniformMatrix4fv(modelLocation, 1, false, &Model[0][0]);
 	}
 

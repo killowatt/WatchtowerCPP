@@ -9,7 +9,7 @@ namespace Graphics
 		Static,
 		Dynamic
 	};
-	class VertexBuffer
+	class VertexBuffer // TODO: mark final?
 	{
 		std::vector<float> bufferData;
 		unsigned int vertexBufferObject;

@@ -21,7 +21,7 @@ void VertexBuffer::SetBufferData(const std::vector<float>& data, int vertSize, M
 	else if (hint == MemoryHint::Dynamic)
 		usage = GL_DYNAMIC_DRAW;
 	else
-		return; // TODO: exception.
+		return; // TODO: exception or HANDLE IT?
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
 	glBufferData(GL_ARRAY_BUFFER, bufferData.size() * sizeof(float), &bufferData[0], usage);

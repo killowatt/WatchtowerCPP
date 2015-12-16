@@ -24,35 +24,48 @@ glm::mat4& Camera::GetView()
 	}
 	return view;
 }
-glm::mat4& Camera::GetProjection() // TODO: Make reference for speed?
+glm::mat4& Camera::GetProjection()
 {
 	if (!projectionCalculated)
 	{
 		if (mode == CameraMode::Perspective)
 			projection = glm::perspective(fieldOfView, aspectRatio.x / aspectRatio.y, zNear, zFar);
 		else if (mode == CameraMode::Ortho)
-			projection = glm::ortho(
-				orthoDimensions.Left, orthoDimensions.Right,
-				orthoDimensions.Bottom, orthoDimensions.Top);
-		
+		{
+			if (orthoDepthEnabled == false)
+				projection = glm::ortho(
+					orthoDimensions.Left, orthoDimensions.Right,
+					orthoDimensions.Bottom, orthoDimensions.Top);
+			else
+				projection = glm::ortho(
+					orthoDimensions.Left, orthoDimensions.Right,
+					orthoDimensions.Bottom, orthoDimensions.Top,
+					zNear, zFar);
+		}
 		projectionCalculated = true;
 	}
 	return projection; // TODO: if projection (or view) unmodified, error (if mode dont match)
 }
 
-CameraMode Camera::GetMode() { return mode; }
-glm::vec3 Camera::GetPosition() { return position; }
-glm::vec3 Camera::GetRotation() { return rotation; }
-glm::vec2 Camera::GetAspectRatio() { return aspectRatio; }
-Rectangle Camera::GetOrthoDimensions() { return orthoDimensions; }
-float Camera::GetFieldOfView() { return fieldOfView; }
-float Camera::GetZNear() { return zNear; }
-float Camera::GetZFar() { return zFar; }
+CameraMode Camera::GetMode() const { return mode; }
+glm::vec3 Camera::GetPosition() const { return position; }
+glm::vec3 Camera::GetRotation() const { return rotation; }
+glm::vec2 Camera::GetAspectRatio() const { return aspectRatio; }
+float Camera::GetFieldOfView() const { return fieldOfView; }
+float Camera::GetZNear() const { return zNear; }
+float Camera::GetZFar() const { return zFar; }
+bool Camera::GetOrthoDepthEnabled() const { return orthoDepthEnabled; }
+Rectangle Camera::GetOrthoDimensions() const { return orthoDimensions; }
 
 void Camera::Reset()
 {
 	viewCalculated = false;
 	projectionCalculated = false;
+}
+void Camera::Calculate()
+{
+	GetProjection();
+	GetView();
 }
 void Camera::SetMode(CameraMode value)
 {
@@ -64,27 +77,45 @@ void Camera::SetPosition(glm::vec3 value)
 	position = value;
 	viewCalculated = false;
 }
+void Camera::SetPositionX(float value)
+{
+	rotation.x = value;
+	viewCalculated = false;
+}
+void Camera::SetPositionY(float value)
+{
+	rotation.y = value;
+	viewCalculated = false;
+}
+void Camera::SetPositionZ(float value)
+{
+	rotation.z = value;
+	viewCalculated = false;
+}
 void Camera::SetRotation(glm::vec3 value)
 {
 	rotation = value;
+	viewCalculated = false;
+}
+void Camera::SetRotationX(float value)
+{
+	rotation.x = value;
+	viewCalculated = false;
+}
+void Camera::SetRotationY(float value)
+{
+	rotation.y = value;
+	viewCalculated = false;
+}
+void Camera::SetRotationZ(float value)
+{
+	rotation.z = value;
 	viewCalculated = false;
 }
 void Camera::SetAspectRatio(glm::vec2 value)
 {
 	aspectRatio = value;
 	projectionCalculated = false;
-}
-void Camera::SetOrthoDimensions(float left, float right, float top, float bottom)
-{
-	orthoDimensions = Rectangle(left, right, top, bottom);
-	if (mode == CameraMode::Ortho)
-		projectionCalculated = false;
-}
-void Camera::SetOrthoDimensions(Rectangle rectangle)
-{
-	orthoDimensions = rectangle;
-	if (mode == CameraMode::Ortho)
-		projectionCalculated = false;
 }
 void Camera::SetFieldOfView(float value)
 {
@@ -104,16 +135,36 @@ void Camera::SetZFar(float value)
 	if (mode == CameraMode::Perspective)
 		projectionCalculated = false;
 }
+void Camera::SetOrthoDepthEnabled(bool value)
+{
+	orthoDepthEnabled = value;
+	if (mode == CameraMode::Ortho)
+		projectionCalculated = false;
+}
+void Camera::SetOrthoDimensions(float left, float right, float top, float bottom)
+{
+	orthoDimensions = Rectangle(left, right, top, bottom);
+	if (mode == CameraMode::Ortho)
+		projectionCalculated = false;
+}
+void Camera::SetOrthoDimensions(Rectangle rectangle)
+{
+	orthoDimensions = rectangle;
+	if (mode == CameraMode::Ortho)
+		projectionCalculated = false;
+}
 
 Camera::Camera()
 {
+	mode = CameraMode::Perspective;
 	position = glm::vec3();
 	rotation = glm::vec3();
 	aspectRatio = glm::vec2(16, 9);
-	orthoDimensions = Rectangle(-128, 128, 128, -128);
 	fieldOfView = 90;
 	zNear = 0.5;
 	zFar = 8192;
+	orthoDepthEnabled = true;
+	orthoDimensions = Rectangle(-128, 128, 128, -128);
 	viewCalculated = false;
 	projectionCalculated = false;
 }

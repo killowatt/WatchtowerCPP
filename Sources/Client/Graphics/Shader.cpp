@@ -54,10 +54,13 @@ std::string Shader::GetCompileLog(ShaderType type) const
 	return std::string("The shader reported no errors or warnings.");
 }
 
-Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource, ShaderState state)
-	: Shader::Shader(vertexSource.c_str(), fragmentSource.c_str(), state) {} // TODO: are these c_str pointers actually safe even with references?
+Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource,
+	ShaderState state, Camera& camera)
+	: Shader::Shader(vertexSource.c_str(), fragmentSource.c_str(), state, camera) {} // TODO: are these c_str pointers actually safe even with references?
 
-Shader::Shader(const char* vertexSource, const char* fragmentSource, ShaderState state)
+Shader::Shader(const char* vertexSource, const char* fragmentSource,
+	ShaderState state, Camera& camera) 
+	: View(camera.GetView()), Projection(camera.GetProjection())
 {
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexSource, nullptr);

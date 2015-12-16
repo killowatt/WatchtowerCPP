@@ -31,19 +31,17 @@ public:
 	}
 	void Update()
 	{
-		//Model = Model * glm::translate(glm::mat4(1.0), glm::vec3(0.01f, 0, 0));
 		glUniformMatrix4fv(modelLocation, 1, false, &Model[0][0]);
 		glUniformMatrix4fv(viewLocation, 1, false, &View[0][0]);
+		glUniformMatrix4fv(projectionLocation, 1, false, &Projection[0][0]);
 	}
 
-	TestShader()
+	TestShader(Graphics::Camera& camera)
 		: Graphics::Shader(ReadFile("Test.v"), ReadFile("Test.f"),
-			Graphics::ShaderState::Static)
+			Graphics::ShaderState::Static, camera)
 	{
-		glm::mat4 m1 = glm::translate(glm::mat4(1.0), glm::vec3(640.0f, 360.0f, 0.0f));
-		Model = glm::scale(m1, glm::vec3(150 / 2, 150 / 2, 150.0f));
-		Projection = glm::ortho(0.0f, 1280.0f, 720.0f, 0.0f);
-		std::cout << "Help, I WAS INITIALIZED \n";
+		//glm::mat4 m1 = glm::translate(glm::mat4(1.0), glm::vec3(640.0f, 360.0f, 0.0f));
+		//Model = glm::scale(m1, glm::vec3(150 / 2, 150 / 2, 150.0f));
 	}
 };
 
@@ -57,6 +55,10 @@ public:
 	Graphics::VertexBuffer* cubevbo;
 	Graphics::VertexArray* cubevao;
 	Graphics::Camera camera;
+
+	float xxxTEST;
+	glm::mat4 projTEST;
+	glm::mat4 viewTEST;
 
 	void Initialize();
 	void Update();

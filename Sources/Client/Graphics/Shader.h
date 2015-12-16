@@ -1,6 +1,7 @@
 #pragma once
 #include <glm/mat4x4.hpp>
 #include <string>
+#include "Camera.h"
 
 namespace Graphics
 {
@@ -24,7 +25,7 @@ namespace Graphics
 	public:
 		ShaderState State;
 
-		glm::mat4& Model;
+		glm::mat4 Model;
 		glm::mat4& View;
 		glm::mat4& Projection;
 
@@ -40,8 +41,9 @@ namespace Graphics
 	protected:
 		Shader() = delete;
 		Shader(const std::string& vertexSource, const std::string& fragmentSource,
-			ShaderState state);
-		Shader(const char* vertexSource, const char* fragmentSource, ShaderState state);
+			ShaderState state, Camera& camera);
+		Shader(const char* vertexSource, const char* fragmentSource,
+			ShaderState state, Camera& camera);
 	public:
 		~Shader();
 	};

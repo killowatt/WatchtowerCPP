@@ -24,11 +24,14 @@ void Game::Initialize()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glClearColor(20.0f / 255, 20.0f / 255, 20.0f / 255, 1.0f);
 
+	camera = Graphics::Camera();
 
 	// temp
 	xyzizzle = new TestShader();
 	glUseProgram(xyzizzle->GetProgram());
 	xyzizzle->Initialize();
+	xyzizzle->Model = 
+
 	glUseProgram(0);
 	cubevbo = new Graphics::VertexBuffer();
 	cubevao = new Graphics::VertexArray();

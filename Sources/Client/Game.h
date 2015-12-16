@@ -10,6 +10,7 @@
 #include "Assets/TempShaderLoader.h"
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "Graphics/Camera.h"
 
 class TestShader : public Graphics::Shader
 {
@@ -32,6 +33,7 @@ public:
 	{
 		//Model = Model * glm::translate(glm::mat4(1.0), glm::vec3(0.01f, 0, 0));
 		glUniformMatrix4fv(modelLocation, 1, false, &Model[0][0]);
+		glUniformMatrix4fv(viewLocation, 1, false, &View[0][0]);
 	}
 
 	TestShader()
@@ -54,6 +56,7 @@ public:
 	TestShader* xyzizzle;
 	Graphics::VertexBuffer* cubevbo;
 	Graphics::VertexArray* cubevao;
+	Graphics::Camera camera;
 
 	void Initialize();
 	void Update();

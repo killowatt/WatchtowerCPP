@@ -9,6 +9,7 @@ Temp/
 # Misc Files
 *.sdf
 *.opensdf
+*.opendb
 
 # User-specific files
 *.suo

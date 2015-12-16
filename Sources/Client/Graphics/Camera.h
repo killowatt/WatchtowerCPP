@@ -1,5 +1,6 @@
 #pragma once
-#include <glm/gtc/matrix_transform.hpp>
+#include <glm/glm.hpp>
+#include "Rectangle.h"
 
 namespace Graphics
 {    
@@ -19,30 +20,34 @@ namespace Graphics
 		glm::vec3 position;
 		glm::vec3 rotation;
 		glm::vec2 aspectRatio;
-		glm::vec4 orthoSize;
+		Rectangle orthoDimensions;
 		float fieldOfView;
 		float zNear;
 		float zFar;
 
-		glm::mat4 GetView(); // TODO: consider performance gain for references vs potential concequences
-		glm::mat4 GetProjection();
+	public:
+		glm::mat4& GetView(); // TODO: consider performance gain for references vs potential concequences
+		glm::mat4& GetProjection();
+
 		CameraMode GetMode();
 		glm::vec3 GetPosition();
 		glm::vec3 GetRotation();
-		float GetFieldOfView();
 		glm::vec2 GetAspectRatio();
+		Rectangle GetOrthoDimensions();
+		float GetFieldOfView();
 		float GetZNear();
 		float GetZFar();
-		// get ORTHO SIZE
 		
+		void Reset();
 		void SetMode(CameraMode value);
 		void SetPosition(glm::vec3 value); 
 		void SetRotation(glm::vec3 value);
-		void SetAspectRatio(glm::vec3 value);
-		void SetOrthoSize(float left, float right, float bottom, float top);
-		float SetFieldOfView(float value);
-		float SetZNear(float value);
-		float SetZFar(float value);
+		void SetAspectRatio(glm::vec2 value);
+		void SetOrthoDimensions(float left, float right, float top, float bottom);
+		void SetOrthoDimensions(Rectangle rectangle);
+		void SetFieldOfView(float value);
+		void SetZNear(float value);
+		void SetZFar(float value);
 
 		Camera();
 	};

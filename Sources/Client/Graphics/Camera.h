@@ -11,53 +11,29 @@ namespace Graphics
 	};
 	class Camera // TODO: consider: this camera is for an fps game. do we care about quaternions?
 	{
-		glm::mat4 view;
-		glm::mat4 projection;
-		CameraMode mode;
-		bool viewCalculated;
-		bool projectionCalculated;
-
-		glm::vec3 position;
-		glm::vec3 rotation;
-		glm::vec2 aspectRatio;
-		float fieldOfView;
-		float zNear;
-		float zFar;
-		bool orthoDepthEnabled;
-		Rectangle orthoDimensions;
-
 	public:
-	    glm::mat4& GetView(); // TODO: consider somehow making these const? is it beneficial?
-		glm::mat4& GetProjection();
+		glm::mat4 View;
+		glm::mat4 Projection;
+		CameraMode Mode;
 
-		CameraMode GetMode() const;
-		glm::vec3 GetPosition() const;
-		glm::vec3 GetRotation() const;
+		glm::vec3 Position;
+		glm::vec2 Rotation;
+		glm::vec2 AspectRatio;
+		float FieldOfView;
+		float ZNear;
+		float ZFar;
+		bool OrthoDepthEnabled;
+		Rectangle OrthoDimensions;
+
 		glm::vec2 GetAspectRatio() const;
 		float GetFieldOfView() const;
 		float GetZNear() const;
 		float GetZFar() const;
+
 		bool GetOrthoDepthEnabled() const;
 		Rectangle GetOrthoDimensions() const;
 		
-		void Reset(); // TODO: potentially remove since we no longer use value return for view/pr. ALTHO WE DONT HAVE CONST REFERENCE
-		void Calculate();
-		void SetMode(CameraMode value);
-		void SetPosition(glm::vec3 value);
-		void SetPositionX(float value);
-		void SetPositionY(float value);
-		void SetPositionZ(float value);
-		void SetRotation(glm::vec3 value);
-		void SetRotationX(float value);
-		void SetRotationY(float value);
-		void SetRotationZ(float value);
-		void SetAspectRatio(glm::vec2 value);
-		void SetFieldOfView(float value);
-		void SetZNear(float value);
-		void SetZFar(float value);
-		void SetOrthoDepthEnabled(bool value);
-		void SetOrthoDimensions(float left, float right, float top, float bottom);
-		void SetOrthoDimensions(Rectangle rectangle);
+		void Update();
 
 		Camera();
 	};

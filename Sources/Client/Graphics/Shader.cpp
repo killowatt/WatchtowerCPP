@@ -60,7 +60,7 @@ Shader::Shader(const std::string& vertexSource, const std::string& fragmentSourc
 
 Shader::Shader(const char* vertexSource, const char* fragmentSource,
 	ShaderState state, Camera& camera) 
-	: View(camera.GetView()), Projection(camera.GetProjection())
+	: View(camera.View), Projection(camera.Projection)
 {
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexSource, nullptr);

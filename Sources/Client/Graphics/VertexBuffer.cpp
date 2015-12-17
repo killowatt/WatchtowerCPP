@@ -45,7 +45,7 @@ MemoryHint VertexBuffer::GetMemoryHint() const
 
 VertexBuffer& VertexBuffer::operator=(const VertexBuffer& v)
 {
-	VertexBuffer* buffer = new VertexBuffer();
+	VertexBuffer* buffer = new VertexBuffer(); // TODO: this seems like a terrible idea actually. does this ever get deleted? 
 	buffer->SetBufferData(v.bufferData, v.vertexSize, v.memoryHint);
 	return *buffer;
 }

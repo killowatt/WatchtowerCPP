@@ -5,19 +5,19 @@ using namespace Graphics;
 
 void Camera::Update()
 {
-	glm::vec3 direction = glm::vec3(
+	Direction = glm::vec3(
 		cos(Rotation.y) * sin(Rotation.x),
 		sin(Rotation.y),
 		cos(Rotation.y) * cos(Rotation.x));
 
-	glm::vec3 right = glm::vec3(
+	Right = glm::vec3(
 		sin(Rotation.x - 3.14f / 2.0f),
 		0,
 		cos(Rotation.x - 3.14f / 2.0f));
 
-	glm::vec3 up = glm::cross(right, direction);
+	Up = glm::cross(Right, Direction);
 
-	View = glm::lookAt(Position, Position + direction, up);
+	View = glm::lookAt(Position, Position + Direction, Up);
 
 	if (Mode == CameraMode::Perspective)
 		Projection = glm::perspective(FieldOfView, AspectRatio.x / AspectRatio.y, ZNear, ZFar);

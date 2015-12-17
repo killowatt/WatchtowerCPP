@@ -49,6 +49,7 @@ class Game
 {
 public:
 	GLFWwindow* Window;
+	bool Running;
 
 	// Temp tests
 	TestShader* xyzizzle;
@@ -56,15 +57,14 @@ public:
 	Graphics::VertexArray* cubevao;
 	Graphics::Camera camera;
 
-	float xxxTEST;
-	glm::mat4 projTEST;
-	glm::mat4 viewTEST;
+	float xTest;
+	double lastTime;
+	double currentTime;
+	float deltaTime;
 
 	void Initialize();
 	void Update();
 	void Render();
-
-	bool Running;
 
 	Game(GLFWwindow* window);
 };

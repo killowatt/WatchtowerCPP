@@ -18,20 +18,18 @@ namespace Graphics
 
 		glm::vec3 Position;
 		glm::vec2 Rotation;
+
+		glm::vec3 Direction;
+		glm::vec3 Right;
+		glm::vec3 Up;
+
 		glm::vec2 AspectRatio;
 		float FieldOfView;
 		float ZNear;
 		float ZFar;
+
 		bool OrthoDepthEnabled;
 		Rectangle OrthoDimensions;
-
-		glm::vec2 GetAspectRatio() const;
-		float GetFieldOfView() const;
-		float GetZNear() const;
-		float GetZFar() const;
-
-		bool GetOrthoDepthEnabled() const;
-		Rectangle GetOrthoDimensions() const;
 		
 		void Update();
 

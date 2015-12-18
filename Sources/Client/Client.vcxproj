@@ -83,6 +83,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Assets\TempShaderLoader.cpp" />
+    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
@@ -94,6 +96,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assets\TempShaderLoader.h" />
+    <ClInclude Include="Block.h" />
+    <ClInclude Include="Chunk.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Graphics\Camera.h" />

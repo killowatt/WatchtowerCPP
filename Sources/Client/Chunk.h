@@ -4,12 +4,10 @@
 #include "Graphics/VertexArray.h"
 #include "Graphics/VertexBuffer.h"
 
-
 class Chunk
 {
 public:
 	Block*** Blocks;
-
 	static const int CHUNK_WIDTH = 16;
 	static const int CHUNK_LENGTH = 16;
 	static const int CHUNK_HEIGHT = 128;

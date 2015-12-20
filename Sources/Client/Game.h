@@ -11,6 +11,8 @@
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Graphics/Camera.h"
+#include "Block.h"
+#include "Chunk.h"
 
 class TestShader : public Graphics::Shader
 {
@@ -53,7 +55,8 @@ public:
 
 	// Temp tests
 	TestShader* xyzizzle;
-	Graphics::VertexBuffer* cubevbo;
+	Graphics::VertexBuffer* cubevboverts;
+	Graphics::VertexBuffer* cubevbonorms;
 	Graphics::VertexArray* cubevao;
 	Graphics::Camera camera;
 

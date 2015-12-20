@@ -62,6 +62,9 @@
       <AdditionalDependencies>opengl32.lib;Debug/GLFW/glfw3.lib;Debug/GLEW/glew32sd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy  /e /d /y $(SolutionDir)Sources\Content $(OutDir)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -80,6 +83,9 @@
       <AdditionalDependencies>opengl32.lib;Release/GLFW/glfw3.lib;Release/GLEW/glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy  /e /d /y $(SolutionDir)Sources\Content $(OutDir)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Assets\TempShaderLoader.cpp" />

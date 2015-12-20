@@ -6,20 +6,6 @@
 
 void Game::Update()
 {
-}
-void Game::Render()
-{
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glBindVertexArray(cubevao->GetVertexArrayObject());
-	glUseProgram(xyzizzle->GetProgram());
-
-	//xxxTEST += 0.05f;
-	//camera.Position = glm::vec3(3 * sin(xxxTEST), 1, 3 * cos(xxxTEST));
-	//camera.Rotation.x = 3.14159f + xxxTEST;
-	//camera.Rotation.y = -3.14159f / 9;
-	//camera.Update();
-
 	currentTime = glfwGetTime();
 	deltaTime = float(currentTime - lastTime);
 	lastTime = currentTime;
@@ -41,7 +27,7 @@ void Game::Render()
 		camera.Position += camera.Direction * deltaTime * speed;
 
 	// Move backward
-	if (glfwGetKey(Window, GLFW_KEY_S) == GLFW_PRESS) 
+	if (glfwGetKey(Window, GLFW_KEY_S) == GLFW_PRESS)
 		camera.Position -= camera.Direction * deltaTime * speed;
 
 	// Strafe right
@@ -52,19 +38,38 @@ void Game::Render()
 	if (glfwGetKey(Window, GLFW_KEY_A) == GLFW_PRESS)
 		camera.Position -= camera.Right * deltaTime * speed;
 
+	// Go up
+	if (glfwGetKey(Window, GLFW_KEY_SPACE) == GLFW_PRESS)
+		camera.Position.y += deltaTime * speed;
+
+	// Go down
+	if (glfwGetKey(Window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+		camera.Position.y -= deltaTime * speed;
+
 	if (glfwGetKey(Window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		Running = false;
 
 
 	camera.Update();
+}
+void Game::Render()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glBindVertexArray(cubevao->GetVertexArrayObject());
+
+	glUseProgram(xyzizzle->GetProgram());
 	xyzizzle->Update();
 
 	glDrawElements(GL_TRIANGLES, cubevao->GetIndexBufferSize(), GL_UNSIGNED_INT, nullptr);
 }
 void Game::Initialize()
 {
+	glEnable(GL_DEPTH_TEST);
+
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	glClearColor(20.0f / 255, 20.0f / 255, 20.0f / 255, 1.0f);
 
 	camera = Graphics::Camera();
@@ -79,12 +84,17 @@ void Game::Initialize()
 	xyzizzle->Initialize();
 
 	glUseProgram(0);
-	cubevbo = new Graphics::VertexBuffer();
+	cubevboverts = new Graphics::VertexBuffer();
+	cubevbonorms = new Graphics::VertexBuffer();
 	cubevao = new Graphics::VertexArray();
+	
+	BlockData testBlock = Block::GenerateBlockData(true, true, true, true, true, true);
 
-	cubevbo->SetBufferData({ -1, 1, 1, 1, -1, -1, 1, -1 }, 2, Graphics::MemoryHint::Static);
-	cubevao->AttachBuffer(*cubevbo, 0);
-	cubevao->SetIndexBuffer({ 0, 1, 2, 2, 1, 3 });
+	cubevboverts->SetBufferData(testBlock.Vertices, 3, Graphics::MemoryHint::Static);
+	cubevbonorms->SetBufferData(testBlock.Normals, 3, Graphics::MemoryHint::Static);
+	cubevao->AttachBuffer(*cubevboverts, 0);
+	cubevao->AttachBuffer(*cubevbonorms, 1);
+	cubevao->SetIndexBuffer(testBlock.Indices);
 
 
 	std::cout << "INITIALIZED!!!!!!!!!! \n";

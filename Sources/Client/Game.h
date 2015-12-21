@@ -55,9 +55,10 @@ public:
 
 	// Temp tests
 	TestShader* xyzizzle;
-	Graphics::VertexBuffer* cubevboverts;
-	Graphics::VertexBuffer* cubevbonorms;
-	Graphics::VertexArray* cubevao;
+	//Graphics::VertexBuffer* cubevboverts;
+	//Graphics::VertexBuffer* cubevbonorms;
+	//Graphics::VertexArray* cubevao;
+	Chunk* chunk;
 	Graphics::Camera camera;
 
 	float xTest;

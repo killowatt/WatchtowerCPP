@@ -11,7 +11,7 @@ namespace Graphics
 	};
 	class VertexBuffer // TODO: mark final?
 	{
-		std::vector<float> bufferData;
+		std::vector<float> bufferData; // TODO: we should not hold a copy of this data!!
 		unsigned int vertexBufferObject;
 		int vertexSize;
 		MemoryHint memoryHint;

@@ -11,7 +11,7 @@ uniform mat4 Model;
 
 void main()
 {
-    vec3 Normal = mat3(Model * View) * normal;
-    color = Normal;
+    //vec3 Normal = mat3(Model * View) * normal;
+    color = normal;
     gl_Position = Projection * View * Model * vec4(vertex, 1.0);
 }

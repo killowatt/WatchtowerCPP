@@ -28,7 +28,7 @@ void VertexBuffer::SetBufferData(const std::vector<float>& data, int vertSize, M
 }
 std::vector<float> VertexBuffer::GetBufferData() const
 {
-	return std::vector<float>(bufferData); // TODO: move/copy semantics?
+	return std::vector<float>(bufferData); // TODO: move/copy semantics? see header for better todo i think
 }
 std::size_t VertexBuffer::GetBufferSize() const
 {

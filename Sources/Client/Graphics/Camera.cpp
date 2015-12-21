@@ -41,7 +41,7 @@ Camera::Camera()
 	Position = glm::vec3();
 	Rotation = glm::vec2();
 	AspectRatio = glm::vec2(16, 9);
-	FieldOfView = 90;
+	FieldOfView = 1.5708f;
 	ZNear = 0.1f;
 	ZFar = 8192;
 	OrthoDepthEnabled = true;

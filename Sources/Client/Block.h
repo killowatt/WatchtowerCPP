@@ -17,9 +17,9 @@ struct Block
 	bool Active;
 	glm::vec3 Color;
 
-	static BlockData GenerateBlockData(bool positiveX, bool negativeX,
-		bool positiveY, bool negativeY,
-		bool positiveZ, bool negativeZ);
+	static BlockData GenerateBlockData(bool xPositive, bool xNegative,
+		bool yPositive, bool yNegative,
+		bool zPositive, bool zNegative, glm::ivec3& position);
 
 	Block(bool active = true, glm::vec3 color = glm::vec3());
 };

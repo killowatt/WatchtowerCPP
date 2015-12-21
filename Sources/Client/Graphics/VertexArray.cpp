@@ -23,14 +23,25 @@ unsigned int VertexArray::GetVertexArrayObject() const
 {
 	return vertexArrayObject;
 }
-void VertexArray::SetIndexBuffer(const std::vector<unsigned int>& data)
+void VertexArray::SetIndexBuffer(const std::vector<unsigned int>& data, MemoryHint hint)
 {
 	indexBuffer = data;
+	hint = indexBufferMemoryHint;
+
+	GLenum usage; // TODO: find a better solution to this without polluting everything that includes VertexBuffer.h
+	if (hint == MemoryHint::Stream)
+		usage = GL_STREAM_DRAW;
+	else if (hint == MemoryHint::Static)
+		usage = GL_STATIC_DRAW;
+	else if (hint == MemoryHint::Dynamic)
+		usage = GL_DYNAMIC_DRAW;
+	else
+		return; // TODO: exception or HANDLE IT?
 
 	glBindVertexArray(vertexArrayObject);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, data.size() * sizeof(unsigned int),
-		&indexBuffer[0], GL_STATIC_DRAW); // TODO: evaluate potential use of even allowing a usage hint option.
+		&indexBuffer[0], usage); 
 	glBindVertexArray(0);
 }
 void VertexArray::RemoveIndexBuffer()
@@ -46,6 +57,10 @@ std::vector<unsigned int> VertexArray::GetIndexBuffer() const
 std::size_t VertexArray::GetIndexBufferSize() const
 {
 	return indexBuffer.size();
+}
+MemoryHint VertexArray::GetIndexBufferMemoryHint() const
+{
+	return indexBufferMemoryHint;
 }
 
 //VertexArray& VertexArray::operator=(const VertexArray& v)

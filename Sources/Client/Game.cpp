@@ -10,10 +10,10 @@ void Game::Update()
 	deltaTime = float(currentTime - lastTime);
 	lastTime = currentTime;
 
-	float speed = 3.0f;
+	float speed = 6.0f;
 	float mouseSpeed = 0.05f;
 
-	double xpos;
+	double xpos; // TODO: when we port this mouse code actually make it nice
 	double ypos;
 	glfwGetCursorPos(Window, &xpos, &ypos);
 	glfwSetCursorPos(Window, 1280 / 2, 720 / 2);
@@ -56,12 +56,15 @@ void Game::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glBindVertexArray(cubevao->GetVertexArrayObject());
+	//glBindVertexArray(cubevao->GetVertexArrayObject());
+	glBindVertexArray(chunk->vertexArray.GetVertexArrayObject());
 
 	glUseProgram(xyzizzle->GetProgram());
 	xyzizzle->Update();
 
-	glDrawElements(GL_TRIANGLES, cubevao->GetIndexBufferSize(), GL_UNSIGNED_INT, nullptr);
+	//glDrawElements(GL_TRIANGLES, cubevao->GetIndexBufferSize(), GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_TRIANGLES, chunk->vertexArray.GetIndexBufferSize(),
+		GL_UNSIGNED_INT, nullptr);
 }
 void Game::Initialize()
 {
@@ -84,18 +87,20 @@ void Game::Initialize()
 	xyzizzle->Initialize();
 
 	glUseProgram(0);
-	cubevboverts = new Graphics::VertexBuffer();
-	cubevbonorms = new Graphics::VertexBuffer();
-	cubevao = new Graphics::VertexArray();
+	//cubevboverts = new Graphics::VertexBuffer();
+	//cubevbonorms = new Graphics::VertexBuffer();
+	//cubevao = new Graphics::VertexArray();
 	
-	BlockData testBlock = Block::GenerateBlockData(true, true, true, true, true, true);
+	//BlockData testBlock = Block::GenerateBlockData(true, true, true, true, true, true);
 
-	cubevboverts->SetBufferData(testBlock.Vertices, 3, Graphics::MemoryHint::Static);
-	cubevbonorms->SetBufferData(testBlock.Normals, 3, Graphics::MemoryHint::Static);
-	cubevao->AttachBuffer(*cubevboverts, 0);
-	cubevao->AttachBuffer(*cubevbonorms, 1);
-	cubevao->SetIndexBuffer(testBlock.Indices);
+	//cubevboverts->SetBufferData(testBlock.Vertices, 3, Graphics::MemoryHint::Static);
+	//cubevbonorms->SetBufferData(testBlock.Normals, 3, Graphics::MemoryHint::Static);
+	//cubevao->AttachBuffer(*cubevboverts, 0);
+	//cubevao->AttachBuffer(*cubevbonorms, 1);
+	//cubevao->SetIndexBuffer(testBlock.Indices, Graphics::MemoryHint::Static);
 
+	chunk = new Chunk();
+	chunk->Update();
 
 	std::cout << "INITIALIZED!!!!!!!!!! \n";
 	std::cout << "GL Error State: " << glGetError() << std::endl;

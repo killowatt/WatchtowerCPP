@@ -1,14 +1,14 @@
 #include "Block.h"
 #include <set>
 
-void BlockData::AppendVertex(float x, float y, float z)
+inline void BlockData::AppendVertex(float x, float y, float z)
 {
 	Vertices.reserve(Vertices.size() + 3);
     Vertices.push_back(x);
 	Vertices.push_back(y);
 	Vertices.push_back(z);
 }
-void BlockData::AppendFaceNormal(float x, float y, float z)
+inline void BlockData::AppendFaceNormal(float x, float y, float z)
 {
 	Normals.reserve(Normals.size() + 12);
 	for (int i = 0; i < 4; i++)
@@ -18,7 +18,7 @@ void BlockData::AppendFaceNormal(float x, float y, float z)
 		Normals.push_back(z);
 	}
 }
-void BlockData::AppendIndices()
+inline void BlockData::AppendIndices()
 {
 	Indices.reserve(Indices.size() + 6);
 	Indices.push_back(Vertices.size() / 3 - 4);

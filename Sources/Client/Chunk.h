@@ -19,6 +19,7 @@ public:
 
 public:
 	void Update();
+	void ExperimentalUpdate();
 
 	Chunk();
 	~Chunk();

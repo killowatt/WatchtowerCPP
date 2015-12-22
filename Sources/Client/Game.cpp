@@ -100,7 +100,7 @@ void Game::Initialize()
 	//cubevao->SetIndexBuffer(testBlock.Indices, Graphics::MemoryHint::Static);
 
 	chunk = new Chunk();
-	chunk->Update();
+	chunk->ExperimentalUpdate();
 
 	std::cout << "INITIALIZED!!!!!!!!!! \n";
 	std::cout << "GL Error State: " << glGetError() << std::endl;

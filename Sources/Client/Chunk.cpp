@@ -43,21 +43,26 @@ void Chunk::Update()
 
 				bool zNegative = true;
 				if (z > 0)
-				{
 					zNegative = !Blocks[x][y][z - 1].Active;
-				}
 
 				BlockData block = Block::GenerateBlockData(
 					xPositive, xNegative,
 					yPositive, yNegative,
 					zPositive, zNegative, glm::ivec3(x, y, z));
 
+				//vertices.insert(vertices.end(),
+				//	make_move_iterator(block.Vertices.begin()),
+				//	make_move_iterator(block.Vertices.end()));
+				//normals.insert(normals.end(),
+				//	make_move_iterator(block.Normals.begin()),
+				//	make_move_iterator(block.Normals.end()));
+
 				vertices.insert(vertices.end(),
-					make_move_iterator(block.Vertices.begin()),
-					make_move_iterator(block.Vertices.end()));
+					block.Vertices.begin(),
+					block.Vertices.end());
 				normals.insert(normals.end(),
-					make_move_iterator(block.Normals.begin()),
-					make_move_iterator(block.Normals.end()));
+					block.Normals.begin(),
+					block.Normals.end());
 
 				for (int i = 0; i < block.Indices.size(); i++)
 				{

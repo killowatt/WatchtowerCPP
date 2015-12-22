@@ -8,9 +8,9 @@ struct BlockData
 	std::vector<float> Normals;
 	std::vector<unsigned int> Indices;
 
-	void AppendVertex(float x, float y, float z);
-	void AppendFaceNormal(float x, float y, float z);
-	void AppendIndices();
+	inline void AppendVertex(float x, float y, float z);
+	inline void AppendFaceNormal(float x, float y, float z);
+	inline void AppendIndices();
 };
 struct Block
 {

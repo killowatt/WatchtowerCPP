@@ -57,13 +57,13 @@ void Game::Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//glBindVertexArray(cubevao->GetVertexArrayObject());
-	glBindVertexArray(chunk->vertexArray.GetVertexArrayObject());
+	glBindVertexArray(chunk->VertexArray.GetVertexArrayObject());
 
 	glUseProgram(xyzizzle->GetProgram());
 	xyzizzle->Update();
 
 	//glDrawElements(GL_TRIANGLES, cubevao->GetIndexBufferSize(), GL_UNSIGNED_INT, nullptr);
-	glDrawElements(GL_TRIANGLES, chunk->vertexArray.GetIndexBufferSize(),
+	glDrawElements(GL_TRIANGLES, chunk->VertexArray.GetIndexBufferSize(),
 		GL_UNSIGNED_INT, nullptr);
 }
 void Game::Initialize()
@@ -100,7 +100,7 @@ void Game::Initialize()
 	//cubevao->SetIndexBuffer(testBlock.Indices, Graphics::MemoryHint::Static);
 
 	chunk = new Chunk();
-	chunk->ExperimentalUpdate();
+	chunk->Update();
 
 	std::cout << "INITIALIZED!!!!!!!!!! \n";
 	std::cout << "GL Error State: " << glGetError() << std::endl;

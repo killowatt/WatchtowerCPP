@@ -111,7 +111,7 @@ void Game::Initialize()
 		for (int y = 0; y < 16; y++)
 		{
 			chunkTranslationTemp[x][y] =
-				glm::translate(glm::mat4(1.0f), glm::vec3(x * -16, 0, y * 16));
+				glm::translate(glm::mat4(), glm::vec3(x * 16, 0, y * 16));
 		}
 	}
 
@@ -140,11 +140,11 @@ void Game::Initialize()
 			{
 				for (int by = 0; by < 16; by++)
 				{
-					for (int bz = 0; bz < 
+					for (int bz = 0; bz <
 						r[(width * (bx + (cx * 16))) + (by + (cy * 16))] / 1; bz++)
 					{
-						chunks[cx][cy].Blocks[bx][by][bz].Active = true;
-						chunks[cx][cy].Blocks[bx][by][bz].Color =
+						chunks[cx][cy].Blocks[bx][bz][by].Active = true;
+						chunks[cx][cy].Blocks[bx][bz][by].Color =
 							glm::vec3((bz / 127.0f), 40.0f / 255.0f, 94.0f / 255.0f);
 					}
 				}

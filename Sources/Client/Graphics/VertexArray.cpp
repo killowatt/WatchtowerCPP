@@ -26,7 +26,7 @@ unsigned int VertexArray::GetVertexArrayObject() const
 void VertexArray::SetIndexBuffer(const std::vector<unsigned int>& data, MemoryHint hint)
 {
 	indexBuffer = data;
-	hint = indexBufferMemoryHint;
+	indexBufferMemoryHint = hint;
 
 	GLenum usage; // TODO: find a better solution to this without polluting everything that includes VertexBuffer.h
 	if (hint == MemoryHint::Stream)

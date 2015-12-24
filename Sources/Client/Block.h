@@ -6,5 +6,5 @@ struct Block
 	bool Active;
 	glm::vec3 Color;
 
-	Block(bool active = true, glm::vec3 color = glm::vec3());
+	Block(bool active = false, glm::vec3 color = glm::vec3());
 };

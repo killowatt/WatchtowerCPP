@@ -55,9 +55,6 @@ public:
 
 	// Temp tests
 	TestShader* xyzizzle;
-	//Graphics::VertexBuffer* cubevboverts;
-	//Graphics::VertexBuffer* cubevbonorms;
-	//Graphics::VertexArray* cubevao;
 	Chunk* chunk;
 	Graphics::Camera camera;
 
@@ -65,6 +62,9 @@ public:
 	double lastTime;
 	double currentTime;
 	float deltaTime;
+
+	Chunk* chunks[16];
+	glm::mat4 chunkTranslationTemp[16][16];
 
 	void Initialize();
 	void Update();

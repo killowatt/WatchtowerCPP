@@ -9,7 +9,7 @@ inline void AppendVertex(std::vector<float>& vector, float x, float y, float z, 
 	vector.push_back(y + position.y + 0.5f);
 	vector.push_back(z + position.z + 0.5f);
 }
-inline void AppendFaceNormal(std::vector<float>& vector, float x, float y, float z)
+inline void AppendFaceValue(std::vector<float>& vector, float x, float y, float z)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -29,19 +29,14 @@ inline void AppendIndices(std::vector<unsigned int>& indices, std::vector<float>
 }
 void GenerateBlockData(
 	std::vector<float>& vertices,
+	std::vector<float>& colors,
 	std::vector<float>& normals,
 	std::vector<unsigned int>& indices,
 	bool xPositive, bool xNegative,
 	bool yPositive, bool yNegative,
 	bool zPositive, bool zNegative,
-	glm::ivec3& position)
+	glm::ivec3& position, glm::vec3& color)
 {
-	//int sidesTotal = xPositive + xNegative + yPositive + yNegative + zPositive + zNegative;
-	//int reserve = sidesTotal * (12);
-	//vertices.reserve(vertices.size() + reserve);
-	//normals.reserve(normals.size() + reserve);
-	//indices.reserve(indices.size() + sidesTotal * 6);
-
 	if (xPositive)
 	{
 		AppendVertex(vertices, 0.5f, -0.5f, -0.5f, position); // We need 24 verts otherwise normals would be incorrect.
@@ -49,7 +44,8 @@ void GenerateBlockData(
 		AppendVertex(vertices, 0.5f, 0.5f, 0.5f, position);
 		AppendVertex(vertices, 0.5f, -0.5f, 0.5f, position);
 
-		AppendFaceNormal(normals, 1, 0, 0);
+		AppendFaceValue(colors, color.x, color.y, color.z);
+		AppendFaceValue(normals, 1, 0, 0);
 		AppendIndices(indices, vertices);
 	}
 	if (xNegative)
@@ -59,7 +55,8 @@ void GenerateBlockData(
 		AppendVertex(vertices, -0.5f, 0.5f, 0.5f, position);
 		AppendVertex(vertices, -0.5f, 0.5f, -0.5f, position);
 
-		AppendFaceNormal(normals, -1, 0, 0);
+		AppendFaceValue(colors, color.x, color.y, color.z);
+		AppendFaceValue(normals, -1, 0, 0);
 		AppendIndices(indices, vertices);
 	}
 	if (yPositive)
@@ -69,7 +66,8 @@ void GenerateBlockData(
 		AppendVertex(vertices, 0.5f, 0.5f, 0.5f, position);
 		AppendVertex(vertices, 0.5f, 0.5f, -0.5f, position);
 
-		AppendFaceNormal(normals, 0, 1, 0);
+		AppendFaceValue(colors, color.x, color.y, color.z);
+		AppendFaceValue(normals, 0, 1, 0);
 		AppendIndices(indices, vertices);
 	}
 	if (yNegative)
@@ -79,7 +77,8 @@ void GenerateBlockData(
 		AppendVertex(vertices, 0.5f, -0.5f, 0.5f, position);
 		AppendVertex(vertices, -0.5f, -0.5f, 0.5f, position);
 
-		AppendFaceNormal(normals, 0, -1, 0);
+		AppendFaceValue(colors, color.x, color.y, color.z);
+		AppendFaceValue(normals, 0, -1, 0);
 		AppendIndices(indices, vertices);
 	}
 	if (zPositive)
@@ -89,7 +88,8 @@ void GenerateBlockData(
 		AppendVertex(vertices, 0.5f, 0.5f, 0.5f, position);
 		AppendVertex(vertices, -0.5f, 0.5f, 0.5f, position);
 
-		AppendFaceNormal(normals, 0, 0, 1);
+		AppendFaceValue(colors, color.x, color.y, color.z);
+		AppendFaceValue(normals, 0, 0, 1);
 		AppendIndices(indices, vertices);
 	}
 	if (zNegative)
@@ -99,13 +99,15 @@ void GenerateBlockData(
 		AppendVertex(vertices, 0.5f, 0.5f, -0.5f, position);
 		AppendVertex(vertices, 0.5f, -0.5f, -0.5f, position);
 
-		AppendFaceNormal(normals, 0, 0, -1);
+		AppendFaceValue(colors, color.x, color.y, color.z);
+		AppendFaceValue(normals, 0, 0, -1);
 		AppendIndices(indices, vertices);
 	}
 }
 void Chunk::Update() // TODO: make this more ~elegant~
 {
 	std::vector<float> vertices;
+	std::vector<float> colors;
 	std::vector<float> normals;
 	std::vector<unsigned int> indices;
 
@@ -161,6 +163,7 @@ void Chunk::Update() // TODO: make this more ~elegant~
 	}
 
 	vertices.reserve(vertexBufferSize);
+	colors.reserve(vertexBufferSize);
 	normals.reserve(vertexBufferSize);
 	indices.reserve(indexBufferSize);
 
@@ -200,19 +203,22 @@ void Chunk::Update() // TODO: make this more ~elegant~
 				if (z > 0)
 					zNegative = !Blocks[x][y][z - 1].Active;
 
-				GenerateBlockData(vertices, normals, indices,
+				GenerateBlockData(vertices, colors, normals, indices,
 					xPositive, xNegative,
 					yPositive, yNegative,
-					zPositive, zNegative, glm::ivec3(x, y, z));
+					zPositive, zNegative,
+					glm::ivec3(x, y, z), Blocks[x][y][z].Color);
 			}
 		}
 	}
 
 	Vertices.SetBufferData(vertices, 3, Graphics::MemoryHint::Dynamic);
+	Colors.SetBufferData(colors, 3, Graphics::MemoryHint::Dynamic);
 	Normals.SetBufferData(normals, 3, Graphics::MemoryHint::Dynamic);
 	VertexArray.SetIndexBuffer(indices, Graphics::MemoryHint::Dynamic);
 	VertexArray.AttachBuffer(Vertices, 0);
-	VertexArray.AttachBuffer(Normals, 1);
+	VertexArray.AttachBuffer(Colors, 1);
+	VertexArray.AttachBuffer(Normals, 2);
 }
 
 Chunk::Chunk()

@@ -23,7 +23,7 @@ namespace Graphics
 		std::size_t GetIndexBufferSize() const;
 		MemoryHint GetIndexBufferMemoryHint() const;
 
-		VertexArray& operator=(const VertexArray&) = delete;
+		//VertexArray& operator=(const VertexArray&) = delete;
 
 		VertexArray();
 		VertexArray(const VertexArray&) = delete;

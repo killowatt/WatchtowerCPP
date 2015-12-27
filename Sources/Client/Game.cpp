@@ -69,12 +69,12 @@ void Game::Render()
 	{
 		for (int y = 0; y < 16; y++)
 		{
-			glBindVertexArray(chunks[x][y].VertexArray.GetVertexArrayObject());
+			glBindVertexArray(world->GetChunk(x, y).VertexArray.GetVertexArrayObject());
 
-			xyzizzle->Model = chunkTranslationTemp[x][y];
+			xyzizzle->Model = world->GetChunk(x, y).Transform;
 			xyzizzle->Update();
 
-			glDrawElements(GL_TRIANGLES, chunks[x][y].VertexArray.GetIndexBufferSize(),
+			glDrawElements(GL_TRIANGLES, world->GetChunk(x, y).VertexArray.GetIndexBufferSize(),
 				GL_UNSIGNED_INT, nullptr);
 		}
 	}
@@ -101,19 +101,6 @@ void Game::Initialize()
 
 	glUseProgram(0);
 
-	// We initialize our test world
-	for (int i = 0; i < 16; i++)
-	{
-		chunks[i] = new Chunk[16];
-	}
-	for (int x = 0; x < 16; x++)
-	{
-		for (int y = 0; y < 16; y++)
-		{
-			chunkTranslationTemp[x][y] =
-				glm::translate(glm::mat4(), glm::vec3(x * 16, 0, y * 16));
-		}
-	}
 
 	// Here we load in a test heightmap just for kicks okay
 	std::vector<unsigned char> image;
@@ -132,6 +119,7 @@ void Game::Initialize()
 		}
 	}
 
+	world = new World(16, 16);
 	for (int cx = 0; cx < 16; cx++)
 	{
 		for (int cy = 0; cy < 16; cy++)
@@ -143,26 +131,15 @@ void Game::Initialize()
 					for (int bz = 0; bz <
 						r[(width * (bx + (cx * 16))) + (by + (cy * 16))] / 1; bz++)
 					{
-						chunks[cx][cy].Blocks[bx][bz][by].Active = true;
-						chunks[cx][cy].Blocks[bx][bz][by].Color =
+						world->GetChunk(cx, cy).Blocks[bx][bz][by].Active = true;
+						world->GetChunk(cx, cy).Blocks[bx][bz][by].Color =
 							glm::vec3((bz / 127.0f), 40.0f / 255.0f, 94.0f / 255.0f);
 					}
 				}
 			}
 		}
 	}
-
-	for (int x = 0; x < 16; x++)
-	{
-		for (int y = 0; y < 16; y++)
-		{
-			chunks[x][y].Update();
-		}
-	}
-
-
-//	chunk = new Chunk();
-//	chunk->Update();
+	world->Update();
 
 	std::cout << "INITIALIZED!!!!!!!!!! \n";
 	std::cout << "GL Error State: " << glGetError() << std::endl;

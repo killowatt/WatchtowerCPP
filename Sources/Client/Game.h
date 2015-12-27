@@ -13,6 +13,7 @@
 #include "Graphics/Camera.h"
 #include "Block.h"
 #include "Chunk.h"
+#include "World.h"
 
 class TestShader : public Graphics::Shader
 {
@@ -65,6 +66,8 @@ public:
 
 	Chunk* chunks[16];
 	glm::mat4 chunkTranslationTemp[16][16];
+
+	World* world;
 
 	void Initialize();
 	void Update();

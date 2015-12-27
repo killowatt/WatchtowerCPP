@@ -3,10 +3,19 @@
 
 Chunk& World::GetChunk(unsigned int x, unsigned int y)
 {
-	if (x > width || y > height)
+	if (x >= width || y >= height)
 		throw std::exception("out of bounds okay.."); // TODO: make proper error
 	return chunks[width * y + x];
 }
+unsigned int World::GetWidth()
+{
+	return width;
+}
+unsigned int World::GetHeight()
+{
+	return height;
+}
+
 void World::Update()
 {
 	for (int i = 0; i < width * height; i++)

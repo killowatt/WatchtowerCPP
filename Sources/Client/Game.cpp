@@ -4,6 +4,7 @@
 #include "Graphics/VertexBuffer.h"
 #include <vector>
 #include "Assets/lodepng.h"
+#include "enet/enet.h"
 
 void Game::Update()
 {
@@ -140,6 +141,89 @@ void Game::Initialize()
 		}
 	}
 	world->Update();
+
+
+	std::cout << "Size of chunk is " << sizeof(Chunk) << "\n";
+
+	// Network
+	if (enet_initialize() != 0)
+	{
+		std::cout << "Network failed to initialize.\n";
+		return;
+	}
+	std::cout << "Network initialized.\n";
+
+	std::cout << "Initializing client.. \n";
+	ENetHost* client;
+	client = enet_host_create(nullptr, 1, 2, 57600 / 8, 14400 / 8);
+
+	if (client == nullptr)
+	{
+		std::cout << "Failed to create client. \n";
+		return;
+	}
+
+	ENetAddress address;
+	ENetEvent event;
+	ENetPeer *peer;
+
+	std::cout << "Please enter the host address. \n";
+	std::string inputAddress;
+	std::getline(std::cin, inputAddress);
+
+	enet_address_set_host(&address, inputAddress.c_str());
+	address.port = 22737;
+
+	peer = enet_host_connect(client, &address, 2, 0);
+	if (peer == nullptr)
+		return;
+
+	if (enet_host_service(client, &event, 5000) > 0 &&
+		event.type == ENET_EVENT_TYPE_CONNECT)
+	{
+		std::cout << "Successfully connected to host. \n";
+	}
+	else
+	{
+		std::cout << "Failed to connect to host. \n";
+		enet_peer_reset(peer);
+		return;
+	}
+
+	// Receive chunks
+	bool receivingChunks = true;
+	while (receivingChunks)
+	{
+		while (enet_host_service(client, &event, 1000) > 0)
+		{
+			switch (event.type)
+			{
+			case ENET_EVENT_TYPE_CONNECT:
+				std::cout << "Connected to ";
+				std::cout << event.peer->address.host << ":"
+					<< event.peer->address.port << "\n";
+				break;
+			case ENET_EVENT_TYPE_RECEIVE:
+				std::cout << "Received a packet.\n";
+				std::cout << "Data Length: " << event.packet->dataLength << "\n";
+				std::cout << "Data: " << event.packet->data << "\n";
+				std::cout << "Peer: " << event.peer->data << "\n";
+				std::cout << "Channel: " << event.channelID << "\n";
+
+				enet_packet_destroy(event.packet);
+				break;
+			case ENET_EVENT_TYPE_DISCONNECT:
+				std::cout << "Peer " << event.peer->data << " disconnected. \n";
+				break;
+			default:
+				std::cout << "An unknown event was triggered.";
+				break;
+			}
+		}
+	}
+
+	enet_deinitialize();
+	// End Network
 
 	std::cout << "INITIALIZED!!!!!!!!!! \n";
 	std::cout << "GL Error State: " << glGetError() << std::endl;

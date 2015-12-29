@@ -24,7 +24,7 @@ void Game::Update()
 	camera.Rotation.x += mouseSpeed * deltaTime * float(1280 / 2 - xpos);
 	camera.Rotation.y += mouseSpeed * deltaTime * float(720 / 2 - ypos);
 
-	
+
 	if (glfwGetKey(Window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 		speed = 12.0f;
 	else
@@ -57,6 +57,11 @@ void Game::Update()
 	if (glfwGetKey(Window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		Running = false;
 
+	if (glfwGetKey(Window, GLFW_KEY_H) == GLFW_PRESS)
+	{		
+		camera.Rotation.x = 0;
+		camera.Rotation.y = 0;
+	}
 
 	camera.Update();
 }
@@ -102,48 +107,47 @@ void Game::Initialize()
 
 	glUseProgram(0);
 
-
 	// Here we load in a test heightmap just for kicks okay
-	std::vector<unsigned char> image;
-	unsigned int width, height;
-	lodepng::decode(image, width, height, "terrain_128_height.png");
+	//std::vector<unsigned char> image;
+	//unsigned int width, height;
+	//lodepng::decode(image, width, height, "terrain_128_height.png");
 
-	unsigned char r[256 * 256];
-	int stride = 1024; // 256 pixels wide * 4 channels
-	int count = 0;
+	//unsigned char r[256 * 256];
+	//int stride = 1024; // 256 pixels wide * 4 channels
+	//int count = 0;
 
-	for (int row = 0; row < height; row++)
-	{
-		for (int column = 0; column < width; column++)
-		{
-			r[count++] = image[(row * stride) + (column * 4)];
-		}
-	}
+	//for (int row = 0; row < height; row++)
+	//{
+	//	for (int column = 0; column < width; column++)
+	//	{
+	//		r[count++] = image[(row * stride) + (column * 4)];
+	//	}
+	//}
 
-	world = new World(16, 16);
-	for (int cx = 0; cx < 16; cx++)
-	{
-		for (int cy = 0; cy < 16; cy++)
-		{
-			for (int bx = 0; bx < 16; bx++)
-			{
-				for (int by = 0; by < 16; by++)
-				{
-					for (int bz = 0; bz <
-						r[(width * (bx + (cx * 16))) + (by + (cy * 16))] / 1; bz++)
-					{
-						world->GetChunk(cx, cy).Blocks[bx][bz][by].Active = true;
-						world->GetChunk(cx, cy).Blocks[bx][bz][by].Color =
-							glm::vec3((bz / 127.0f), 40.0f / 255.0f, 94.0f / 255.0f);
-					}
-				}
-			}
-		}
-	}
-	world->Update();
+	//world = new World(16, 16);
+	//for (int cx = 0; cx < 16; cx++)
+	//{
+	//	for (int cy = 0; cy < 16; cy++)
+	//	{
+	//		for (int bx = 0; bx < 16; bx++)
+	//		{
+	//			for (int by = 0; by < 16; by++)
+	//			{
+	//				for (int bz = 0; bz <
+	//					r[(width * (bx + (cx * 16))) + (by + (cy * 16))] / 1; bz++)
+	//				{
+	//					world->GetChunk(cx, cy).Blocks[bx][bz][by].Active = true;
+	//					world->GetChunk(cx, cy).Blocks[bx][bz][by].Color =
+	//						glm::vec3((bz / 127.0f), 40.0f / 255.0f, 94.0f / 255.0f);
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
+	//world->Update();
 
 
-	std::cout << "Size of chunk is " << sizeof(Chunk) << "\n";
+	std::cout << "Size of block is " << sizeof(Block) << "\n";
 
 	// Network
 	if (enet_initialize() != 0)
@@ -178,7 +182,7 @@ void Game::Initialize()
 	if (peer == nullptr)
 		return;
 
-	if (enet_host_service(client, &event, 5000) > 0 &&
+	if (enet_host_service(client, &event, 50000) > 0 &&
 		event.type == ENET_EVENT_TYPE_CONNECT)
 	{
 		std::cout << "Successfully connected to host. \n";
@@ -190,11 +194,13 @@ void Game::Initialize()
 		return;
 	}
 
+	world = new World(16, 16);
 	// Receive chunks
-	bool receivingChunks = true;
-	while (receivingChunks)
+	int count = 0;
+	bool receiving = true;
+	while (receiving)
 	{
-		while (enet_host_service(client, &event, 1000) > 0)
+		while (enet_host_service(client, &event, 100000) > 0)
 		{
 			switch (event.type)
 			{
@@ -204,16 +210,40 @@ void Game::Initialize()
 					<< event.peer->address.port << "\n";
 				break;
 			case ENET_EVENT_TYPE_RECEIVE:
+			{
 				std::cout << "Received a packet.\n";
 				std::cout << "Data Length: " << event.packet->dataLength << "\n";
 				std::cout << "Data: " << event.packet->data << "\n";
-				std::cout << "Peer: " << event.peer->data << "\n";
+				std::cout << "Peer: " << event.peer->address.host << "\n";
 				std::cout << "Channel: " << event.channelID << "\n";
 
-				enet_packet_destroy(event.packet);
+
+
+				//int* x;
+				//x = (int*)event.packet->data;
+
+				//std::cout << x[0] << " " << x[1] << " " << x[2] << " " << x[3] << " ";
+
+				//Block* blokkszz = new Block[16 * 16];
+				//chunkszz = (Chunk*)event.packet->data
+				
+				Chunk* chunkey = (Chunk*)event.packet->data;
+
+				memcpy(world->chunks[count].Blocks, chunkey->Blocks, sizeof(chunkey->Blocks));
+				//world->chunks[count].Blocks = (Block)event.packet->data;
+
+
+				//enet_packet_destroy(event.packet);
+				count++;
+				if (count >= 16 * 16)
+				{
+					receiving = false;
+				}
 				break;
+			}
 			case ENET_EVENT_TYPE_DISCONNECT:
 				std::cout << "Peer " << event.peer->data << " disconnected. \n";
+				receiving = false;
 				break;
 			default:
 				std::cout << "An unknown event was triggered.";
@@ -223,6 +253,18 @@ void Game::Initialize()
 	}
 
 	enet_deinitialize();
+
+
+	world->Update();
+	for (int x = 0; x < 16; x++)
+	{
+		for (int y = 0; y < 16; y++)
+		{
+			world->GetChunk(x, y).Transform =
+				glm::translate(glm::mat4(), glm::vec3(x * 16, 0, y * 16));
+		}
+	}
+
 	// End Network
 
 	std::cout << "INITIALIZED!!!!!!!!!! \n";

@@ -9,6 +9,8 @@ private:
 	std::size_t position;
 
 public:
+	char* GetData();
+
 	uint8_t ReadByte();
 	int16_t ReadShort();
 	int32_t ReadInt();

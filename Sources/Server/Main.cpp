@@ -7,7 +7,7 @@
 #include "Chunk.h"
 #include "Block.h"
 
-
+#include "MemoryStream.h"
 
 void SetupChunks(World* world)
 {
@@ -166,7 +166,22 @@ void ServerChunk()
 	std::cout << "Now preparing to send chunks. \n";
 
 
+	Block blok(true, glm::vec3(3.14159, 1.005f, 39.94245f));
+	MemoryStream stream;
 
+	stream.Write(blok.Active);
+	stream.Write(blok.Color.x);
+	stream.Write(blok.Color.y);
+	stream.Write(blok.Color.z);
+
+	std::cout << stream.ReadBool() << "\n";
+	std::cout << stream.ReadFloat() << "\n";
+	std::cout << stream.ReadFloat() << "\n";
+	std::cout << stream.ReadFloat() << "\n";
+
+	ENetPacket* packet = enet_packet_create(stream.GetData(), sizeof(Block), ENET_PACKET_FLAG_RELIABLE);
+	enet_host_broadcast(server, 0, packet);
+	enet_host_flush(server);
 	//int* xy = new int[4];
 	//xy[0] = 1;
 	//xy[1] = 4;
@@ -174,20 +189,23 @@ void ServerChunk()
 	//xy[3] = 5;
 	//ENetPacket* packet = enet_packet_create((const void*)xy, sizeof(int) * 4,
 	//	ENET_PACKET_FLAG_RELIABLE);
-	for (int i = 0; i < 16 * 16; i++)
-	{
-		std::cout << "Sending packet num" << i << "\n";
-		Chunk xyi = world->chunks[i];
-		ENetPacket* packet = enet_packet_create(&xyi, sizeof(world->chunks[i]),
-			ENET_PACKET_FLAG_UNRELIABLE_FRAGMENT);
+	//for (int i = 0; i < 16 * 16; i++)
+	//{
+	//	std::cout << "Sending packet num" << i << "\n";
+	//	Chunk xyi = world->chunks[i];
+	//	ENetPacket* packet = enet_packet_create(&xyi, sizeof(world->chunks[i]),
+	//		ENET_PACKET_FLAG_UNRELIABLE_FRAGMENT);
 
-		enet_host_broadcast(server, 0, packet);
-		enet_host_flush(server);
-		for (int SLOW = 0; SLOW < 15000; SLOW++)
-		{
-			std::cout << "SLOWING DOWN : " << SLOW << "\n.";
-		}
-	}
+
+	//	Block blok;
+
+	//	enet_host_broadcast(server, 0, packet);
+	//	enet_host_flush(server);
+	//	for (int SLOW = 0; SLOW < 15000; SLOW++)
+	//	{
+	//		std::cout << "SLOWING DOWN : " << SLOW << "\n.";
+	//	}
+	//}
 
 	std::cout << "Packet sent. Press enter.\n";
 	getchar();

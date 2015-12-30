@@ -2,6 +2,11 @@
 #include <cstring>
 #include <cwchar>
 
+char* MemoryStream::GetData()
+{
+	return data.data();
+}
+
 uint8_t MemoryStream::ReadByte()
 {
 	if (position >= data.size()) {}

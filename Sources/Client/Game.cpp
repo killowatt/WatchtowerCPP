@@ -5,6 +5,7 @@
 #include <vector>
 #include "Assets/lodepng.h"
 #include "enet/enet.h"
+#include "MemoryStream.h"
 
 void Game::Update()
 {
@@ -226,19 +227,21 @@ void Game::Initialize()
 
 				//Block* blokkszz = new Block[16 * 16];
 				//chunkszz = (Chunk*)event.packet->data
-				
-				Chunk* chunkey = (Chunk*)event.packet->data;
 
-				memcpy(world->chunks[count].Blocks, chunkey->Blocks, sizeof(chunkey->Blocks));
+				MemoryStream stream(event.packet->data, event.packet->dataLength);
+				std::cout << stream.ReadBool() << "\n";
+				std::cout << stream.ReadFloat() << "\n";
+				std::cout << stream.ReadFloat() << "\n";
+				std::cout << stream.ReadFloat() << "\n";
 				//world->chunks[count].Blocks = (Block)event.packet->data;
 
 
 				//enet_packet_destroy(event.packet);
-				count++;
-				if (count >= 16 * 16)
-				{
-					receiving = false;
-				}
+				//count++;
+				//if (count >= 16 * 16)
+				//{
+				//	receiving = false;
+				//}
 				break;
 			}
 			case ENET_EVENT_TYPE_DISCONNECT:

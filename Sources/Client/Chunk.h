@@ -3,6 +3,7 @@
 #include "Block.h"
 #include "Graphics/VertexArray.h"
 #include "Graphics/VertexBuffer.h"
+#include "glm/glm.hpp"
 
 struct Chunk
 {

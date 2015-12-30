@@ -9,13 +9,22 @@ inline void AppendVertex(std::vector<float>& vector, float x, float y, float z, 
 	vector.push_back(y + position.y + 0.5f);
 	vector.push_back(z + position.z + 0.5f);
 }
-inline void AppendFaceValue(std::vector<float>& vector, float x, float y, float z)
+inline void AppendFaceNormal(std::vector<float>& vector, float x, float y, float z)
 {
 	for (int i = 0; i < 4; i++)
 	{
 		vector.push_back(x);
 		vector.push_back(y);
 		vector.push_back(z);
+	}
+}
+inline void AppendColor(std::vector<float>& vector, uint8_t r, uint8_t g, uint8_t b)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		vector.push_back(r / 255.0f);
+		vector.push_back(g / 255.0f);
+		vector.push_back(b / 255.0f);
 	}
 }
 inline void AppendIndices(std::vector<unsigned int>& indices, std::vector<float>& vertices)
@@ -35,7 +44,7 @@ void GenerateBlockData(
 	bool xPositive, bool xNegative,
 	bool yPositive, bool yNegative,
 	bool zPositive, bool zNegative,
-	glm::ivec3& position, glm::vec3& color)
+	glm::ivec3& position, Graphics::Color color)
 {
 	if (xPositive)
 	{
@@ -44,8 +53,8 @@ void GenerateBlockData(
 		AppendVertex(vertices, 0.5f, 0.5f, 0.5f, position);
 		AppendVertex(vertices, 0.5f, -0.5f, 0.5f, position);
 
-		AppendFaceValue(colors, color.x, color.y, color.z);
-		AppendFaceValue(normals, 1, 0, 0);
+		AppendColor(colors, color.R, color.G, color.B);
+		AppendFaceNormal(normals, 1, 0, 0);
 		AppendIndices(indices, vertices);
 	}
 	if (xNegative)
@@ -55,8 +64,8 @@ void GenerateBlockData(
 		AppendVertex(vertices, -0.5f, 0.5f, 0.5f, position);
 		AppendVertex(vertices, -0.5f, 0.5f, -0.5f, position);
 
-		AppendFaceValue(colors, color.x, color.y, color.z);
-		AppendFaceValue(normals, -1, 0, 0);
+		AppendColor(colors, color.R, color.G, color.B);
+		AppendFaceNormal(normals, -1, 0, 0);
 		AppendIndices(indices, vertices);
 	}
 	if (yPositive)
@@ -66,8 +75,8 @@ void GenerateBlockData(
 		AppendVertex(vertices, 0.5f, 0.5f, 0.5f, position);
 		AppendVertex(vertices, 0.5f, 0.5f, -0.5f, position);
 
-		AppendFaceValue(colors, color.x, color.y, color.z);
-		AppendFaceValue(normals, 0, 1, 0);
+		AppendColor(colors, color.R, color.G, color.B);
+		AppendFaceNormal(normals, 0, 1, 0);
 		AppendIndices(indices, vertices);
 	}
 	if (yNegative)
@@ -77,8 +86,8 @@ void GenerateBlockData(
 		AppendVertex(vertices, 0.5f, -0.5f, 0.5f, position);
 		AppendVertex(vertices, -0.5f, -0.5f, 0.5f, position);
 
-		AppendFaceValue(colors, color.x, color.y, color.z);
-		AppendFaceValue(normals, 0, -1, 0);
+		AppendColor(colors, color.R, color.G, color.B);
+		AppendFaceNormal(normals, 0, -1, 0);
 		AppendIndices(indices, vertices);
 	}
 	if (zPositive)
@@ -88,8 +97,8 @@ void GenerateBlockData(
 		AppendVertex(vertices, 0.5f, 0.5f, 0.5f, position);
 		AppendVertex(vertices, -0.5f, 0.5f, 0.5f, position);
 
-		AppendFaceValue(colors, color.x, color.y, color.z);
-		AppendFaceValue(normals, 0, 0, 1);
+		AppendColor(colors, color.R, color.G, color.B);
+		AppendFaceNormal(normals, 0, 0, 1);
 		AppendIndices(indices, vertices);
 	}
 	if (zNegative)
@@ -99,8 +108,8 @@ void GenerateBlockData(
 		AppendVertex(vertices, 0.5f, 0.5f, -0.5f, position);
 		AppendVertex(vertices, 0.5f, -0.5f, -0.5f, position);
 
-		AppendFaceValue(colors, color.x, color.y, color.z);
-		AppendFaceValue(normals, 0, 0, -1);
+		AppendColor(colors, color.R, color.G, color.B);
+		AppendFaceNormal(normals, 0, 0, -1);
 		AppendIndices(indices, vertices);
 	}
 }

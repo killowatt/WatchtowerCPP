@@ -1,6 +1,6 @@
 #include "Block.h"
 
-Block::Block(bool active, glm::vec3 color)
+Block::Block(bool active, Graphics::Color color)
 {
 	Active = active;
 	Color = color;

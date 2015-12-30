@@ -139,7 +139,7 @@ void Game::Initialize()
 	//				{
 	//					world->GetChunk(cx, cy).Blocks[bx][bz][by].Active = true;
 	//					world->GetChunk(cx, cy).Blocks[bx][bz][by].Color =
-	//						glm::vec3((bz / 127.0f), 40.0f / 255.0f, 94.0f / 255.0f);
+	//						Graphics::Color(bz * 2, 40, 94);
 	//				}
 	//			}
 	//		}
@@ -230,9 +230,9 @@ void Game::Initialize()
 
 				MemoryStream stream(event.packet->data, event.packet->dataLength);
 				std::cout << stream.ReadBool() << "\n";
-				std::cout << stream.ReadFloat() << "\n";
-				std::cout << stream.ReadFloat() << "\n";
-				std::cout << stream.ReadFloat() << "\n";
+				std::cout << (int)stream.ReadByte() << "\n";
+				std::cout << (int)stream.ReadByte() << "\n";
+				std::cout << (int)stream.ReadByte() << "\n";
 				//world->chunks[count].Blocks = (Block)event.packet->data;
 
 

@@ -41,7 +41,7 @@ void SetupChunks(World* world)
 					{
 						world->GetChunk(cx, cy).Blocks[bx][bz][by].Active = true;
 						world->GetChunk(cx, cy).Blocks[bx][bz][by].Color =
-							glm::vec3((bz / 127.0f), 40.0f / 255.0f, 94.0f / 255.0f);
+							Graphics::Color(bz * 2, 40, 94);
 					}
 				}
 			}
@@ -166,18 +166,18 @@ void ServerChunk()
 	std::cout << "Now preparing to send chunks. \n";
 
 
-	Block blok(true, glm::vec3(3.14159, 1.005f, 39.94245f));
+	Block blok(true, Graphics::Color(255, 188, 123));
 	MemoryStream stream;
 
 	stream.Write(blok.Active);
-	stream.Write(blok.Color.x);
-	stream.Write(blok.Color.y);
-	stream.Write(blok.Color.z);
+	stream.Write(blok.Color.R);
+	stream.Write(blok.Color.G);
+	stream.Write(blok.Color.B);
 
 	std::cout << stream.ReadBool() << "\n";
-	std::cout << stream.ReadFloat() << "\n";
-	std::cout << stream.ReadFloat() << "\n";
-	std::cout << stream.ReadFloat() << "\n";
+	std::cout << (int)stream.ReadByte() << "\n";
+	std::cout << (int)stream.ReadByte() << "\n";
+	std::cout << (int)stream.ReadByte() << "\n";
 
 	ENetPacket* packet = enet_packet_create(stream.GetData(), sizeof(Block), ENET_PACKET_FLAG_RELIABLE);
 	enet_host_broadcast(server, 0, packet);

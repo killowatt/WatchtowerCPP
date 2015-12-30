@@ -7,7 +7,7 @@
 #include "Chunk.h"
 #include "Block.h"
 
-#include "Packet.h"
+
 
 void SetupChunks(World* world)
 {
@@ -111,7 +111,6 @@ void Client()
 }
 void ServerChunk()
 {
-	TestSys();
 	std::cout << "Generating chunk data. \n";
 
 	World* world = new World(16, 16);

@@ -125,10 +125,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Packet.h" />
+    <ClInclude Include="MemoryStream.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Packet.cpp" />
+    <ClCompile Include="MemoryStream.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

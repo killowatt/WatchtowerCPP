@@ -126,11 +126,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
+    <ClInclude Include="Chunk.h" />
     <ClInclude Include="Graphics\Color.h" />
     <ClInclude Include="MemoryStream.h" />
+    <ClInclude Include="Network\Packet.h" />
+    <ClInclude Include="Network\ChunkPacket.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="Graphics\Color.cpp" />
     <ClCompile Include="MemoryStream.cpp" />
   </ItemGroup>

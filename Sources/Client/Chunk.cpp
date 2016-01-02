@@ -130,34 +130,34 @@ void Chunk::Update() // TODO: make this more ~elegant~
 		{
 			for (int z = 0; z < CHUNK_DEPTH; z++)
 			{
-				if (!Blocks[x][y][z].Active)
+				if (!GetBlock(x, y, z).Active)
 				{
 					continue;
 				}
 
 				bool xPositive = true;
 				if (x < CHUNK_WIDTH - 1)
-					xPositive = !Blocks[x + 1][y][z].Active;
+					xPositive = !GetBlock(x + 1,y, z).Active;
 
 				bool xNegative = true;
 				if (x > 0)
-					xNegative = !Blocks[x - 1][y][z].Active;
+					xNegative = !GetBlock(x - 1, y, z).Active;
 
 				bool yPositive = true;
 				if (y < CHUNK_HEIGHT - 1)
-					yPositive = !Blocks[x][y + 1][z].Active;
+					yPositive = !GetBlock(x, y + 1, z).Active;
 
 				bool yNegative = true;
 				if (y > 0)
-					yNegative = !Blocks[x][y - 1][z].Active;
+					yNegative = !GetBlock(x, y - 1, z).Active;
 
 				bool zPositive = true;
 				if (z < CHUNK_DEPTH - 1)
-					zPositive = !Blocks[x][y][z + 1].Active;
+					zPositive = !GetBlock(x, y, z + 1).Active;
 
 				bool zNegative = true;
 				if (z > 0)
-					zNegative = !Blocks[x][y][z - 1].Active;
+					zNegative = !GetBlock(x, y, z - 1).Active;
 
 				int sides = xPositive + xNegative + yPositive + yNegative + zPositive + zNegative;
 				vertexBufferSize += sides * 12;
@@ -183,40 +183,40 @@ void Chunk::Update() // TODO: make this more ~elegant~
 		{
 			for (int z = 0; z < CHUNK_DEPTH; z++)
 			{
-				if (!Blocks[x][y][z].Active)
+				if (!GetBlock(x, y, z).Active)
 				{
 					continue;
 				}
 
 				bool xPositive = true;
 				if (x < CHUNK_WIDTH - 1)
-					xPositive = !Blocks[x + 1][y][z].Active;
+					xPositive = !GetBlock(x + 1, y, z).Active;
 
 				bool xNegative = true;
 				if (x > 0)
-					xNegative = !Blocks[x - 1][y][z].Active;
+					xNegative = !GetBlock(x - 1, y, z).Active;
 
 				bool yPositive = true;
 				if (y < CHUNK_HEIGHT - 1)
-					yPositive = !Blocks[x][y + 1][z].Active;
+					yPositive = !GetBlock(x, y + 1, z).Active;
 
 				bool yNegative = true;
 				if (y > 0)
-					yNegative = !Blocks[x][y - 1][z].Active;
+					yNegative = !GetBlock(x, y - 1, z).Active;
 
 				bool zPositive = true;
 				if (z < CHUNK_DEPTH - 1)
-					zPositive = !Blocks[x][y][z + 1].Active;
+					zPositive = !GetBlock(x, y, z + 1).Active;
 
 				bool zNegative = true;
 				if (z > 0)
-					zNegative = !Blocks[x][y][z - 1].Active;
+					zNegative = !GetBlock(x, y, z - 1).Active;
 
 				GenerateBlockData(vertices, colors, normals, indices,
 					xPositive, xNegative,
 					yPositive, yNegative,
 					zPositive, zNegative,
-					glm::ivec3(x, y, z), Blocks[x][y][z].Color);
+					glm::ivec3(x, y, z), GetBlock(x, y, z).Color);
 			}
 		}
 	}

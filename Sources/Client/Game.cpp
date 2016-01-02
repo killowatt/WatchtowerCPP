@@ -108,7 +108,7 @@ void Game::Initialize()
 
 	glUseProgram(0);
 
-	// Here we load in a test heightmap just for kicks okay
+	//// Here we load in a test heightmap just for kicks okay
 	//std::vector<unsigned char> image;
 	//unsigned int width, height;
 	//lodepng::decode(image, width, height, "terrain_128_height.png");
@@ -137,8 +137,8 @@ void Game::Initialize()
 	//				for (int bz = 0; bz <
 	//					r[(width * (bx + (cx * 16))) + (by + (cy * 16))] / 1; bz++)
 	//				{
-	//					world->GetChunk(cx, cy).Blocks[bx][bz][by].Active = true;
-	//					world->GetChunk(cx, cy).Blocks[bx][bz][by].Color =
+	//					world->GetChunk(cx, cy).GetBlock(bx, bz, by).Active = true;
+	//					world->GetChunk(cx, cy).GetBlock(bx, bz, by).Color =
 	//						Graphics::Color(bz * 2, 40, 94);
 	//				}
 	//			}

@@ -1,25 +1,17 @@
 #pragma once
-#include "Packet.h"
+#include "../MemoryStream.h"
 #include "../Block.h"
 
 namespace Network
 {
-	struct ChunkPacket : public Network::Packet<ChunkPacket>
+	struct ChunkPacket // We arent worried about optimization of network right now.
 	{
-		uint32_t ChunkOffset;
-		uint32_t BlockOffset;
-		Block Block;
+		static const int BLOCK_SEND_COUNT = 256;
+		Block Blocks[BLOCK_SEND_COUNT];
 
-		void Save(MemoryStream& stream)
-		{
-			stream.Write(ChunkOffset);
-			stream.Write(BlockOffset);
-		}
-		static ChunkPacket Load(MemoryStream& stream)
-		{
-			ChunkPacket packet;
-			packet.ChunkOffset = stream.ReadInt();
-			packet.BlockOffset = stream.ReadInt();
-		}
+		void Save(MemoryStream& stream);
+		static ChunkPacket Load(MemoryStream& stream);
+
+		ChunkPacket();
 	};
 }

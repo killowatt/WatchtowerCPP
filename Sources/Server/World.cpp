@@ -2,7 +2,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
-Chunk& World::GetChunk(unsigned int x, unsigned int y)
+Common::Chunk& World::GetChunk(unsigned int x, unsigned int y)
 {
 	if (x >= width || y >= height)
 		throw std::exception("out of bounds okay.."); // TODO: make proper error
@@ -22,7 +22,7 @@ World::World(unsigned int width, unsigned int height)
 	this->width = width;
 	this->height = height;
 
-	chunks = new Chunk[width * height];
+	chunks = new Common::Chunk[width * height];
 }
 World::~World()
 {

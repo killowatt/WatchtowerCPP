@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Block.h"
+#include <Chunk.h>
 
-struct Chunk
+struct Chunk : Common::Chunk
 {
 public:
 	static const int CHUNK_WIDTH = 16;

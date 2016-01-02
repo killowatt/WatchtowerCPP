@@ -8,6 +8,7 @@
 #include "Block.h"
 
 #include "MemoryStream.h"
+#include "Network/ChunkPacket.h"
 
 void SetupChunks(World* world)
 {
@@ -39,9 +40,9 @@ void SetupChunks(World* world)
 					for (int bz = 0; bz <
 						r[(width * (bx + (cx * 16))) + (by + (cy * 16))] / 1; bz++)
 					{
-						world->GetChunk(cx, cy).Blocks[bx][bz][by].Active = true;
-						world->GetChunk(cx, cy).Blocks[bx][bz][by].Color =
-							Graphics::Color(bz * 2, 40, 94);
+						world->GetChunk(cx, cy).GetBlock(bx, bz, by).Active = true;
+						world->GetChunk(cx, cy).GetBlock(bx, bz, by).Color =
+							Graphics::Color(0, bz * 2, 147);
 					}
 				}
 			}
@@ -111,6 +112,7 @@ void Client()
 }
 void ServerChunk()
 {
+	std::cout << "Size of chunk packet is " << sizeof(Network::ChunkPacket) << "\n";
 	std::cout << "Generating chunk data. \n";
 
 	World* world = new World(16, 16);
@@ -165,23 +167,13 @@ void ServerChunk()
 
 	std::cout << "Now preparing to send chunks. \n";
 
-
-	Block blok(true, Graphics::Color(255, 188, 123));
-	MemoryStream stream;
-
-	stream.Write(blok.Active);
-	stream.Write(blok.Color.R);
-	stream.Write(blok.Color.G);
-	stream.Write(blok.Color.B);
-
-	std::cout << stream.ReadBool() << "\n";
-	std::cout << (int)stream.ReadByte() << "\n";
-	std::cout << (int)stream.ReadByte() << "\n";
-	std::cout << (int)stream.ReadByte() << "\n";
-
-	ENetPacket* packet = enet_packet_create(stream.GetData(), sizeof(Block), ENET_PACKET_FLAG_RELIABLE);
-	enet_host_broadcast(server, 0, packet);
-	enet_host_flush(server);
+	for (int i = 0; i < 256; i++)
+	{
+		ENetPacket* packet = enet_packet_create(&world->chunks[i],
+			sizeof(Common::Chunk), ENET_PACKET_FLAG_RELIABLE);
+		enet_peer_send(&server->peers[0], 0, packet);
+	}
+	enet_host_service(server, &event, 60000);
 	//int* xy = new int[4];
 	//xy[0] = 1;
 	//xy[1] = 4;

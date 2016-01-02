@@ -145,7 +145,6 @@ void Game::Initialize()
 	//		}
 	//	}
 	//}
-	//world->Update();
 
 
 	std::cout << "Size of block is " << sizeof(Block) << "\n";
@@ -160,7 +159,7 @@ void Game::Initialize()
 
 	std::cout << "Initializing client.. \n";
 	ENetHost* client;
-	client = enet_host_create(nullptr, 1, 2, 57600 / 8, 14400 / 8);
+	client = enet_host_create(nullptr, 1, 2, 0, 0);
 
 	if (client == nullptr)
 	{
@@ -183,7 +182,7 @@ void Game::Initialize()
 	if (peer == nullptr)
 		return;
 
-	if (enet_host_service(client, &event, 50000) > 0 &&
+	if (enet_host_service(client, &event, 10000) > 0 &&
 		event.type == ENET_EVENT_TYPE_CONNECT)
 	{
 		std::cout << "Successfully connected to host. \n";
@@ -197,11 +196,11 @@ void Game::Initialize()
 
 	world = new World(16, 16);
 	// Receive chunks
-	int count = 0;
+	int countc = 0;
 	bool receiving = true;
 	while (receiving)
 	{
-		while (enet_host_service(client, &event, 100000) > 0)
+		while (enet_host_service(client, &event, 10) > 0)
 		{
 			switch (event.type)
 			{
@@ -228,15 +227,30 @@ void Game::Initialize()
 				//Block* blokkszz = new Block[16 * 16];
 				//chunkszz = (Chunk*)event.packet->data
 
-				MemoryStream stream(event.packet->data, event.packet->dataLength);
-				std::cout << stream.ReadBool() << "\n";
-				std::cout << (int)stream.ReadByte() << "\n";
-				std::cout << (int)stream.ReadByte() << "\n";
-				std::cout << (int)stream.ReadByte() << "\n";
+				Common::Chunk* chhh = (Common::Chunk*)event.packet->data;
+
+
+				for (int x = 0; x < 16; x++)
+				{
+					for (int y = 0; y < 128; y++)
+					{
+						for (int z = 0; z < 16; z++)
+						{
+							world->chunks[countc].GetBlock(x, y, z) = chhh->GetBlock(x, y, z);
+						}
+					}
+				}
+
+				countc++;
+				std::cout << countc << "\n";
+				if (countc > 255)
+				{
+					receiving = false;
+				}
 				//world->chunks[count].Blocks = (Block)event.packet->data;
 
 
-				//enet_packet_destroy(event.packet);
+				enet_packet_destroy(event.packet);
 				//count++;
 				//if (count >= 16 * 16)
 				//{

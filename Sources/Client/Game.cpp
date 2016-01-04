@@ -6,6 +6,7 @@
 #include "Assets/lodepng.h"
 #include "enet/enet.h"
 #include "MemoryStream.h"
+#include "zlib/zlib.h"
 
 void Game::Update()
 {
@@ -213,7 +214,7 @@ void Game::Initialize()
 			{
 				std::cout << "Received a packet.\n";
 				std::cout << "Data Length: " << event.packet->dataLength << "\n";
-				std::cout << "Data: " << event.packet->data << "\n";
+				//std::cout << "Data: " << event.packet->data << "\n";
 				std::cout << "Peer: " << event.peer->address.host << "\n";
 				std::cout << "Channel: " << event.channelID << "\n";
 
@@ -227,8 +228,20 @@ void Game::Initialize()
 				//Block* blokkszz = new Block[16 * 16];
 				//chunkszz = (Chunk*)event.packet->data
 
-				Common::Chunk* chhh = (Common::Chunk*)event.packet->data;
+				Common::Chunk* chhh = new Common::Chunk();
 
+				z_stream infstream;
+				infstream.zalloc = Z_NULL;
+				infstream.zfree = Z_NULL;
+				infstream.opaque = Z_NULL;
+				infstream.avail_in = sizeof(Common::Chunk);
+				infstream.next_in = (Bytef*)event.packet->data;
+				infstream.avail_out = sizeof(Common::Chunk);
+				infstream.next_out = (Bytef*)chhh;
+
+				inflateInit(&infstream);
+				inflate(&infstream, Z_NO_FLUSH);
+				inflateEnd(&infstream);
 
 				for (int x = 0; x < 16; x++)
 				{
@@ -242,7 +255,8 @@ void Game::Initialize()
 				}
 
 				countc++;
-				std::cout << countc << "\n";
+				std::cout << "PACKET# " << countc << "\n";
+				std::cout << "SIZE " << infstream.total_in << "\n";
 				if (countc > 255)
 				{
 					receiving = false;

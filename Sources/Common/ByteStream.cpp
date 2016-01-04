@@ -1,19 +1,19 @@
-#include "MemoryStream.h"
+#include "ByteStream.h"
 #include <cstring>
 #include <cwchar>
 
-char* MemoryStream::GetData()
+const char* const ByteStream::GetData()
 {
 	return data.data();
 }
 
-uint8_t MemoryStream::ReadByte()
+uint8_t ByteStream::ReadByte()
 {
 	if (position >= data.size()) {}
 	// TODO: throw truncate msg and remove bracket
 	return (uint8_t)data[position++];
 }
-int16_t MemoryStream::ReadShort()
+int16_t ByteStream::ReadShort()
 {
 	int16_t value = 0;
 	if (position + 2 > data.size()) {}
@@ -22,7 +22,7 @@ int16_t MemoryStream::ReadShort()
 	value |= ((int16_t)(uint8_t)data[position++]) << 8;
 	return value;
 }
-int32_t MemoryStream::ReadInt()
+int32_t ByteStream::ReadInt()
 {
 	int32_t value = 0;
 	if (position + 4 > data.size()) {}
@@ -33,7 +33,7 @@ int32_t MemoryStream::ReadInt()
 	value |= ((int32_t)(uint8_t)data[position++]) << 24;
 	return value;
 }
-int64_t MemoryStream::ReadLong()
+int64_t ByteStream::ReadLong()
 {
 	int64_t value = 0;
 	if (position + 8 > data.size()) {}
@@ -47,13 +47,13 @@ int64_t MemoryStream::ReadLong()
 	value |= ((int64_t)(uint8_t)data[position++]) << 56;
 	return value;
 }
-int8_t MemoryStream::ReadSignedByte()
+int8_t ByteStream::ReadSignedByte()
 {
 	if (position >= data.size()) {}
 		// TODO: throw truncate msg and remove bracket
 	return (int8_t)data[position++];
 }
-uint16_t MemoryStream::ReadUnsignedShort()
+uint16_t ByteStream::ReadUnsignedShort()
 {
 	uint16_t value = 0;
 	if (position + 2 > data.size()) {}
@@ -62,7 +62,7 @@ uint16_t MemoryStream::ReadUnsignedShort()
 	value |= ((uint16_t)(uint8_t)data[position++]) << 8;
 	return value;
 }
-uint32_t MemoryStream::ReadUnsignedInt()
+uint32_t ByteStream::ReadUnsignedInt()
 {
 	uint32_t value = 0;
 	if (position + 4 > data.size()) {}
@@ -73,7 +73,7 @@ uint32_t MemoryStream::ReadUnsignedInt()
 	value |= ((uint32_t)(uint8_t)data[position++]) << 24;
 	return value;
 }
-uint64_t MemoryStream::ReadUnsignedLong()
+uint64_t ByteStream::ReadUnsignedLong()
 {
 	uint64_t value = 0;
 	if (position + 8 > data.size()) {}
@@ -88,13 +88,13 @@ uint64_t MemoryStream::ReadUnsignedLong()
 	value |= ((uint64_t)(uint8_t)data[position++]) << 56;
 	return value;
 }
-bool MemoryStream::ReadBool()
+bool ByteStream::ReadBool()
 {
 	if (position >= data.size()) {}
 	// TODO: throw truncate..
 	return data[position++] != 0;
 }
-float MemoryStream::ReadFloat()
+float ByteStream::ReadFloat()
 {
 	if (position + 4 > data.size()) {}
 	// TODO: throw..
@@ -102,7 +102,7 @@ float MemoryStream::ReadFloat()
 	position += sizeof(data);
 	return data;
 }
-double MemoryStream::ReadDouble()
+double ByteStream::ReadDouble()
 {
 	if (position + 8 > data.size()) {}
 	// TODO: throw..
@@ -110,13 +110,13 @@ double MemoryStream::ReadDouble()
 	position += sizeof(data);
 	return data;
 }
-char MemoryStream::ReadChar()
+char ByteStream::ReadChar()
 {
 	if (position >= data.size()) {}
 	// TODO: throw truncate msg and remove bracket
 	return data[position++];
 }
-std::string MemoryStream::ReadString()
+std::string ByteStream::ReadString()
 {
 	uint32_t length = ReadUnsignedInt();
 	std::string string;
@@ -128,56 +128,29 @@ std::string MemoryStream::ReadString()
 	return string;
 }
 
-void MemoryStream::Write(const void* data, std::size_t size)
+void ByteStream::Write(const void* data, std::size_t size)
 {
 	std::size_t start = this->data.size();
 	this->data.resize(start + size);
 	std::memcpy(&this->data[start], data, size);
 }
-void MemoryStream::Write(uint8_t value)
+void ByteStream::Write(uint8_t value)
 {
 	data.push_back((char)value);
 }
-void MemoryStream::Write(int16_t value)
-{
-	data.push_back((char)value);
-	data.push_back((char)(value >> 8));
-}
-void MemoryStream::Write(int32_t value)
-{
-	data.push_back((char)value);
-	data.push_back((char)(value >> 8));
-	data.push_back((char)(value >> 16));
-	data.push_back((char)(value >> 24));
-}
-void MemoryStream::Write(int64_t value)
-{
-	data.push_back((char)value);
-	data.push_back((char)(value >> 8));
-	data.push_back((char)(value >> 16));
-	data.push_back((char)(value >> 24));
-	data.push_back((char)(value >> 32));
-	data.push_back((char)(value >> 40));
-	data.push_back((char)(value >> 48));
-	data.push_back((char)(value >> 56));
-}
-void MemoryStream::Write(int8_t value)
-{
-	data.push_back((char)value);
-}
-void MemoryStream::Write(uint16_t value)
+void ByteStream::Write(int16_t value)
 {
 	data.push_back((char)value);
 	data.push_back((char)(value >> 8));
 }
-void MemoryStream::Write(uint32_t value)
+void ByteStream::Write(int32_t value)
 {
 	data.push_back((char)value);
 	data.push_back((char)(value >> 8));
 	data.push_back((char)(value >> 16));
 	data.push_back((char)(value >> 24));
 }
-void MemoryStream::Write(uint64_t value)
+void ByteStream::Write(int64_t value)
 {
 	data.push_back((char)value);
 	data.push_back((char)(value >> 8));
@@ -188,23 +161,50 @@ void MemoryStream::Write(uint64_t value)
 	data.push_back((char)(value >> 48));
 	data.push_back((char)(value >> 56));
 }
-void MemoryStream::Write(bool value)
+void ByteStream::Write(int8_t value)
+{
+	data.push_back((char)value);
+}
+void ByteStream::Write(uint16_t value)
+{
+	data.push_back((char)value);
+	data.push_back((char)(value >> 8));
+}
+void ByteStream::Write(uint32_t value)
+{
+	data.push_back((char)value);
+	data.push_back((char)(value >> 8));
+	data.push_back((char)(value >> 16));
+	data.push_back((char)(value >> 24));
+}
+void ByteStream::Write(uint64_t value)
+{
+	data.push_back((char)value);
+	data.push_back((char)(value >> 8));
+	data.push_back((char)(value >> 16));
+	data.push_back((char)(value >> 24));
+	data.push_back((char)(value >> 32));
+	data.push_back((char)(value >> 40));
+	data.push_back((char)(value >> 48));
+	data.push_back((char)(value >> 56));
+}
+void ByteStream::Write(bool value)
 {
 	data.push_back((uint8_t)value);
 }
-void MemoryStream::Write(float value)
+void ByteStream::Write(float value)
 {
 	Write(&value, sizeof(value));
 }
-void MemoryStream::Write(double value)
+void ByteStream::Write(double value)
 {
 	Write(&value, sizeof(value));
 }
-void MemoryStream::Write(char value)
+void ByteStream::Write(char value)
 {
 	data.push_back(value);
 }
-void MemoryStream::Write(const std::string& value)
+void ByteStream::Write(const std::string& value)
 {
 	uint32_t length = static_cast<uint32_t>(value.size());
 	Write(length);
@@ -213,11 +213,11 @@ void MemoryStream::Write(const std::string& value)
 		Write(value.c_str(), length * sizeof(std::string::value_type));
 }
 
-MemoryStream::MemoryStream()
+ByteStream::ByteStream()
 {
 	position = 0;
 }
-MemoryStream::MemoryStream(uint8_t* data, std::size_t length)
+ByteStream::ByteStream(uint8_t* data, std::size_t length)
 {
 	position = 0;
 

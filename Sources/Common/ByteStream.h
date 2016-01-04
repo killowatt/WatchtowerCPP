@@ -2,14 +2,14 @@
 #include <vector>
 #include <string>
 
-class MemoryStream
+class ByteStream
 {
 private:
 	std::vector<char> data;
 	std::size_t position;
 
 public:
-	char* GetData();
+	const char* const GetData();
 
 	uint8_t ReadByte();
 	int16_t ReadShort();
@@ -40,6 +40,6 @@ public:
 	void Write(char value);
 	void Write(const std::string& value);
 
-	MemoryStream();
-	MemoryStream(uint8_t* data, std::size_t length);
+	ByteStream();
+	ByteStream(uint8_t* data, std::size_t length);
 };

@@ -9,6 +9,7 @@
 
 #include "MemoryStream.h"
 #include "Network/ChunkPacket.h"
+#include "zlib/zlib.h"
 
 void SetupChunks(World* world)
 {
@@ -169,8 +170,23 @@ void ServerChunk()
 
 	for (int i = 0; i < 256; i++)
 	{
-		ENetPacket* packet = enet_packet_create(&world->chunks[i],
-			sizeof(Common::Chunk), ENET_PACKET_FLAG_RELIABLE);
+		unsigned char* out = new unsigned char[sizeof(Common::Chunk)];
+
+		z_stream defstream;
+		defstream.zalloc = Z_NULL;
+		defstream.zfree = Z_NULL;
+		defstream.opaque = Z_NULL;
+		defstream.avail_in = sizeof(Common::Chunk);
+		defstream.next_in = (Bytef*)&world->chunks[i];
+		defstream.avail_out = sizeof(Common::Chunk);
+		defstream.next_out = (Bytef*)out;
+
+		deflateInit(&defstream, Z_DEFAULT_COMPRESSION);
+		deflate(&defstream, Z_FINISH);
+		deflateEnd(&defstream);
+
+		ENetPacket* packet = enet_packet_create(out,
+			defstream.total_out, ENET_PACKET_FLAG_RELIABLE);
 		enet_peer_send(&server->peers[0], 0, packet);
 	}
 	enet_host_service(server, &event, 60000);

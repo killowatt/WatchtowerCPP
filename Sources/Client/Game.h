@@ -14,6 +14,7 @@
 #include "Block.h"
 #include "Chunk.h"
 #include "World.h"
+#include "ChunkTempData.h"
 
 class TestShader : public Graphics::Shader
 {
@@ -56,7 +57,7 @@ public:
 
 	// Temp tests
 	TestShader* xyzizzle;
-	Chunk* chunk;
+	//Chunk* chunk;
 	Graphics::Camera camera;
 
 	float xTest;
@@ -64,10 +65,11 @@ public:
 	double currentTime;
 	float deltaTime;
 
-	Chunk* chunks[16];
+	//Chunk* chunks[16];
 	glm::mat4 chunkTranslationTemp[16][16];
 
-	World* world;
+	Common::World* world;
+	ChunkTempData tempdata[16][16];
 
 	void Initialize();
 	void Update();

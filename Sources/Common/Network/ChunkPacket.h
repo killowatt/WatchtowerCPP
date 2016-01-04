@@ -1,5 +1,5 @@
 #pragma once
-#include "../MemoryStream.h"
+#include "../ByteStream.h"
 #include "../Block.h"
 
 namespace Network
@@ -9,8 +9,8 @@ namespace Network
 		static const int BLOCK_SEND_COUNT = 256;
 		Block Blocks[BLOCK_SEND_COUNT];
 
-		void Save(MemoryStream& stream);
-		static ChunkPacket Load(MemoryStream& stream);
+		void Save(ByteStream& stream);
+		static ChunkPacket Load(ByteStream& stream);
 
 		ChunkPacket();
 	};

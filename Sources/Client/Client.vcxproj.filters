@@ -48,9 +48,6 @@
     <ClCompile Include="Assets\lodepng.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="World.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -77,13 +74,10 @@
     <ClInclude Include="Graphics\Rectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Chunk.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Assets\lodepng.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="World.h">
+    <ClInclude Include="ChunkTempData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

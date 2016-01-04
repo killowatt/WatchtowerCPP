@@ -2,7 +2,7 @@
 
 using namespace Network;
 
-void ChunkPacket::Save(MemoryStream& stream)
+void ChunkPacket::Save(ByteStream& stream)
 {
 	for (int i = 0; i < BLOCK_SEND_COUNT; i++)
 	{
@@ -12,7 +12,7 @@ void ChunkPacket::Save(MemoryStream& stream)
 		stream.Write(Blocks[i].Color.B);
 	}
 }
-ChunkPacket ChunkPacket::Load(MemoryStream& stream)
+ChunkPacket ChunkPacket::Load(ByteStream& stream)
 {
 	ChunkPacket packet;
 	for (int i = 0; i < BLOCK_SEND_COUNT; i++)

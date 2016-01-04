@@ -5,7 +5,7 @@
 #include <vector>
 #include "Assets/lodepng.h"
 #include "enet/enet.h"
-#include "MemoryStream.h"
+#include "ByteStream.h"
 #include "zlib/zlib.h"
 
 void Game::Update()
@@ -77,12 +77,12 @@ void Game::Render()
 	{
 		for (int y = 0; y < 16; y++)
 		{
-			glBindVertexArray(world->GetChunk(x, y).VertexArray.GetVertexArrayObject());
+			glBindVertexArray(tempdata[x][y].VertexArray.GetVertexArrayObject());
 
-			xyzizzle->Model = world->GetChunk(x, y).Transform;
+			xyzizzle->Model = tempdata[x][y].Transform;
 			xyzizzle->Update();
 
-			glDrawElements(GL_TRIANGLES, world->GetChunk(x, y).VertexArray.GetIndexBufferSize(),
+			glDrawElements(GL_TRIANGLES, tempdata[x][y].VertexArray.GetIndexBufferSize(),
 				GL_UNSIGNED_INT, nullptr);
 		}
 	}
@@ -195,7 +195,7 @@ void Game::Initialize()
 		return;
 	}
 
-	world = new World(16, 16);
+	world = new Common::World(16, 16);
 	// Receive chunks
 	int countc = 0;
 	bool receiving = true;
@@ -249,7 +249,8 @@ void Game::Initialize()
 					{
 						for (int z = 0; z < 16; z++)
 						{
-							world->chunks[countc].GetBlock(x, y, z) = chhh->GetBlock(x, y, z);
+
+							world->GetData()[countc].GetBlock(x, y, z) = chhh->GetBlock(x, y, z);
 						}
 					}
 				}
@@ -286,12 +287,12 @@ void Game::Initialize()
 	enet_deinitialize();
 
 
-	world->Update();
 	for (int x = 0; x < 16; x++)
 	{
 		for (int y = 0; y < 16; y++)
 		{
-			world->GetChunk(x, y).Transform =
+			tempdata[x][y].Update(world->GetChunk(x, y));
+			tempdata[x][y].Transform =
 				glm::translate(glm::mat4(), glm::vec3(x * 16, 0, y * 16));
 		}
 	}

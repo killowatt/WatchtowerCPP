@@ -6,9 +6,13 @@
 #include "Graphics/VertexArray.h"
 #include "Graphics/VertexBuffer.h"
 
-class Chunk : public Common::Chunk
+class ChunkTempData
 {
 public:
+	static const int CHUNK_WIDTH = 16;
+	static const int CHUNK_HEIGHT = 128;
+	static const int CHUNK_DEPTH = 16;
+
 	glm::mat4 Transform;
 
 	Graphics::VertexArray VertexArray;
@@ -16,8 +20,9 @@ public:
 	Graphics::VertexBuffer Colors;
 	Graphics::VertexBuffer Normals;
 
-	void Update();
+	
+	void Update(Common::Chunk& chnk);
 
-	Chunk();
-	~Chunk();
+	ChunkTempData();
+	~ChunkTempData();
 };

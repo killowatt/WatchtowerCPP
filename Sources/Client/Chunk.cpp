@@ -1,4 +1,4 @@
-#include "Chunk.h"
+#include "ChunkTempData.h"
 #include <iterator>
 
 using namespace Graphics;
@@ -113,7 +113,10 @@ void GenerateBlockData(
 		AppendIndices(indices, vertices);
 	}
 }
-void Chunk::Update() // TODO: make this more ~elegant~
+
+#define GetBlock(x, y, z) chnk.GetBlock(x, y, z)
+
+void ChunkTempData::Update(Common::Chunk& chnk) // TODO: make this more ~elegant~
 {
 	std::vector<float> vertices;
 	std::vector<float> colors;
@@ -230,9 +233,9 @@ void Chunk::Update() // TODO: make this more ~elegant~
 	VertexArray.AttachBuffer(Normals, 2);
 }
 
-Chunk::Chunk()
+ChunkTempData::ChunkTempData()
 {
 }
-Chunk::~Chunk()
+ChunkTempData::~ChunkTempData()
 {
 }

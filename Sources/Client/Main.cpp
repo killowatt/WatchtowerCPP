@@ -15,7 +15,7 @@ int main()
 		glewExperimental = true;
 		if (glewInit() == GLEW_OK)
 		{
-			Game game = Game(window);
+			Game game(window);
 		}
 	}
 

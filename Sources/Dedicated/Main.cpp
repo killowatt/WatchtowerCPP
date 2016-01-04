@@ -7,9 +7,12 @@
 #include "Chunk.h"
 #include "Block.h"
 
-#include "MemoryStream.h"
+#include <World.h>
+#include "ByteStream.h"
 #include "Network/ChunkPacket.h"
 #include "zlib/zlib.h"
+
+using namespace Common;
 
 void SetupChunks(World* world)
 {
@@ -177,7 +180,7 @@ void ServerChunk()
 		defstream.zfree = Z_NULL;
 		defstream.opaque = Z_NULL;
 		defstream.avail_in = sizeof(Common::Chunk);
-		defstream.next_in = (Bytef*)&world->chunks[i];
+		defstream.next_in = (Bytef*)&world->GetData()[i];
 		defstream.avail_out = sizeof(Common::Chunk);
 		defstream.next_out = (Bytef*)out;
 

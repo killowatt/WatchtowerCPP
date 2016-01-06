@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Graphics
+namespace Common
 {
 	class Rectangle // TODO: this is pretty primitive. consider expanding use, altho we dont need it
 	{

@@ -3,7 +3,7 @@
 #include <vector>
 #include <map>
 
-namespace Graphics
+namespace Client
 {
 	class VertexArray
 	{

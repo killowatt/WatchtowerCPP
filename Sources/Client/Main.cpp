@@ -1,6 +1,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "Game.h"
+#include "Client.h"
 
 int main() 
 {
@@ -15,7 +15,7 @@ int main()
 		glewExperimental = true;
 		if (glewInit() == GLEW_OK)
 		{
-			Game game(window);
+			Clientx Clientx(window);
 		}
 	}
 

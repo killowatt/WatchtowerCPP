@@ -46,7 +46,7 @@ void SetupChunks(World* world)
 					{
 						world->GetChunk(cx, cy).GetBlock(bx, bz, by).Active = true;
 						world->GetChunk(cx, cy).GetBlock(bx, bz, by).Color =
-							Graphics::Color(0, bz * 2, 147);
+							Common::Color(0, bz * 2, 147);
 					}
 				}
 			}
@@ -116,7 +116,7 @@ void Client()
 }
 void ServerChunk()
 {
-	std::cout << "Size of chunk packet is " << sizeof(Network::ChunkPacket) << "\n";
+	std::cout << "Size of chunk packet is " << sizeof(Common::ChunkPacket) << "\n";
 	std::cout << "Generating chunk data. \n";
 
 	World* world = new World(16, 16);

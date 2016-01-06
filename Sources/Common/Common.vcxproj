@@ -91,6 +91,7 @@
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="Graphics\Color.h" />
     <ClInclude Include="ByteStream.h" />
+    <ClInclude Include="Graphics\Rectangle.h" />
     <ClInclude Include="Network\ChunkPacket.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
@@ -100,6 +101,7 @@
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="Graphics\Color.cpp" />
     <ClCompile Include="ByteStream.cpp" />
+    <ClCompile Include="Graphics\Rectangle.cpp" />
     <ClCompile Include="Network\ChunkPacket.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>

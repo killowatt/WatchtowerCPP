@@ -91,10 +91,10 @@
     <ClCompile Include="Assets\lodepng.cpp" />
     <ClCompile Include="Assets\TempShaderLoader.cpp" />
     <ClCompile Include="Chunk.cpp" />
-    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
-    <ClCompile Include="Graphics\Rectangle.cpp" />
+    <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\VertexArray.cpp" />
     <ClCompile Include="Graphics\VertexBuffer.cpp" />
@@ -104,10 +104,10 @@
     <ClInclude Include="Assets\lodepng.h" />
     <ClInclude Include="Assets\TempShaderLoader.h" />
     <ClInclude Include="ChunkTempData.h" />
-    <ClInclude Include="Game.h" />
+    <ClInclude Include="Client.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Graphics\Camera.h" />
-    <ClInclude Include="Graphics\Rectangle.h" />
+    <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\VertexArray.h" />
     <ClInclude Include="Graphics\VertexBuffer.h" />

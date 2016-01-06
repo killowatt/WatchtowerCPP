@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-namespace Graphics
+namespace Common
 {
 	struct Color
 	{

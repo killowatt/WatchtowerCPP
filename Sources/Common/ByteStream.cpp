@@ -1,6 +1,7 @@
 #include "ByteStream.h"
 #include <cstring>
 #include <cwchar>
+using namespace Common;
 
 const char* const ByteStream::GetData()
 {

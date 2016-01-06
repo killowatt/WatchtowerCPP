@@ -1,10 +1,13 @@
 #pragma once
 #include "Graphics/Color.h"
 
-struct Block
+namespace Common
 {
-	bool Active;
-	Graphics::Color Color;
+	struct Block
+	{
+		bool Active;
+		Color Color;
 
-	Block(bool active = false, Graphics::Color color = Graphics::Color());
-};
+		Block(bool active = false, Common::Color color = Common::Color());
+	};
+}

@@ -1,7 +1,7 @@
 #include "ChunkTempData.h"
 #include <iterator>
 
-using namespace Graphics;
+using namespace Client;
 
 inline void AppendVertex(std::vector<float>& vector, float x, float y, float z, glm::ivec3& position)
 {
@@ -44,7 +44,7 @@ void GenerateBlockData(
 	bool xPositive, bool xNegative,
 	bool yPositive, bool yNegative,
 	bool zPositive, bool zNegative,
-	glm::ivec3& position, Graphics::Color color)
+	glm::ivec3& position, Common::Color color)
 {
 	if (xPositive)
 	{
@@ -224,10 +224,10 @@ void ChunkTempData::Update(Common::Chunk& chnk) // TODO: make this more ~elegant
 		}
 	}
 
-	Vertices.SetBufferData(vertices, 3, Graphics::MemoryHint::Dynamic);
-	Colors.SetBufferData(colors, 3, Graphics::MemoryHint::Dynamic);
-	Normals.SetBufferData(normals, 3, Graphics::MemoryHint::Dynamic);
-	VertexArray.SetIndexBuffer(indices, Graphics::MemoryHint::Dynamic);
+	Vertices.SetBufferData(vertices, 3, Client::MemoryHint::Dynamic);
+	Colors.SetBufferData(colors, 3, Client::MemoryHint::Dynamic);
+	Normals.SetBufferData(normals, 3, Client::MemoryHint::Dynamic);
+	VertexArray.SetIndexBuffer(indices, Client::MemoryHint::Dynamic);
 	VertexArray.AttachBuffer(Vertices, 0);
 	VertexArray.AttachBuffer(Colors, 1);
 	VertexArray.AttachBuffer(Normals, 2);

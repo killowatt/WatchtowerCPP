@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "Client.h"
 
 // temp
 #include "Graphics/VertexBuffer.h"
@@ -8,7 +8,9 @@
 #include "ByteStream.h"
 #include "zlib/zlib.h"
 
-void Game::Update()
+using namespace Common;
+
+void Clientx::Update()
 {
 	currentTime = glfwGetTime();
 	deltaTime = float(currentTime - lastTime);
@@ -67,7 +69,7 @@ void Game::Update()
 
 	camera.Update();
 }
-void Game::Render()
+void Clientx::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -87,7 +89,7 @@ void Game::Render()
 		}
 	}
 }
-void Game::Initialize()
+void Clientx::Initialize()
 {
 	glEnable(GL_DEPTH_TEST);
 
@@ -96,7 +98,7 @@ void Game::Initialize()
 
 	glClearColor(20.0f / 255, 20.0f / 255, 20.0f / 255, 1.0f);
 
-	camera = Graphics::Camera();
+	camera = Client::Camera();
 	camera.Position.z = -4;
 	//camera.Rotation.y = 3.14159;
 	
@@ -140,7 +142,7 @@ void Game::Initialize()
 	//				{
 	//					world->GetChunk(cx, cy).GetBlock(bx, bz, by).Active = true;
 	//					world->GetChunk(cx, cy).GetBlock(bx, bz, by).Color =
-	//						Graphics::Color(bz * 2, 40, 94);
+	//						Client::Color(bz * 2, 40, 94);
 	//				}
 	//			}
 	//		}
@@ -301,13 +303,13 @@ void Game::Initialize()
 
 	std::cout << "INITIALIZED!!!!!!!!!! \n";
 	std::cout << "GL Error State: " << glGetError() << std::endl;
-	std::cout << xyzizzle->GetCompileLog(Graphics::ShaderType::Vertex) << std::endl;
-	std::cout << xyzizzle->GetCompileLog(Graphics::ShaderType::Fragment) << std::endl;
+	std::cout << xyzizzle->GetCompileLog(Client::ShaderType::Vertex) << std::endl;
+	std::cout << xyzizzle->GetCompileLog(Client::ShaderType::Fragment) << std::endl;
 
 	glfwSetCursorPos(Window, 1280 / 2, 720 / 2);
 }
 
-Game::Game(GLFWwindow* window)
+Clientx::Clientx(GLFWwindow* window)
 {
 	std::cout << "WE ARE STARTING \n";
 	Window = window;

@@ -1,15 +1,15 @@
 #pragma once
 #include <glm/glm.hpp>
-#include "Rectangle.h"
+#include <Graphics/Rectangle.h>
 
-namespace Graphics
-{    
+namespace Client
+{
 	enum class CameraMode
 	{
 		Perspective,
 		Ortho
 	};
-	class Camera // TODO: consider: this camera is for an fps game. do we care about quaternions?
+	class Camera // TODO:  this camera is for an fps game. do we care about quaternions?
 	{
 	public:
 		glm::mat4 View;
@@ -29,10 +29,11 @@ namespace Graphics
 		float ZFar;
 
 		bool OrthoDepthEnabled;
-		Rectangle OrthoDimensions;
-		
+		Common::Rectangle OrthoDimensions;
+
 		void Update();
 
 		Camera();
 	};
 }
+

@@ -1,7 +1,6 @@
 #include "VertexArray.h"
 #include <GL/glew.h>
-
-using namespace Graphics;
+using namespace Client;
 
 void VertexArray::AttachBuffer(VertexBuffer& buffer, int index)
 {

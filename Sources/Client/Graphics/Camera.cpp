@@ -1,7 +1,6 @@
 #include "Camera.h"
 #include <glm/gtc/matrix_transform.hpp>
-
-using namespace Graphics;
+using namespace Client;
 
 void Camera::Update()
 {
@@ -45,5 +44,5 @@ Camera::Camera()
 	ZNear = 0.1f;
 	ZFar = 8192;
 	OrthoDepthEnabled = true;
-	OrthoDimensions = Rectangle(-128, 128, 128, -128);
+	OrthoDimensions = Common::Rectangle(-128, 128, 128, -128);
 }

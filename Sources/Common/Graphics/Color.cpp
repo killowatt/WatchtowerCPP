@@ -1,5 +1,5 @@
 #include "Color.h"
-using namespace Graphics;
+using namespace Common;
 
 Color::Color()
 {

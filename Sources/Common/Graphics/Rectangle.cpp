@@ -1,6 +1,6 @@
 #include "Rectangle.h"
 
-using namespace Graphics;
+using namespace Common;
 
 Rectangle::Rectangle() : Left(0), Right(0), Top(0), Bottom(0) {}
 Rectangle::Rectangle(float left, float right, float top, float bottom)

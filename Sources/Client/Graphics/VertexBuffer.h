@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-namespace Graphics
+namespace Client
 {
 	enum class MemoryHint
 	{

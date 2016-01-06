@@ -16,7 +16,7 @@
 #include "World.h"
 #include "ChunkTempData.h"
 
-class TestShader : public Graphics::Shader
+class TestShader : public Client::Shader
 {
 public:
 	int modelLocation;
@@ -40,16 +40,16 @@ public:
 		glUniformMatrix4fv(projectionLocation, 1, false, &Projection[0][0]);
 	}
 
-	TestShader(Graphics::Camera& camera)
-		: Graphics::Shader(ReadFile("Test.v"), ReadFile("Test.f"),
-			Graphics::ShaderState::Static, camera)
+	TestShader(Client::Camera& camera)
+		: Client::Shader(ReadFile("Test.v"), ReadFile("Test.f"),
+			Client::ShaderState::Static, camera)
 	{
 		//glm::mat4 m1 = glm::translate(glm::mat4(1.0), glm::vec3(640.0f, 360.0f, 0.0f));
 		//Model = glm::scale(m1, glm::vec3(150 / 2, 150 / 2, 150.0f));
 	}
 };
 
-class Game
+class Clientx
 {
 public:
 	GLFWwindow* Window;
@@ -58,7 +58,7 @@ public:
 	// Temp tests
 	TestShader* xyzizzle;
 	//Chunk* chunk;
-	Graphics::Camera camera;
+	Client::Camera camera;
 
 	float xTest;
 	double lastTime;
@@ -69,11 +69,11 @@ public:
 	glm::mat4 chunkTranslationTemp[16][16];
 
 	Common::World* world;
-	ChunkTempData tempdata[16][16];
+	Client::ChunkTempData tempdata[16][16];
 
 	void Initialize();
 	void Update();
 	void Render();
 
-	Game(GLFWwindow* window);
+	Clientx(GLFWwindow* window);
 };

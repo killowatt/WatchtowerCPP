@@ -1,6 +1,7 @@
 #pragma once
 
-class LinkMePlease
-{
-	static int PleaseLinkMe();
-};
+
+	class LinkMePlease
+	{
+		static int PleaseLinkMe();
+	};

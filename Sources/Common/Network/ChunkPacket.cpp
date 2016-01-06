@@ -1,6 +1,6 @@
 #include "ChunkPacket.h"
 
-using namespace Network;
+using namespace Common;
 
 void ChunkPacket::Save(ByteStream& stream)
 {

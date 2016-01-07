@@ -27,7 +27,6 @@ bool Shader::GetCompileStatus(ShaderType type) const
 		return false;
 	return result != 0;
 }
-
 std::string Shader::GetCompileLog(ShaderType type) const
 {
 	int logLength = 0;

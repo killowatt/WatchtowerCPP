@@ -27,7 +27,7 @@ void VertexBuffer::SetBufferData(const std::vector<float>& data, int vertSize, M
 }
 std::vector<float> VertexBuffer::GetBufferData() const
 {
-	return std::vector<float>(bufferData); // TODO: move/copy semantics? see header for better todo i think
+	return std::vector<float>(bufferData); 
 }
 std::size_t VertexBuffer::GetBufferSize() const
 {
@@ -42,11 +42,9 @@ MemoryHint VertexBuffer::GetMemoryHint() const
 	return memoryHint;
 }
 
-VertexBuffer& VertexBuffer::operator=(const VertexBuffer& v)
+VertexBuffer VertexBuffer::operator=(const VertexBuffer& v)
 {
-	VertexBuffer* buffer = new VertexBuffer(); // TODO: this seems like a terrible idea actually. does this ever get deleted? 
-	buffer->SetBufferData(v.bufferData, v.vertexSize, v.memoryHint);
-	return *buffer;
+	return VertexBuffer(v);
 }
 
 VertexBuffer::VertexBuffer()

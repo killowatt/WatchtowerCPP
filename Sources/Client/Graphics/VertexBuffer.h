@@ -25,7 +25,7 @@ namespace Client
 		int GetVertexSize() const;
 		MemoryHint GetMemoryHint() const;
 
-		VertexBuffer& operator=(const VertexBuffer& v); // TODO: we dont really need copies do we? sets a bad precedent for resource management.
+		VertexBuffer operator=(const VertexBuffer& v); // TODO: we dont really need copies do we? sets a bad precedent for resource management.
 		// TODO: maybe instead, we have a method to return a shared_ptr?
 
 		VertexBuffer();

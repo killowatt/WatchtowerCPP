@@ -1,7 +1,6 @@
 #pragma once
 #include "VertexBuffer.h"
 #include <vector>
-#include <map>
 
 namespace Client
 {
@@ -9,7 +8,7 @@ namespace Client
 	{
 		unsigned int vertexArrayObject;
 		unsigned int indexBufferObject;
-		
+
 		std::vector<unsigned int> indexBuffer;
 		MemoryHint indexBufferMemoryHint;
 	public:
@@ -23,7 +22,7 @@ namespace Client
 		std::size_t GetIndexBufferSize() const;
 		MemoryHint GetIndexBufferMemoryHint() const;
 
-		//VertexArray& operator=(const VertexArray&) = delete;
+		VertexArray& operator=(const VertexArray&) = delete;
 
 		VertexArray();
 		VertexArray(const VertexArray&) = delete;

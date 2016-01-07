@@ -1,4 +1,4 @@
-Copyright 2015 William Yates
+Copyright 2016 William Yates
 
 Watchtower uses third party software for certain functionality. The
 required legal notices for the software used are found below.

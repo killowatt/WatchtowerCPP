@@ -17,7 +17,6 @@ void VertexArray::RemoveBuffer(int index)
 	glBindVertexArray(0);
 }
 
-
 unsigned int VertexArray::GetVertexArrayObject() const
 {
 	return vertexArrayObject;
@@ -62,19 +61,11 @@ MemoryHint VertexArray::GetIndexBufferMemoryHint() const
 	return indexBufferMemoryHint;
 }
 
-//VertexArray& VertexArray::operator=(const VertexArray& v)
-//{
-//}
-
 VertexArray::VertexArray()
 {
 	glGenVertexArrays(1, &vertexArrayObject);
 	glGenBuffers(1, &indexBufferObject);
 }
-//VertexArray::VertexArray(const VertexArray& v)
-//{
-//
-//}
 VertexArray::~VertexArray()
 {
 	glDeleteVertexArrays(1, &vertexArrayObject);

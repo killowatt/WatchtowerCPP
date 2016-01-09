@@ -62,7 +62,7 @@ void Clientx::Update()
 		Running = false;
 
 	if (glfwGetKey(Window, GLFW_KEY_H) == GLFW_PRESS)
-	{		
+	{
 		camera.Rotation.x = 0;
 		camera.Rotation.y = 0;
 	}
@@ -73,21 +73,7 @@ void Clientx::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram(xyzizzle->GetProgram());
-
-	for (int x = 0; x < 16; x++)
-	{
-		for (int y = 0; y < 16; y++)
-		{
-			glBindVertexArray(tempdata[x][y].VertexArray.GetVertexArrayObject());
-
-			xyzizzle->Model = tempdata[x][y].Transform;
-			xyzizzle->Update();
-
-			glDrawElements(GL_TRIANGLES, tempdata[x][y].VertexArray.GetIndexBufferSize(),
-				GL_UNSIGNED_INT, nullptr);
-		}
-	}
+	renderer.RenderMap();
 }
 void Clientx::Initialize()
 {
@@ -197,7 +183,7 @@ void Clientx::Initialize()
 		return;
 	}
 
-	world = new Common::World(16, 16);
+	world = new Common::GameMap(16, 16);
 	// Receive chunks
 	int countc = 0;
 	bool receiving = true;
@@ -289,15 +275,9 @@ void Clientx::Initialize()
 	enet_deinitialize();
 
 
-	for (int x = 0; x < 16; x++)
-	{
-		for (int y = 0; y < 16; y++)
-		{
-			tempdata[x][y].Update(world->GetChunk(x, y));
-			tempdata[x][y].Transform =
-				glm::translate(glm::mat4(), glm::vec3(x * 16, 0, y * 16));
-		}
-	}
+	renderer.SetShader(*xyzizzle);
+	renderer.SetMap(*world);
+	renderer.Update();
 
 	// End Network
 

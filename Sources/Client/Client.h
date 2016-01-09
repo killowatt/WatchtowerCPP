@@ -13,8 +13,10 @@
 #include "Graphics/Camera.h"
 #include "Block.h"
 #include "Chunk.h"
-#include "World.h"
+#include <GameMap.h>
 #include "ChunkTempData.h"
+#include "Graphics/Renderer.h"
+#include "Graphics/ChunkRenderData.h"
 
 class TestShader : public Client::Shader
 {
@@ -66,10 +68,12 @@ public:
 	float deltaTime;
 
 	//Chunk* chunks[16];
-	glm::mat4 chunkTranslationTemp[16][16];
+	//glm::mat4 chunkTranslationTemp[16][16];
 
-	Common::World* world;
-	Client::ChunkTempData tempdata[16][16];
+	Common::GameMap* world;
+	Client::Renderer renderer;
+
+	//Common::World* world;
 
 	void Initialize();
 	void Update();

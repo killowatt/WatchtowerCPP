@@ -1,6 +1,5 @@
-#include "ChunkTempData.h"
+#include "ChunkRenderData.h"
 #include <iterator>
-
 using namespace Client;
 
 inline void AppendVertex(std::vector<float>& vector, float x, float y, float z, glm::ivec3& position)
@@ -114,9 +113,11 @@ void GenerateBlockData(
 	}
 }
 
-#define GetBlock(x, y, z) chnk.GetBlock(x, y, z)
+ChunkRenderData::ChunkRenderData()
+{
+}
 
-void ChunkTempData::Update(Common::Chunk& chnk) // TODO: make this more ~elegant~
+void ChunkRenderData::Generate(Common::Chunk& chunk, int x, int y)
 {
 	std::vector<float> vertices;
 	std::vector<float> colors;
@@ -127,40 +128,40 @@ void ChunkTempData::Update(Common::Chunk& chnk) // TODO: make this more ~elegant
 	int indexBufferSize = 0;
 
 	// Calculate the size of the buffers.
-	for (int x = 0; x < CHUNK_WIDTH; x++)
+	for (int x = 0; x < Common::Chunk::CHUNK_WIDTH; x++)
 	{
-		for (int y = 0; y < CHUNK_HEIGHT; y++)
+		for (int y = 0; y < Common::Chunk::CHUNK_HEIGHT; y++)
 		{
-			for (int z = 0; z < CHUNK_DEPTH; z++)
+			for (int z = 0; z < Common::Chunk::CHUNK_DEPTH; z++)
 			{
-				if (!GetBlock(x, y, z).Active)
+				if (!chunk.GetBlock(x, y, z).Active)
 				{
 					continue;
 				}
 
 				bool xPositive = true;
-				if (x < CHUNK_WIDTH - 1)
-					xPositive = !GetBlock(x + 1,y, z).Active;
+				if (x < Common::Chunk::CHUNK_WIDTH - 1)
+					xPositive = !chunk.GetBlock(x + 1, y, z).Active;
 
 				bool xNegative = true;
 				if (x > 0)
-					xNegative = !GetBlock(x - 1, y, z).Active;
+					xNegative = !chunk.GetBlock(x - 1, y, z).Active;
 
 				bool yPositive = true;
-				if (y < CHUNK_HEIGHT - 1)
-					yPositive = !GetBlock(x, y + 1, z).Active;
+				if (y < Common::Chunk::CHUNK_HEIGHT - 1)
+					yPositive = !chunk.GetBlock(x, y + 1, z).Active;
 
 				bool yNegative = true;
 				if (y > 0)
-					yNegative = !GetBlock(x, y - 1, z).Active;
+					yNegative = !chunk.GetBlock(x, y - 1, z).Active;
 
 				bool zPositive = true;
-				if (z < CHUNK_DEPTH - 1)
-					zPositive = !GetBlock(x, y, z + 1).Active;
+				if (z < Common::Chunk::CHUNK_DEPTH - 1)
+					zPositive = !chunk.GetBlock(x, y, z + 1).Active;
 
 				bool zNegative = true;
 				if (z > 0)
-					zNegative = !GetBlock(x, y, z - 1).Active;
+					zNegative = !chunk.GetBlock(x, y, z - 1).Active;
 
 				int sides = xPositive + xNegative + yPositive + yNegative + zPositive + zNegative;
 				vertexBufferSize += sides * 12;
@@ -180,46 +181,46 @@ void ChunkTempData::Update(Common::Chunk& chnk) // TODO: make this more ~elegant
 	indices.reserve(indexBufferSize);
 
 	// Create the vertex data.
-	for (int x = 0; x < CHUNK_WIDTH; x++)
+	for (int x = 0; x < Common::Chunk::CHUNK_WIDTH; x++)
 	{
-		for (int y = 0; y < CHUNK_HEIGHT; y++)
+		for (int y = 0; y < Common::Chunk::CHUNK_HEIGHT; y++)
 		{
-			for (int z = 0; z < CHUNK_DEPTH; z++)
+			for (int z = 0; z < Common::Chunk::CHUNK_DEPTH; z++)
 			{
-				if (!GetBlock(x, y, z).Active)
+				if (!chunk.GetBlock(x, y, z).Active)
 				{
 					continue;
 				}
 
 				bool xPositive = true;
-				if (x < CHUNK_WIDTH - 1)
-					xPositive = !GetBlock(x + 1, y, z).Active;
+				if (x < Common::Chunk::CHUNK_WIDTH - 1)
+					xPositive = !chunk.GetBlock(x + 1, y, z).Active;
 
 				bool xNegative = true;
 				if (x > 0)
-					xNegative = !GetBlock(x - 1, y, z).Active;
+					xNegative = !chunk.GetBlock(x - 1, y, z).Active;
 
 				bool yPositive = true;
-				if (y < CHUNK_HEIGHT - 1)
-					yPositive = !GetBlock(x, y + 1, z).Active;
+				if (y < Common::Chunk::CHUNK_HEIGHT - 1)
+					yPositive = !chunk.GetBlock(x, y + 1, z).Active;
 
 				bool yNegative = true;
 				if (y > 0)
-					yNegative = !GetBlock(x, y - 1, z).Active;
+					yNegative = !chunk.GetBlock(x, y - 1, z).Active;
 
 				bool zPositive = true;
-				if (z < CHUNK_DEPTH - 1)
-					zPositive = !GetBlock(x, y, z + 1).Active;
+				if (z < Common::Chunk::CHUNK_DEPTH - 1)
+					zPositive = !chunk.GetBlock(x, y, z + 1).Active;
 
 				bool zNegative = true;
 				if (z > 0)
-					zNegative = !GetBlock(x, y, z - 1).Active;
+					zNegative = !chunk.GetBlock(x, y, z - 1).Active;
 
 				GenerateBlockData(vertices, colors, normals, indices,
 					xPositive, xNegative,
 					yPositive, yNegative,
 					zPositive, zNegative,
-					glm::ivec3(x, y, z), GetBlock(x, y, z).Color);
+					glm::ivec3(x, y, z), chunk.GetBlock(x, y, z).Color);
 			}
 		}
 	}
@@ -231,11 +232,6 @@ void ChunkTempData::Update(Common::Chunk& chnk) // TODO: make this more ~elegant
 	VertexArray.AttachBuffer(Vertices, 0);
 	VertexArray.AttachBuffer(Colors, 1);
 	VertexArray.AttachBuffer(Normals, 2);
-}
-
-ChunkTempData::ChunkTempData()
-{
-}
-ChunkTempData::~ChunkTempData()
-{
+	Transform = glm::translate(glm::mat4(), 
+		glm::vec3(x * Common::Chunk::CHUNK_WIDTH, 0, y * Common::Chunk::CHUNK_DEPTH));
 }

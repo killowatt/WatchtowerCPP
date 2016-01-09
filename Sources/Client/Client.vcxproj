@@ -90,10 +90,10 @@
   <ItemGroup>
     <ClCompile Include="Assets\lodepng.cpp" />
     <ClCompile Include="Assets\TempShaderLoader.cpp" />
-    <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
+    <ClCompile Include="Graphics\ChunkRenderData.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\VertexArray.cpp" />
@@ -107,6 +107,7 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Graphics\Camera.h" />
+    <ClInclude Include="Graphics\ChunkRenderData.h" />
     <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\VertexArray.h" />

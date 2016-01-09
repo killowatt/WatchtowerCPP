@@ -13,11 +13,11 @@ Chunk& GameMap::GetChunk(unsigned int x, unsigned int y)
 		throw std::exception("out of bounds okay.."); // TODO: make proper error
 	return chunks[width * y + x];
 }
-unsigned int GameMap::GetWidth()
+unsigned int GameMap::GetWidth() const
 {
 	return width;
 }
-unsigned int GameMap::GetHeight()
+unsigned int GameMap::GetHeight() const
 {
 	return height;
 }

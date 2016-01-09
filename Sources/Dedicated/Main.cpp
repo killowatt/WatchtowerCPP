@@ -3,18 +3,18 @@
 #include <enet/enet.h>
 #include <vector>
 #include "lodepng.h"
-#include "World.h"
+#include <GameMap.h>
 #include "Chunk.h"
 #include "Block.h"
 
-#include <World.h>
+#include <GameMap.h>
 #include "ByteStream.h"
 #include "Network/ChunkPacket.h"
 #include "zlib/zlib.h"
 
 using namespace Common;
 
-void SetupChunks(World* world)
+void SetupChunks(GameMap* world)
 {
 	// Here we load in a test heightmap just for kicks okay
 	std::vector<unsigned char> image;
@@ -119,7 +119,7 @@ void ServerChunk()
 	std::cout << "Size of chunk packet is " << sizeof(Common::ChunkPacket) << "\n";
 	std::cout << "Generating chunk data. \n";
 
-	World* world = new World(16, 16);
+	GameMap* world = new GameMap(16, 16);
 	SetupChunks(world);
 
 	std::cout << "Initializing server. \n";

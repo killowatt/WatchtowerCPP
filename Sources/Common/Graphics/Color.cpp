@@ -1,12 +1,7 @@
 #include "Color.h"
 using namespace Common;
 
-Color::Color()
-{
-	R = 0;
-	G = 0;
-	B = 0;
-}
+Color::Color() : Color(0, 0, 0) {}
 Color::Color(uint8_t r, uint8_t g, uint8_t b)
 {
 	R = r;

@@ -89,11 +89,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Assets\lodepng.cpp" />
+    <ClCompile Include="Assets\Shaders\BasicColorShader.cpp" />
     <ClCompile Include="Assets\TempShaderLoader.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
-    <ClCompile Include="Graphics\ChunkRenderData.cpp" />
+    <ClCompile Include="Graphics\MapRenderer.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\VertexArray.cpp" />
@@ -102,12 +103,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assets\lodepng.h" />
+    <ClInclude Include="Assets\Shaders\BasicColorShader.h" />
     <ClInclude Include="Assets\TempShaderLoader.h" />
     <ClInclude Include="ChunkTempData.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Graphics\Camera.h" />
-    <ClInclude Include="Graphics\ChunkRenderData.h" />
+    <ClInclude Include="Graphics\MapRenderer.h" />
     <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\VertexArray.h" />

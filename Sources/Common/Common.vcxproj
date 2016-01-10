@@ -93,6 +93,7 @@
     <ClInclude Include="Graphics\Rectangle.h" />
     <ClInclude Include="Network\ChunkPacket.h" />
     <ClInclude Include="GameMap.h" />
+    <ClInclude Include="Raycast.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="Graphics\Rectangle.cpp" />
     <ClCompile Include="Network\ChunkPacket.cpp" />
     <ClCompile Include="GameMap.cpp" />
+    <ClCompile Include="Raycast.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -117,7 +117,7 @@ ChunkRenderData::ChunkRenderData()
 {
 }
 
-void ChunkRenderData::Generate(Common::Chunk& chunk, int x, int y)
+void MapRenderer::RenderChunk::Generate(const Common::Chunk& chunk, int x, int y)
 {
 	std::vector<float> vertices;
 	std::vector<float> colors;

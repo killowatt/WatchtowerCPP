@@ -4,33 +4,28 @@
 #include <GameMap.h>
 #include "VertexArray.h"
 #include "Shader.h"
-#include "ChunkRenderData.h"
+#include "MapRenderer.h"
 
 namespace Client
 {
 	class Renderer
 	{
 	private:
-		Common::GameMap* currentMap;
-		ChunkRenderData* mapRenderData;
 		Shader* currentShader;
 
 	public:
 		void Render(const VertexArray& vertexArray);
 		void Render(const VertexBuffer& vertexBuffer);
-		void RenderMap();
+
+		MapRenderer mapRenderer; // TODO: temp?
 
 		void Update();
-		void UpdateChunk(unsigned int x, unsigned int y);
 
 		void SetShader(Shader& shader);
 		Shader& GetShader();
 
-		void SetMap(Common::GameMap& map);
-		Common::GameMap& GetMap();
-		void RemoveMap();
-
 		Renderer();
+		Renderer(Common::GameMap* mapPtrTemp);
 		~Renderer();
 	};
 }

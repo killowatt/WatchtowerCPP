@@ -49,10 +49,12 @@ VertexBuffer VertexBuffer::operator=(const VertexBuffer& v)
 
 VertexBuffer::VertexBuffer()
 {
+	vertexSize = 0;
 	glGenBuffers(1, &vertexBufferObject);
 }
 VertexBuffer::VertexBuffer(const VertexBuffer& v)
 {
+	vertexSize = 0;
 	glGenBuffers(1, &vertexBufferObject);
 	SetBufferData(v.bufferData, v.vertexSize, v.memoryHint);
 }

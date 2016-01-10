@@ -1,10 +1,19 @@
+#include "Raycast.h"
+#include <cmath>
+#include "Graphics/Color.h"
+#include "GameMap.h"
+using namespace Common;
+
+glm::ivec2 Raycast::chunkToUpdate = glm::ivec2(0, 0);
+Common::GameMap* Raycast::world = nullptr;
+
 float mod(float value, float modulus) // So temporary
 {
 	//return value % modulus;
 	//return fmod(value, modulus);
 	return fmod((fmod(value, modulus) + modulus), modulus);
 }
-bool Clientx::callback(int xCopy, int yCopy, int zCopy,
+bool callback(int xCopy, int yCopy, int zCopy,
 	glm::ivec3 face, glm::vec3 direction, bool active)
 {
 	int cx = (int)floor(xCopy / 16);
@@ -19,7 +28,7 @@ bool Clientx::callback(int xCopy, int yCopy, int zCopy,
 
 	if ((bx > -1 && bx < 16) && (by > -1 && by < 128) && (bz > -1 && bz < 16))
 	{
-		if (world->GetChunk(cx, cy).GetBlock(bx, by, bz).Active)
+		if (Raycast::world->GetChunk(cx, cy).GetBlock(bx, by, bz).Active)
 		{
 			if (active)
 			{
@@ -35,7 +44,7 @@ bool Clientx::callback(int xCopy, int yCopy, int zCopy,
 
 			if (!active)
 			{
-				world->GetChunk(cx, cy).GetBlock(bx, by, bz).Active = false;
+				Raycast::world->GetChunk(cx, cy).GetBlock(bx, by, bz).Active = false;
 			}
 			if (active)
 			{
@@ -48,19 +57,13 @@ bool Clientx::callback(int xCopy, int yCopy, int zCopy,
 
 				if ((bx > -1 && bx < 16) && (by > -1 && by < 128) && (bz > -1 && bz < 16))
 				{
-					world->GetChunk(cx, cy).GetBlock(bx, by, bz).Active = true;
-					world->GetChunk(cx, cy).GetBlock(bx, by, bz).Color = Color(255, 255, 255);
+					Raycast::world->GetChunk(cx, cy).GetBlock(bx, by, bz).Active = true;
+					Raycast::world->GetChunk(cx, cy).GetBlock(bx, by, bz).Color = Color(255, 255, 255);
 				}
 			}
 
-			chunkToUpdate = glm::ivec2(cx, cy);
+			Raycast::chunkToUpdate = glm::ivec2(cx, cy);
 
-			std::cout << "dir " << camera.Direction.x << " " <<
-				camera.Direction.y << " " << camera.Direction.z << "\n";
-
-			std::cout << "chunk " << cx << " " << cy << "\n";
-			std::cout << "block " << bx << " " << by << " " << bz << "\n";
-			std::cout << "copy " << xCopy << " " << yCopy << " " << zCopy << "\n";
 			return true;
 		}
 	}
@@ -115,13 +118,15 @@ static int signum(float x)
 
 //    GL.End();
 //}
-void (glm::vec3 direction, float radius, bool active)
+void Raycast::RaycastBlock(glm::vec3 direction, float radius, bool active, glm::vec3 cam, Common::GameMap* world)
 {
+	Raycast::world = world;
+	Raycast::chunkToUpdate = glm::ivec2(0, 0);
 	glm::vec3 origin(0, 0, 0);
 
-	int x = (int)floor(camera.Position.x);
-	int y = (int)floor(camera.Position.y);
-	int z = (int)floor(camera.Position.z);
+	int x = (int)floor(cam.x);
+	int y = (int)floor(cam.y);
+	int z = (int)floor(cam.z);
 
 	int wx = 256;
 	int wy = 256;
@@ -135,9 +140,9 @@ void (glm::vec3 direction, float radius, bool active)
 	int stepy = signum(dy);
 	int stepz = signum(dz);
 
-	float tMaxx = intbound(camera.Position.x, dx);
-	float tMaxy = intbound(camera.Position.y, dy);
-	float tMaxz = intbound(camera.Position.z, dz);
+	float tMaxx = intbound(cam.x, dx);
+	float tMaxy = intbound(cam.y, dy);
+	float tMaxz = intbound(cam.z, dz);
 
 	float tDeltax = stepx / dx;
 	float tDeltay = stepy / dy;

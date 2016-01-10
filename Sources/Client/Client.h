@@ -16,7 +16,6 @@
 #include <GameMap.h>
 #include "ChunkTempData.h"
 #include "Graphics/Renderer.h"
-#include "Graphics/ChunkRenderData.h"
 #include "Assets/Shaders/BasicColorShader.h"
 
 

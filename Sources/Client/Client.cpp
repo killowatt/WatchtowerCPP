@@ -8,6 +8,7 @@
 #include "ByteStream.h"
 #include "zlib/zlib.h"
 #include <cmath>
+#include <Raycast.h>
 
 using namespace Common;
 
@@ -75,13 +76,13 @@ void Clientx::Update()
 
 		if (glfwGetMouseButton(Window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
 		{
-				raycast(camera.Direction * 8.0f, 8, false);
-				renderer.UpdateChunk(chunkToUpdate.x, chunkToUpdate.y);
+			Raycast::RaycastBlock(camera.Direction * 8.0f, 8, false, camera.Position, world);
+			renderer.mapRenderer.UpdateChunk(Raycast::chunkToUpdate.x, Raycast::chunkToUpdate.y);
 		}
 		else if (glfwGetMouseButton(Window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
 		{
-				raycast(camera.Direction * 8.0f, 8, true);
-				renderer.UpdateChunk(chunkToUpdate.x, chunkToUpdate.y);
+			Raycast::RaycastBlock(camera.Direction * 8.0f, 8, true, camera.Position, world);
+			renderer.mapRenderer.UpdateChunk(Raycast::chunkToUpdate.x, Raycast::chunkToUpdate.y);
 		}
 	}
 }
@@ -89,7 +90,7 @@ void Clientx::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	renderer.RenderMap();
+	renderer.mapRenderer.Render(renderer);
 }
 void Clientx::Initialize()
 {
@@ -290,10 +291,10 @@ void Clientx::Initialize()
 
 	enet_deinitialize();
 
-
+	renderer = Client::Renderer(world);
 	renderer.SetShader(*xyzizzle);
-	renderer.SetMap(*world);
 	renderer.Update();
+	renderer.mapRenderer.UpdateMap();
 
 	// End Network
 
@@ -303,6 +304,8 @@ void Clientx::Initialize()
 	std::cout << xyzizzle->GetCompileLog(Client::ShaderType::Fragment) << std::endl;
 
 	glfwSetCursorPos(Window, 1280 / 2, 720 / 2);
+	
+
 }
 
 Clientx::Clientx(GLFWwindow* window)

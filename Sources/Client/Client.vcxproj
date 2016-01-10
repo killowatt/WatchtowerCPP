@@ -94,6 +94,7 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
+    <ClCompile Include="Graphics\MapRenderData.cpp" />
     <ClCompile Include="Graphics\MapRenderer.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />

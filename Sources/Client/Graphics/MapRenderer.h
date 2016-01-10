@@ -1,11 +1,12 @@
 #pragma once
 #include <glm/gtc/matrix_transform.hpp>
-#include <Chunk.h>
+#include <GameMap.h>
 #include "VertexArray.h"
 
 namespace Client
 {
-	struct MapRenderer
+	class Renderer;
+	class MapRenderer
 	{
 	private:
 		struct RenderChunk
@@ -15,16 +16,20 @@ namespace Client
 			VertexBuffer Colors;
 			VertexBuffer Normals;
 
-			void Generate(const Common::Chunk& chunk);
+			void Generate(Common::Chunk& chunk);
 		};
 
-	public:
+		Common::GameMap* map;
 		RenderChunk* vertexData;
-		glm::mat4x4* chunkTransforms;
+		glm::mat4x4* chunkTransforms; 
 
-		void SetMap();
+	public:
+		void UpdateMap();
+		void UpdateChunk(int x, int y);
+		void Render(Renderer& renderer);
 
 		MapRenderer();
+		MapRenderer(Common::GameMap* staticMap); // TODO: point to world map eventually
 		~MapRenderer();
 	};
 }

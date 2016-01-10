@@ -21,6 +21,7 @@ namespace Client
 		void RenderMap();
 
 		void Update();
+		void UpdateChunk(unsigned int x, unsigned int y);
 
 		void SetShader(Shader& shader);
 		Shader& GetShader();

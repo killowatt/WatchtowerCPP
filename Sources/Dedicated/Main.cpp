@@ -46,7 +46,7 @@ void SetupChunks(GameMap* world)
 					{
 						world->GetChunk(cx, cy).GetBlock(bx, bz, by).Active = true;
 						world->GetChunk(cx, cy).GetBlock(bx, bz, by).Color =
-							Common::Color(0, bz * 2, 147);
+							Common::Color(bz * 2, 40, 94);
 					}
 				}
 			}

@@ -70,6 +70,9 @@ public:
 	//Chunk* chunks[16];
 	//glm::mat4 chunkTranslationTemp[16][16];
 
+	glm::ivec2 chunkToUpdate;
+	void raycast(glm::vec3 direction, float radius, bool active);
+	bool callback(int xCopy, int yCopy, int zCopy, glm::ivec3 face, glm::vec3 direction, bool active);
 	Common::GameMap* world;
 	Client::Renderer renderer;
 

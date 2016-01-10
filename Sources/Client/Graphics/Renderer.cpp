@@ -38,6 +38,10 @@ void Renderer::Update()
 		}
 	}
 }
+void Renderer::UpdateChunk(unsigned int x, unsigned int y)
+{
+	mapRenderData[currentMap->GetWidth() * y + x].Generate(currentMap->GetChunk(x, y), x, y);
+}
 
 void Renderer::SetShader(Shader& shader)
 {

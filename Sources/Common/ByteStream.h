@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 
-namespace Common
+namespace Watchtower
 {
 	class ByteStream
 	{

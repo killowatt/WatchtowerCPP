@@ -1,5 +1,5 @@
 #include "Renderer.h"
-using namespace Client;
+using namespace Watchtower;
 
 void Renderer::Render(const VertexArray& vertexArray)
 {
@@ -26,7 +26,7 @@ Shader& Renderer::GetShader()
 }
 
 Renderer::Renderer() {}
-Renderer::Renderer(Common::GameMap* mapPtrTemp)
+Renderer::Renderer(GameMap* mapPtrTemp)
 {
 	mapRenderer = MapRenderer(mapPtrTemp);
 }

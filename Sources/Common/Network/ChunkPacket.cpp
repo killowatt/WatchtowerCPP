@@ -1,6 +1,6 @@
 #include "ChunkPacket.h"
 
-using namespace Common;
+using namespace Watchtower;
 
 void ChunkPacket::Save(ByteStream& stream)
 {

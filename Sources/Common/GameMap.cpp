@@ -1,7 +1,7 @@
 #include "GameMap.h"
 #include <exception> // TODO: remove 
 
-using namespace Common;
+using namespace Watchtower;
 
 Chunk* const GameMap::GetData()
 {

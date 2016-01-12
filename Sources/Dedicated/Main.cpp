@@ -12,7 +12,7 @@
 #include "Network/ChunkPacket.h"
 #include "zlib/zlib.h"
 
-using namespace Common;
+using namespace Watchtower;
 
 void SetupChunks(GameMap* world)
 {
@@ -45,8 +45,8 @@ void SetupChunks(GameMap* world)
 						r[(width * (bx + (cx * 16))) + (by + (cy * 16))] / 1; bz++)
 					{
 						world->GetChunk(cx, cy).GetBlock(bx, bz, by).Active = true;
-						world->GetChunk(cx, cy).GetBlock(bx, bz, by).Color =
-							Common::Color(bz * 2, 40, 94);
+						world->GetChunk(cx, cy).GetBlock(bx, bz, by).Color = 
+							Color(bz * 2, 40, 94);
 					}
 				}
 			}
@@ -116,7 +116,7 @@ void Client()
 }
 void ServerChunk()
 {
-	std::cout << "Size of chunk packet is " << sizeof(Common::ChunkPacket) << "\n";
+	std::cout << "Size of chunk packet is " << sizeof(ChunkPacket) << "\n";
 	std::cout << "Generating chunk data. \n";
 
 	GameMap* world = new GameMap(16, 16);
@@ -173,15 +173,15 @@ void ServerChunk()
 
 	for (int i = 0; i < 256; i++)
 	{
-		unsigned char* out = new unsigned char[sizeof(Common::Chunk)];
+		unsigned char* out = new unsigned char[sizeof(Chunk)];
 
 		z_stream defstream;
 		defstream.zalloc = Z_NULL;
 		defstream.zfree = Z_NULL;
 		defstream.opaque = Z_NULL;
-		defstream.avail_in = sizeof(Common::Chunk);
+		defstream.avail_in = sizeof(Chunk);
 		defstream.next_in = (Bytef*)&world->GetData()[i];
-		defstream.avail_out = sizeof(Common::Chunk);
+		defstream.avail_out = sizeof(Chunk);
 		defstream.next_out = (Bytef*)out;
 
 		deflateInit(&defstream, Z_DEFAULT_COMPRESSION);

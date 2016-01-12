@@ -1,5 +1,5 @@
 #include "MapRenderer.h"
-using namespace Client;
+using namespace Watchtower;
 
 static bool xPositive;
 static bool xNegative;
@@ -7,10 +7,10 @@ static bool yPositive;
 static bool yNegative;
 static bool zPositive;
 static bool zNegative;
-inline static void UpdateActiveFaces(Common::Chunk& chunk, int x, int y, int z)
+inline static void UpdateActiveFaces(Chunk& chunk, int x, int y, int z)
 {
 	xPositive = true;
-	if (x < Common::Chunk::CHUNK_WIDTH - 1)
+	if (x < Chunk::CHUNK_WIDTH - 1)
 		xPositive = !chunk.GetBlock(x + 1, y, z).Active;
 
 	xNegative = true;
@@ -18,7 +18,7 @@ inline static void UpdateActiveFaces(Common::Chunk& chunk, int x, int y, int z)
 		xNegative = !chunk.GetBlock(x - 1, y, z).Active;
 
 	yPositive = true;
-	if (y < Common::Chunk::CHUNK_HEIGHT - 1)
+	if (y < Chunk::CHUNK_HEIGHT - 1)
 		yPositive = !chunk.GetBlock(x, y + 1, z).Active;
 
 	yNegative = true;
@@ -26,7 +26,7 @@ inline static void UpdateActiveFaces(Common::Chunk& chunk, int x, int y, int z)
 		yNegative = !chunk.GetBlock(x, y - 1, z).Active;
 
 	zPositive = true;
-	if (z < Common::Chunk::CHUNK_DEPTH - 1)
+	if (z < Chunk::CHUNK_DEPTH - 1)
 		zPositive = !chunk.GetBlock(x, y, z + 1).Active;
 
 	zNegative = true;
@@ -76,7 +76,7 @@ void GenerateBlockData(
 	std::vector<float>& colors,
 	std::vector<float>& normals,
 	std::vector<unsigned int>& indices,
-	glm::ivec3& position, Common::Color color)
+	glm::ivec3& position, Color color)
 {
 	if (xPositive)
 	{
@@ -145,7 +145,7 @@ void GenerateBlockData(
 		AppendIndices(indices, vertices);
 	}
 }
-void MapRenderer::RenderChunk::Generate(Common::Chunk& chunk)
+void MapRenderer::RenderChunk::Generate(Chunk& chunk)
 {
 	std::vector<float> vertices;
 	std::vector<float> colors;
@@ -156,11 +156,11 @@ void MapRenderer::RenderChunk::Generate(Common::Chunk& chunk)
 	int indexBufferSize = 0;
 
 	// Calculate the size of the buffers.
-	for (int x = 0; x < Common::Chunk::CHUNK_WIDTH; x++)
+	for (int x = 0; x < Chunk::CHUNK_WIDTH; x++)
 	{
-		for (int y = 0; y < Common::Chunk::CHUNK_HEIGHT; y++)
+		for (int y = 0; y < Chunk::CHUNK_HEIGHT; y++)
 		{
-			for (int z = 0; z < Common::Chunk::CHUNK_DEPTH; z++)
+			for (int z = 0; z < Chunk::CHUNK_DEPTH; z++)
 			{
 				if (!chunk.GetBlock(x, y, z).Active)
 				{
@@ -184,11 +184,11 @@ void MapRenderer::RenderChunk::Generate(Common::Chunk& chunk)
 	indices.reserve(indexBufferSize);
 
 	// Create the vertex data.
-	for (int x = 0; x < Common::Chunk::CHUNK_WIDTH; x++)
+	for (int x = 0; x < Chunk::CHUNK_WIDTH; x++)
 	{
-		for (int y = 0; y < Common::Chunk::CHUNK_HEIGHT; y++)
+		for (int y = 0; y < Chunk::CHUNK_HEIGHT; y++)
 		{
-			for (int z = 0; z < Common::Chunk::CHUNK_DEPTH; z++)
+			for (int z = 0; z < Chunk::CHUNK_DEPTH; z++)
 			{
 				if (!chunk.GetBlock(x, y, z).Active)
 				{
@@ -201,10 +201,10 @@ void MapRenderer::RenderChunk::Generate(Common::Chunk& chunk)
 		}
 	}
 
-	Vertices.SetBufferData(vertices, 3, Client::MemoryHint::Dynamic);
-	Colors.SetBufferData(colors, 3, Client::MemoryHint::Dynamic);
-	Normals.SetBufferData(normals, 3, Client::MemoryHint::Dynamic);
-	VertexArray.SetIndexBuffer(indices, Client::MemoryHint::Dynamic);
+	Vertices.SetBufferData(vertices, 3, MemoryHint::Dynamic);
+	Colors.SetBufferData(colors, 3, MemoryHint::Dynamic);
+	Normals.SetBufferData(normals, 3, MemoryHint::Dynamic);
+	VertexArray.SetIndexBuffer(indices, MemoryHint::Dynamic);
 	VertexArray.AttachBuffer(Vertices, 0);
 	VertexArray.AttachBuffer(Colors, 1);
 	VertexArray.AttachBuffer(Normals, 2);

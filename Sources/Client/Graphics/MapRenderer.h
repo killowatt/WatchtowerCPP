@@ -3,7 +3,7 @@
 #include <GameMap.h>
 #include "VertexArray.h"
 
-namespace Client
+namespace Watchtower
 {
 	class Renderer;
 	class MapRenderer
@@ -16,12 +16,12 @@ namespace Client
 			VertexBuffer Colors;
 			VertexBuffer Normals;
 
-			void Generate(Common::Chunk& chunk);
+			void Generate(Chunk& chunk);
 		};
 
-		Common::GameMap* map;
+		GameMap* map;
 		RenderChunk* vertexData;
-		glm::mat4x4* chunkTransforms; 
+		glm::mat4x4* chunkTransforms;
 
 	public:
 		void UpdateMap();
@@ -29,7 +29,7 @@ namespace Client
 		void Render(Renderer& renderer);
 
 		MapRenderer();
-		MapRenderer(Common::GameMap* staticMap); // TODO: point to world map eventually
+		MapRenderer(GameMap* staticMap); // TODO: point to world map eventually
 		~MapRenderer();
 	};
 }

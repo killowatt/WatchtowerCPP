@@ -10,7 +10,7 @@
 #include <cmath>
 #include <Raycast.h>
 
-using namespace Common;
+using namespace Watchtower;
 
 void Clientx::Update()
 {
@@ -101,13 +101,13 @@ void Clientx::Initialize()
 
 	glClearColor(20.0f / 255, 20.0f / 255, 20.0f / 255, 1.0f);
 
-	camera = Client::Camera();
+	camera = Camera();
 	camera.Position.z = -4;
 	//camera.Rotation.y = 3.14159;
 	
 
 	// temp
-	xyzizzle = new Client::BasicColorShader(camera);
+	xyzizzle = new BasicColorShader(camera);
 
 	glUseProgram(xyzizzle->GetProgram());
 	xyzizzle->Initialize();
@@ -145,7 +145,7 @@ void Clientx::Initialize()
 	//				{
 	//					world->GetChunk(cx, cy).GetBlock(bx, bz, by).Active = true;
 	//					world->GetChunk(cx, cy).GetBlock(bx, bz, by).Color =
-	//						Client::Color(bz * 2, 40, 94);
+	//						Color(bz * 2, 40, 94);
 	//				}
 	//			}
 	//		}
@@ -200,7 +200,7 @@ void Clientx::Initialize()
 		return;
 	}
 
-	world = new Common::GameMap(16, 16);
+	world = new GameMap(16, 16);
 	// Receive chunks
 	int countc = 0;
 	bool receiving = true;
@@ -233,15 +233,15 @@ void Clientx::Initialize()
 				//Block* blokkszz = new Block[16 * 16];
 				//chunkszz = (Chunk*)event.packet->data
 
-				Common::Chunk* chhh = new Common::Chunk();
+				Chunk* chhh = new Chunk();
 
 				z_stream infstream;
 				infstream.zalloc = Z_NULL;
 				infstream.zfree = Z_NULL;
 				infstream.opaque = Z_NULL;
-				infstream.avail_in = sizeof(Common::Chunk);
+				infstream.avail_in = sizeof(Chunk);
 				infstream.next_in = (Bytef*)event.packet->data;
-				infstream.avail_out = sizeof(Common::Chunk);
+				infstream.avail_out = sizeof(Chunk);
 				infstream.next_out = (Bytef*)chhh;
 
 				inflateInit(&infstream);
@@ -291,7 +291,7 @@ void Clientx::Initialize()
 
 	enet_deinitialize();
 
-	renderer = Client::Renderer(world);
+	renderer = Renderer(world);
 	renderer.SetShader(*xyzizzle);
 	renderer.Update();
 	renderer.mapRenderer.UpdateMap();
@@ -300,8 +300,8 @@ void Clientx::Initialize()
 
 	std::cout << "INITIALIzED!!!!!!!!!! \n";
 	std::cout << "GL Error State: " << glGetError() << std::endl;
-	std::cout << xyzizzle->GetCompileLog(Client::ShaderType::Vertex) << std::endl;
-	std::cout << xyzizzle->GetCompileLog(Client::ShaderType::Fragment) << std::endl;
+	std::cout << xyzizzle->GetCompileLog(ShaderType::Vertex) << std::endl;
+	std::cout << xyzizzle->GetCompileLog(ShaderType::Fragment) << std::endl;
 
 	glfwSetCursorPos(Window, 1280 / 2, 720 / 2);
 	

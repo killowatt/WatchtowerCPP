@@ -1,7 +1,7 @@
 #pragma once
 #include "Block.h"
 
-namespace Common
+namespace Watchtower
 {
 	class Chunk
 	{

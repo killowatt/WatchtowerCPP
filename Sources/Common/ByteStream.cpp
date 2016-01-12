@@ -1,7 +1,7 @@
 #include "ByteStream.h"
 #include <cstring>
 #include <cwchar>
-using namespace Common;
+using namespace Watchtower;
 
 const char* const ByteStream::GetData()
 {

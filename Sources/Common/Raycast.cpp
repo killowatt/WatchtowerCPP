@@ -2,10 +2,10 @@
 #include <cmath>
 #include "Graphics/Color.h"
 #include "GameMap.h"
-using namespace Common;
+using namespace Watchtower;
 
 glm::ivec2 Raycast::chunkToUpdate = glm::ivec2(0, 0);
-Common::GameMap* Raycast::world = nullptr;
+GameMap* Raycast::world = nullptr;
 
 float mod(float value, float modulus) // So temporary
 {
@@ -118,7 +118,7 @@ static int signum(float x)
 
 //    GL.End();
 //}
-void Raycast::RaycastBlock(glm::vec3 direction, float radius, bool active, glm::vec3 cam, Common::GameMap* world)
+void Raycast::RaycastBlock(glm::vec3 direction, float radius, bool active, glm::vec3 cam, GameMap* world)
 {
 	Raycast::world = world;
 	Raycast::chunkToUpdate = glm::ivec2(0, 0);

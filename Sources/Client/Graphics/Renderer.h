@@ -6,7 +6,7 @@
 #include "Shader.h"
 #include "MapRenderer.h"
 
-namespace Client
+namespace Watchtower
 {
 	class Renderer
 	{
@@ -25,7 +25,7 @@ namespace Client
 		Shader& GetShader();
 
 		Renderer();
-		Renderer(Common::GameMap* mapPtrTemp);
+		Renderer(GameMap* mapPtrTemp);
 		~Renderer();
 	};
 }

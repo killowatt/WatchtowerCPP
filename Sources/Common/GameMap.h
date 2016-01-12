@@ -1,7 +1,7 @@
 #pragma once
 #include "Chunk.h"
 
-namespace Common
+namespace Watchtower
 {
 	class GameMap
 	{

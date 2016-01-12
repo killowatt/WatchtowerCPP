@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 #include <Graphics/Rectangle.h>
 
-namespace Client
+namespace Watchtower
 {
 	enum class CameraMode
 	{
@@ -29,7 +29,7 @@ namespace Client
 		float ZFar;
 
 		bool OrthoDepthEnabled;
-		Common::Rectangle OrthoDimensions;
+		Rectangle OrthoDimensions;
 
 		void Update();
 

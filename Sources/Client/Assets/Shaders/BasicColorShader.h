@@ -3,9 +3,9 @@
 #include "../../Graphics/Shader.h"
 #include "../TempShaderLoader.h"
 
-namespace Client
+namespace Watchtower
 {
-	class BasicColorShader : public Client::Shader
+	class BasicColorShader : public Shader
 	{
 	public:
 		int modelLocation;
@@ -15,6 +15,6 @@ namespace Client
 		void Initialize();
 		void Update();
 
-		BasicColorShader(Client::Camera& camera);
+		BasicColorShader(Camera& camera);
 	};
 }

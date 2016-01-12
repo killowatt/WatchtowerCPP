@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Client
+namespace Watchtower
 {
 	class ClientState
 	{

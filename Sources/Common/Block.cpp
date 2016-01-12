@@ -1,7 +1,7 @@
 #include "Block.h"
-using namespace Common;
+using namespace Watchtower;
 
-Block::Block(bool active, Common::Color color)
+Block::Block(bool active, Watchtower::Color color)
 {
 	Active = active;
 	Color = color;

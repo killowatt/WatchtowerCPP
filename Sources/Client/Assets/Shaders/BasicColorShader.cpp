@@ -1,5 +1,5 @@
 #include "BasicColorShader.h"
-using namespace Client;
+using namespace Watchtower;
 
 void BasicColorShader::Initialize()
 {
@@ -17,8 +17,8 @@ void BasicColorShader::Update()
 	glUniformMatrix4fv(viewLocation, 1, false, &View[0][0]);
 	glUniformMatrix4fv(projectionLocation, 1, false, &Projection[0][0]);
 }
-BasicColorShader::BasicColorShader(Client::Camera& camera) 
-	: Client::Shader(ReadFile("Test.v"), ReadFile("Test.f"),
-		Client::ShaderState::Static, camera)
+BasicColorShader::BasicColorShader(Camera& camera) 
+	: Shader(ReadFile("Test.v"), ReadFile("Test.f"),
+		ShaderState::Static, camera)
 {
 }

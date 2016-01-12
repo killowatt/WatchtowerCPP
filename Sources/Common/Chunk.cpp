@@ -1,6 +1,6 @@
 #include "Chunk.h"
 
-using namespace Common;
+using namespace Watchtower;
 
 Block& Chunk::GetBlock(int x, int y, int z)
 {

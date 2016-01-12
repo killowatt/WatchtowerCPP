@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Common
+namespace Watchtower
 {
 	class Rectangle // TODO: this is pretty primitive. consider expanding use, altho we dont need it
 	{

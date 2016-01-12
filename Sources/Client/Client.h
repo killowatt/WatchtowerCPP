@@ -18,6 +18,7 @@
 #include "Graphics/Renderer.h"
 #include "Assets/Shaders/BasicColorShader.h"
 
+using namespace Watchtower;
 
 class Clientx
 {
@@ -26,9 +27,9 @@ public:
 	bool Running;
 
 	// Temp tests
-	Client::BasicColorShader* xyzizzle;
+	BasicColorShader* xyzizzle;
 	//Chunk* chunk;
-	Client::Camera camera;
+	Camera camera;
 
 	float xTest;
 	double lastTime;
@@ -41,10 +42,10 @@ public:
 	glm::ivec2 chunkToUpdate;
 	void raycast(glm::vec3 direction, float radius, bool active);
 	bool callback(int xCopy, int yCopy, int zCopy, glm::ivec3 face, glm::vec3 direction, bool active);
-	Common::GameMap* world;
-	Client::Renderer renderer;
+	GameMap* world;
+	Renderer renderer;
 
-	//Common::World* world;
+	//World* world;
 
 	void Initialize();
 	void Update();

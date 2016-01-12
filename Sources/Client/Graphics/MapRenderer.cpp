@@ -1,6 +1,6 @@
 #include "MapRenderer.h"
 #include "Renderer.h"
-using namespace Client;
+using namespace Watchtower;
 
 void MapRenderer::UpdateMap()
 {
@@ -21,7 +21,7 @@ void MapRenderer::UpdateMap()
 		{
 			vertexData[map->GetWidth() * y + x].Generate(map->GetChunk(x, y));
 			chunkTransforms[map->GetWidth() * y + x] = glm::translate(glm::mat4(),
-				glm::vec3(x * Common::Chunk::CHUNK_WIDTH, 0, y * Common::Chunk::CHUNK_DEPTH));
+				glm::vec3(x * Chunk::CHUNK_WIDTH, 0, y * Chunk::CHUNK_DEPTH));
 		}
 	}
 }
@@ -48,7 +48,7 @@ MapRenderer::MapRenderer()
 	vertexData = nullptr;
 	chunkTransforms = nullptr;
 }
-MapRenderer::MapRenderer(Common::GameMap* staticMap) : MapRenderer()
+MapRenderer::MapRenderer(GameMap* staticMap) : MapRenderer()
 {
 	map = staticMap;
 }

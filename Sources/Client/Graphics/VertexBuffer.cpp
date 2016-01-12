@@ -1,6 +1,6 @@
 #include "VertexBuffer.h"
 #include <GL/glew.h>
-using namespace Client;
+using namespace Watchtower;
 
 unsigned int VertexBuffer::GetVertexBufferObject() const 
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-namespace Common
+namespace Watchtower
 {
 	struct Color
 	{

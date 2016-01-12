@@ -6,7 +6,7 @@
 #include "Graphics/VertexArray.h"
 #include "Graphics/VertexBuffer.h"
 
-namespace Client
+namespace Watchtower
 {
 	class ChunkTempData
 	{
@@ -17,13 +17,13 @@ namespace Client
 
 		glm::mat4 Transform;
 
-		Client::VertexArray VertexArray;
-		Client::VertexBuffer Vertices;
-		Client::VertexBuffer Colors;
-		Client::VertexBuffer Normals;
+		VertexArray VertexArray;
+		VertexBuffer Vertices;
+		VertexBuffer Colors;
+		VertexBuffer Normals;
 
 
-		void Update(Common::Chunk& chnk);
+		void Update(Chunk& chnk);
 
 		ChunkTempData();
 		~ChunkTempData();

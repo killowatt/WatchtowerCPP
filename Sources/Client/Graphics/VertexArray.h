@@ -2,7 +2,7 @@
 #include "VertexBuffer.h"
 #include <vector>
 
-namespace Client
+namespace Watchtower
 {
 	class VertexArray
 	{

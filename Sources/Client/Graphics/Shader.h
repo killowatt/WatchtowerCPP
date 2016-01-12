@@ -3,7 +3,7 @@
 #include <string>
 #include "Camera.h"
 
-namespace Client
+namespace Watchtower
 {
 	enum class ShaderState
 	{

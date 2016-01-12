@@ -1,7 +1,7 @@
 #include "Shader.h"
 #include <GL/glew.h>
 
-using namespace Client;
+using namespace Watchtower;
                                         // TODO: canidate for inline probs
 unsigned int Shader::GetProgram() const // TODO: evaluate the speed of these methods vs having public fields.
 {

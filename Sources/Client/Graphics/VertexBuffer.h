@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-namespace Client
+namespace Watchtower
 {
 	enum class MemoryHint
 	{

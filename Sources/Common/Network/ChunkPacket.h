@@ -2,7 +2,7 @@
 #include "../ByteStream.h"
 #include "../Block.h"
 
-namespace Common
+namespace Watchtower
 {
 	struct ChunkPacket // We arent worried about optimization of network right now.
 	{

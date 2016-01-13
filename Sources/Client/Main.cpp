@@ -2,11 +2,19 @@
 #include <GLFW/glfw3.h>
 #include "Client.h"
 
-#include "Entity.h"
-#include "EntityManager.h"
+#include "Settings.h"
 
 int main() 
 { // TODO: move initialization to their subsystems..
+
+	//Settings set;
+	//set.WindowWidth = 1920;
+	//set.WindowHeight = 1080;
+	//set.Save();
+
+	Settings y = Settings::Load();
+
+
 	if (!glfwInit())
 		return 1; // GLFW failed to initialize.
 	 

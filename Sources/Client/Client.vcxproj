@@ -106,7 +106,6 @@
     <ClInclude Include="Assets\lodepng.h" />
     <ClInclude Include="Assets\Shaders\BasicColorShader.h" />
     <ClInclude Include="Assets\TempShaderLoader.h" />
-    <ClInclude Include="ChunkTempData.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Graphics\Camera.h" />

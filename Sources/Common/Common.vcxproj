@@ -93,19 +93,16 @@
     <ClInclude Include="Graphics\Color.h" />
     <ClInclude Include="ByteStream.h" />
     <ClInclude Include="Graphics\Rectangle.h" />
-    <ClInclude Include="Network\ChunkPacket.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="Raycast.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Chunk.cpp" />
-    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Graphics\Color.cpp" />
     <ClCompile Include="ByteStream.cpp" />
     <ClCompile Include="Graphics\Rectangle.cpp" />
-    <ClCompile Include="Network\ChunkPacket.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="Raycast.cpp" />
   </ItemGroup>

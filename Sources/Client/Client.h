@@ -14,7 +14,6 @@
 #include "Block.h"
 #include "Chunk.h"
 #include <GameMap.h>
-#include "ChunkTempData.h"
 #include "Graphics/Renderer.h"
 #include "Assets/Shaders/BasicColorShader.h"
 

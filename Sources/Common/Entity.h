@@ -7,11 +7,10 @@ namespace Watchtower
 	public:
 		bool Active;
 		bool Visible;
-		bool Finished;
 
-		virtual void Update() { }
+		virtual bool Update() { return false; }
 		virtual void Render() { }
 
-		Entity() { }
+		Entity() : Active(false), Visible(false) { }
 	};
 }

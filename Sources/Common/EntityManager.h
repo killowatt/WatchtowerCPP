@@ -9,15 +9,12 @@ namespace Watchtower
 	{
 	private:
 		std::vector<std::unique_ptr<Entity>> entities;
-
-
 	public:
 		void AddEntity(Entity* entity);
-		template<class Type> Type& GetEntity(
 
 		void Update();
 		void Render();
 
-		EntityManager();
+		EntityManager() { }
 	};
 }

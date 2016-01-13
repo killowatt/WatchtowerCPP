@@ -9,7 +9,6 @@
 
 #include <GameMap.h>
 #include "ByteStream.h"
-#include "Network/ChunkPacket.h"
 #include "zlib/zlib.h"
 
 using namespace Watchtower;
@@ -116,7 +115,6 @@ void Client()
 }
 void ServerChunk()
 {
-	std::cout << "Size of chunk packet is " << sizeof(ChunkPacket) << "\n";
 	std::cout << "Generating chunk data. \n";
 
 	GameMap* world = new GameMap(16, 16);

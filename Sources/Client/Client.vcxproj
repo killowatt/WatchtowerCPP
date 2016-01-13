@@ -92,6 +92,7 @@
     <ClCompile Include="Assets\Shaders\BasicColorShader.cpp" />
     <ClCompile Include="Assets\TempShaderLoader.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="OldClient.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
     <ClCompile Include="Graphics\MapRenderData.cpp" />
@@ -108,6 +109,7 @@
     <ClInclude Include="Assets\Shaders\BasicColorShader.h" />
     <ClInclude Include="Assets\TempShaderLoader.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="OldClient.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Graphics\Camera.h" />
     <ClInclude Include="Graphics\MapRenderer.h" />

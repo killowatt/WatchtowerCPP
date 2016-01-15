@@ -4,6 +4,7 @@
 #include <GameMap.h>
 #include "VertexArray.h"
 #include "Shader.h"
+#include "Camera.h"
 #include "MapRenderer.h"
 
 namespace Watchtower
@@ -12,6 +13,7 @@ namespace Watchtower
 	{
 	private:
 		Shader* currentShader;
+		Camera camera;
 
 	public:
 		void Render(const VertexArray& vertexArray);

@@ -3,6 +3,11 @@ using namespace Watchtower;
 
 void Client::Initialize()
 {
+	// Set up OpenGL stuff.
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glClearColor(20 / 255.0f, 20 / 255.0f, 20 / 255.0f, 1.0f);
 
 	// Start the game loop.
 	Running = true;

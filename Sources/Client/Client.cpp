@@ -40,7 +40,7 @@ void Client::Render()
 
 Client::Client()
 {
-	Settings = Settings::Load();
+	Settings = GameSettings::Load();
 
 	if (!glfwInit()) // GLFW failed to initialize.
 		throw 1; // TODO: error
@@ -64,10 +64,9 @@ Client::Client()
 		glewExperimental = true;
 		if (glewInit() == GLEW_OK)
 			Initialize();
+		else {} // TODO: error
 	}
-	// Terminate GLFW after we've finished.
+	// Terminate GLFW after we've finished. Same for enet.
 	glfwTerminate();
-}
-Client::~Client()
-{
+	enet_deinitialize();
 }

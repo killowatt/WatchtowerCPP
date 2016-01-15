@@ -1,11 +1,11 @@
-#include "Settings.h"
+#include "GameSettings.h"
 #include <fstream>
 #include <sstream>
 using namespace Watchtower;
 
-const std::string Settings::FILENAME = "Settings.cfg";
+const std::string GameSettings::FILENAME = "GameSettings.cfg";
 
-void Settings::Save()
+void GameSettings::Save()
 {
 	std::ofstream stream(FILENAME);
 	if (stream.is_open())
@@ -18,9 +18,9 @@ void Settings::Save()
 	}
 	else {}// TODO: throw error
 }
-Settings Settings::Load()
+GameSettings GameSettings::Load()
 {
-	Settings settings;
+	GameSettings settings;
 	std::ifstream stream(FILENAME);
 	if (stream.is_open())
 	{
@@ -36,7 +36,7 @@ Settings Settings::Load()
 			if (!key.compare("WindowWidth")) settings.WindowWidth = std::stoul(value);
 			else if (!key.compare("WindowHeight")) settings.WindowHeight = std::stoul(value);
 			else if (!key.compare("WindowType")) 
-				settings.WindowType = static_cast<Watchtower::WindowType>(std::stoul(value));
+				settings.WindowType = static_cast<Watchtower::WindowType>(std::stoul(value)); // TODO: avoid cast?
 			else if (!key.compare("VerticalSync")) settings.VerticalSync = std::stoul(value);
 			else {} // TODO: error
 		}
@@ -44,7 +44,7 @@ Settings Settings::Load()
 	else {} // TODO: error!!
 	return settings;
 }
-Settings::Settings() 
+GameSettings::GameSettings() 
 {
 	WindowWidth = 1280;
 	WindowHeight = 720;

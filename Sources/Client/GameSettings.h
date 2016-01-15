@@ -9,7 +9,7 @@ namespace Watchtower
 		BorderlessWindow = 1,
 		Window = 2
 	};
-	class Settings
+	class GameSettings
 	{
 	public:
 		static const std::string FILENAME;
@@ -19,8 +19,8 @@ namespace Watchtower
 		bool VerticalSync;
 
 		void Save();
-		static Settings Load();
+		static GameSettings Load();
 
-		Settings();
+		GameSettings();
 	};
 }

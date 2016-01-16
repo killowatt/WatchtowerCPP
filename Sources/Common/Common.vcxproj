@@ -95,6 +95,7 @@
     <ClInclude Include="Graphics\Rectangle.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="Raycast.h" />
+    <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
@@ -105,6 +106,7 @@
     <ClCompile Include="Graphics\Rectangle.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="Raycast.cpp" />
+    <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

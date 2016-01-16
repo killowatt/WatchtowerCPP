@@ -62,8 +62,9 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Release/inih/inih.lib;Release/enet/enet64.lib;ws2_32.lib;winmm.lib</AdditionalDependencies>
+      <AdditionalDependencies>Release/enet/enet64.lib;ws2_32.lib;winmm.lib</AdditionalDependencies>
     </Lib>
+    <ProjectReference />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -82,14 +83,10 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Release/inih/inih.lib;Release/enet/enet64.lib;ws2_32.lib;winmm.lib</AdditionalDependencies>
+      <AdditionalDependencies>Release/enet/enet64.lib;ws2_32.lib;winmm.lib</AdditionalDependencies>
     </Lib>
+    <ProjectReference />
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.vcxproj">
-      <Project>{86657b77-9305-4981-b02c-27a7be258ebf}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server.h" />
     <ClInclude Include="Player.h" />
@@ -99,6 +96,11 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="ServerParameters.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{86657b77-9305-4981-b02c-27a7be258ebf}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

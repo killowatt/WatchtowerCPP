@@ -4,7 +4,7 @@ using namespace Watchtower;
 void Server::Initialize()
 {
 	ServerAddress.host = ENET_HOST_ANY;
-	Server
+	//Server
 
 	Running = true;
 	const double MS_PER_UPDATE = 1000 / TICKRATE;

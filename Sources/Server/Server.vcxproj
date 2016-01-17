@@ -88,6 +88,8 @@
     <ProjectReference />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Network\ClientData.h" />
+    <ClInclude Include="Network\Packet.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ServerParameters.h" />

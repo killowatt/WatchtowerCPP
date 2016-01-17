@@ -8,6 +8,13 @@ using namespace Watchtower;
 void ServerParameters::Save()
 {
 	std::ofstream file;
+	if (file.is_open())
+	{
+		file << "ServerIP = " << ServerIP;
+		file << "Port = " << Port;
+		file.close();
+	}
+	else {} // TODO: error
 }
 ServerParameters ServerParameters::Load()
 {
@@ -41,4 +48,5 @@ ServerParameters::ServerParameters()
 {
 	ServerIP = "";
 	Port = 22737;
+	MaxPlayers = 128;
 }

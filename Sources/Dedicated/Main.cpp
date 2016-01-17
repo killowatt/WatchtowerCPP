@@ -10,6 +10,7 @@
 #include <GameMap.h>
 #include "ByteStream.h"
 #include "zlib/zlib.h"
+#include "ServerParameters.h"
 
 using namespace Watchtower;
 

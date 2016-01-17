@@ -1,11 +1,23 @@
 #include "Server.h"
+#include <ByteStream.h>
+
+
+#include "Network/Packet.h"
+
 using namespace Watchtower;
 
 void Server::Initialize()
 {
-	ServerAddress.host = ENET_HOST_ANY;
-	//Server
+	if (Settings.ServerIP == "")
+		ServerAddress.host = ENET_HOST_ANY;
+	else
+		enet_address_set_host(&ServerAddress, Settings.ServerIP.c_str());
+	ServerAddress.port = Settings.Port;
 
+	if (ServerHost == nullptr)
+		return; // TODO: error!!
+
+	// Start server loop.
 	Running = true;
 	const double MS_PER_UPDATE = 1000 / TICKRATE;
 	double previous = glfwGetTime();
@@ -27,10 +39,30 @@ void Server::Initialize()
 }
 void Server::Update()
 {
+	ENetEvent event;
+	while (enet_host_service(ServerHost, &event, 100))
+	{
+		if (event.type == ENET_EVENT_TYPE_CONNECT)
+			printf("Client connected.\n", event.peer->address.host);
+			
+		else if (event.type == ENET_EVENT_TYPE_RECEIVE)
+		{
+			ByteStream reader(event.packet->data, event.packet->dataLength);
+			unsigned char packetType = reader.ReadChar();
+			if (packetType == PacketType::ClientData)
+			{
+				printf("Received packet CLIENTDATA");
+			}
+		}
+		else if (event.type == ENET_EVENT_TYPE_DISCONNECT) {}
+		else {}
+	}
 }
 
 Server::Server()
 {
+	Settings = ServerParameters::Load();
+
 	if (!glfwInit()) // GLFW failed to initialize.
 		throw 1; // TODO: error
 

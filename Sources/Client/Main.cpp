@@ -2,13 +2,8 @@
 #include <GLFW/glfw3.h>
 #include "OldClient.h"
 
-#include <Utilities.h>
-#include <ServerParameters.h>
-
 int main() 
 { // TODO: move initialization to their subsystems..
-	ServerParameters::Load();
-
 	if (!glfwInit())
 		return 1; // GLFW failed to initialize.
 	 

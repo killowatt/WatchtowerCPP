@@ -3,10 +3,8 @@
 #include <cwchar>
 using namespace Watchtower;
 
-const char* const ByteStream::GetData()
-{
-	return data.data();
-}
+const char* const ByteStream::GetData() { return data.data(); }
+std::size_t const ByteStream::GetSize() const { return data.size(); }
 
 uint8_t ByteStream::ReadByte()
 {

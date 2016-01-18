@@ -5,9 +5,11 @@
 #include <Utilities.h>
 using namespace Watchtower;
 
+const std::string ServerParameters::FILENAME = "Server.ini";
+
 void ServerParameters::Save()
 {
-	std::ofstream file;
+	std::ofstream file(FILENAME);
 	if (file.is_open())
 	{
 		file << "ServerIP = " << ServerIP;
@@ -19,7 +21,7 @@ void ServerParameters::Save()
 ServerParameters ServerParameters::Load()
 {
 	ServerParameters settings;
-	std::istringstream file(Utilities::FileReadAllLines("Server.ini"));
+	std::istringstream file(Utilities::FileReadAllLines(FILENAME.c_str()));
 	std::string line;
 	while (std::getline(file >> std::ws, line))
 	{
@@ -37,10 +39,8 @@ ServerParameters ServerParameters::Load()
 }
 void ServerParameters::Parse(const std::string& key, const std::string& value)
 {
-	if (key == "ServerIP")
-		ServerIP = value;
-	else if (key == "Port")
-		Port = std::stoul(value);
+	if (key == "ServerIP") ServerIP = value;
+	else if (key == "Port") Port = std::stoul(value);
 	else {} // TODO: no matching key!
 }
 

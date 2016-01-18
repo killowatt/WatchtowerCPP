@@ -1,51 +1,58 @@
 #include "GameSettings.h"
 #include <fstream>
 #include <sstream>
+#include <Utilities.h>
 using namespace Watchtower;
 
-const std::string GameSettings::FILENAME = "GameSettings.cfg";
+const std::string GameSettings::FILENAME = "GameSettings.ini";
 
 void GameSettings::Save()
 {
-	std::ofstream stream(FILENAME);
-	if (stream.is_open())
+	std::ofstream file(FILENAME);
+	if (file.is_open())
 	{
-		stream << "WindowWidth = " << WindowWidth << "\n";
-		stream << "WindowHeight = " << WindowHeight << "\n";
-		stream << "WindowType = " << static_cast<int>(WindowType) << "\n";
-		stream << "VerticalSync = " << VerticalSync << "\n";
-		stream.close();
+		file << "PlayerName = " << PlayerName << "\n";
+		file << "WindowWidth = " << WindowWidth << "\n";
+		file << "WindowHeight = " << WindowHeight << "\n";
+		file << "WindowType = " << static_cast<int>(WindowType) << "\n";
+		file << "VerticalSync = " << VerticalSync << "\n";
+		file.close();
 	}
 	else {}// TODO: throw error
 }
 GameSettings GameSettings::Load()
 {
 	GameSettings settings;
-	std::ifstream stream(FILENAME);
-	if (stream.is_open())
+	std::istringstream file(Utilities::FileReadAllLines(FILENAME.c_str()));
+	std::string line;
+	while (std::getline(file >> std::ws, line))
 	{
-		std::string line;
-		while (std::getline(stream, line))
+		std::istringstream lineStream(line);
+		std::string key;
+		if (std::getline(lineStream >> std::ws, key, '='))
 		{
-			if (line.at(0) == '#')
-				continue;
-
-			std::string key = line.substr(0, line.find(" "));
-			std::string value = line.substr(line.find("=") + 1);
-
-			if (!key.compare("WindowWidth")) settings.WindowWidth = std::stoul(value);
-			else if (!key.compare("WindowHeight")) settings.WindowHeight = std::stoul(value);
-			else if (!key.compare("WindowType")) 
-				settings.WindowType = static_cast<Watchtower::WindowType>(std::stoul(value)); // TODO: avoid cast?
-			else if (!key.compare("VerticalSync")) settings.VerticalSync = std::stoul(value);
-			else {} // TODO: error
+			Utilities::StringRemoveWhitespace(key); // TODO: is there a better way to remove trailing
+			std::string value;
+			if (std::getline(lineStream >> std::ws, value))
+				settings.Parse(key, value);
 		}
 	}
-	else {} // TODO: error!!
 	return settings;
 }
+void GameSettings::Parse(const std::string& key, const std::string& value)
+{
+	if (key == "PlayerName") PlayerName = value;
+	if (key == "WindowWidth") WindowWidth = std::stoul(value);
+	if (key == "WindowHeight") WindowHeight = std::stoul(value);
+	if (key == "WindowType") WindowType = std::stoul(value);
+	if (key == "VerticalSync") VerticalSync = std::stoul(value);
+}
+
 GameSettings::GameSettings() 
 {
+	PlayerName = "Player";
 	WindowWidth = 1280;
 	WindowHeight = 720;
+	WindowType = Watchtower::WindowType::Window;
+	VerticalSync = true;
 }

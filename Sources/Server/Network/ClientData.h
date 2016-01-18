@@ -3,10 +3,16 @@
 #include "Packet.h"
 namespace Watchtower
 {
-	class ClientData
+	class ClientData : public Packet
 	{
 	public:
-		unsigned char PacketType;
 		std::string PlayerName;
+
+		static ClientData Read(ByteStream& stream);
+		ByteStream ToStream();
+
+		ClientData(std::string playerName);
+	private:
+		ClientData();
 	};
 }

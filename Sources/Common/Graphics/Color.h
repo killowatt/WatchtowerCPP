@@ -3,7 +3,7 @@
 
 namespace Watchtower
 {
-	struct Color
+	struct Color // TODO: is padded :-)
 	{
 		uint8_t R;
 		uint8_t G;

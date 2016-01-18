@@ -8,7 +8,12 @@ namespace Watchtower
 	{
 		enum PacketType
 		{
-			ClientData = 0
+			ClientData = 0,
+			ClientDataReceived = 1
 		};
 	}
+	class Packet
+	{
+		virtual ByteStream ToStream() = 0;
+	};
 }

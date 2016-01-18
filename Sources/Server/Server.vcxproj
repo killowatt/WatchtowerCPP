@@ -54,7 +54,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Include;$(SolutionDir)Sources\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Include;$(SolutionDir)Sources\Common;$(SolutionDir)Sources\Server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -62,7 +62,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Release/enet/enet64.lib;ws2_32.lib;winmm.lib</AdditionalDependencies>
+      <AdditionalDependencies>Debug/GLFW/glfw3.lib;Release/enet/enet64.lib;ws2_32.lib;winmm.lib</AdditionalDependencies>
     </Lib>
     <ProjectReference />
   </ItemDefinitionGroup>
@@ -73,7 +73,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Include;$(SolutionDir)Sources\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Include;$(SolutionDir)Sources\Common;$(SolutionDir)Sources\Server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -83,18 +83,20 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Release/enet/enet64.lib;ws2_32.lib;winmm.lib</AdditionalDependencies>
+      <AdditionalDependencies>Release/GLFW/glfw3.lib;Release/enet/enet64.lib;ws2_32.lib;winmm.lib</AdditionalDependencies>
     </Lib>
     <ProjectReference />
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Network\ClientData.h" />
     <ClInclude Include="Network\Packet.h" />
+    <ClInclude Include="Network\Packets.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ServerParameters.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Network\ClientData.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="ServerParameters.cpp" />

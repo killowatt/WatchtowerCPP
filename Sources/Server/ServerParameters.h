@@ -6,6 +6,8 @@ namespace Watchtower
 	class ServerParameters
 	{
 	public:
+		const static std::string FILENAME;
+
 		std::string ServerIP;
 		unsigned short Port;
 		unsigned short MaxPlayers;

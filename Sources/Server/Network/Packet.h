@@ -9,7 +9,9 @@ namespace Watchtower
 		enum PacketType
 		{
 			ClientData = 0,
-			ClientDataReceived = 1
+			ClientDataReceived = 1,
+			MapInfo = 2,
+			MapChunk = 3
 		};
 	}
 	class Packet

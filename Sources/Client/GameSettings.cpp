@@ -37,6 +37,7 @@ GameSettings GameSettings::Load()
 				settings.Parse(key, value);
 		}
 	}
+	settings.Save();
 	return settings;
 }
 void GameSettings::Parse(const std::string& key, const std::string& value)

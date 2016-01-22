@@ -3,11 +3,12 @@
 
 namespace Watchtower
 {
-	struct Color // TODO: is padded :-)
+	struct Color
 	{
 		uint8_t R;
 		uint8_t G;
 		uint8_t B;
+		uint8_t A;
 
 		Color();
 		Color(uint8_t r, uint8_t g, uint8_t b);

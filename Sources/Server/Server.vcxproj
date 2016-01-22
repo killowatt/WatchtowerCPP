@@ -88,7 +88,9 @@
     <ProjectReference />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="lodepng.h" />
     <ClInclude Include="Network\ClientData.h" />
+    <ClInclude Include="Network\MapInfo.h" />
     <ClInclude Include="Network\Packet.h" />
     <ClInclude Include="Network\Packets.h" />
     <ClInclude Include="Server.h" />
@@ -96,7 +98,9 @@
     <ClInclude Include="ServerParameters.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="Network\ClientData.cpp" />
+    <ClCompile Include="Network\MapInfo.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="ServerParameters.cpp" />

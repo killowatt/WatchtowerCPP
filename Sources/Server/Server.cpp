@@ -53,20 +53,22 @@ void Server::Update()
 			{
 				ClientData data = ClientData::Read(reader);
 				Players.push_back(Player(data.PlayerName));
+				event.peer->data = &Players.back();
 				std::cout << "Received player data. Name " << data.PlayerName << "\n";
-
-				//ByteStream stream;
-				//stream.Write((char)PacketType::ClientDataReceived);
-				//ENetPacket* packet = enet_packet_create(stream.GetData(), stream.GetSize(),
-				//	ENET_PACKET_FLAG_RELIABLE);
-				//enet_peer_send(event.peer, 0, packet);
-				//enet_host_flush(ServerHost);
+				SendMap(*event.peer);
 			}
+
 		}
 		else if (event.type == ENET_EVENT_TYPE_DISCONNECT)
 			std::cout << "Client disconnected. " << event.peer->address.host;
 		else {}
 	}
+}
+
+void Server::SendMap(const ENetPeer& peer)
+{
+	unsigned int totalChunks = CurrentMap->GetWidth() * CurrentMap->GetHeight();
+
 }
 
 Server::Server()

@@ -1,9 +1,10 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include <enet/enet.h>
+#include <vector>
+#include <GameMap.h>
 #include "ServerParameters.h"
 #include "Player.h"
-#include <vector>
 
 namespace Watchtower
 {
@@ -20,10 +21,14 @@ namespace Watchtower
 		std::vector<Player> Players;
 		unsigned short PlayerCount;
 
+		GameMap* CurrentMap;
 		ServerParameters Settings;
 
 		void Initialize();
 		void Update();
+
+		void ChangeMap(); // TODO:
+		void SendMap(const ENetPeer& peer);
 
 		Server();
 	};

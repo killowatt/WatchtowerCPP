@@ -1,5 +1,6 @@
 #pragma once
 #include "Chunk.h"
+#include <string>
 
 namespace Watchtower
 {
@@ -17,6 +18,9 @@ namespace Watchtower
 
 		unsigned int GetWidth() const;
 		unsigned int GetHeight() const;
+
+		void Save(const char* fileName);
+		static GameMap* Load(const char* fileName);
 
 		GameMap() = delete;
 		GameMap(unsigned int width, unsigned int height);

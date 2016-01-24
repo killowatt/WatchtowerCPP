@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Packet.h"
+
 namespace Watchtower
 {
 	class ClientData : public Packet

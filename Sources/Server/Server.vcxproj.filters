@@ -33,10 +33,10 @@
     <ClInclude Include="Network\Packets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Network\MapInfo.h">
+    <ClInclude Include="lodepng.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lodepng.h">
+    <ClInclude Include="Network\MapData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,10 +53,10 @@
     <ClCompile Include="Network\ClientData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Network\MapInfo.cpp">
+    <ClCompile Include="lodepng.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lodepng.cpp">
+    <ClCompile Include="Network\MapData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -15,11 +15,8 @@ ByteStream ClientData::ToStream()
 	return stream;
 }
 
+ClientData::ClientData() : PlayerName("Player") {}
 ClientData::ClientData(std::string playerName)
 {
 	PlayerName = playerName;
-}
-ClientData::ClientData()
-{
-	PlayerName = "Player";
 }

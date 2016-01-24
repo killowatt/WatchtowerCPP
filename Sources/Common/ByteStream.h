@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <enet/enet.h>
 
 namespace Watchtower
 {
@@ -12,7 +13,8 @@ namespace Watchtower
 
 	public:
 		const char* const GetData();
-		std::size_t const GetSize() const;
+		std::size_t GetSize() const;
+		ENetPacket* const ToPacket() const;
 
 		uint8_t ReadByte();
 		int16_t ReadShort();

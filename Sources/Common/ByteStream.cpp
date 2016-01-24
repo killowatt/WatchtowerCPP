@@ -4,7 +4,13 @@
 using namespace Watchtower;
 
 const char* const ByteStream::GetData() { return data.data(); }
-std::size_t const ByteStream::GetSize() const { return data.size(); }
+std::size_t ByteStream::GetSize() const { return data.size(); }
+ENetPacket* const ByteStream::ToPacket() const
+{
+	ENetPacket* packet = enet_packet_create(data.data(), data.size(),
+		ENET_PACKET_FLAG_RELIABLE);
+	return packet;
+}
 
 uint8_t ByteStream::ReadByte()
 {

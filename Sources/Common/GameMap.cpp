@@ -17,6 +17,7 @@ Chunk& GameMap::GetChunk(unsigned int x, unsigned int y)
 
 unsigned int GameMap::GetWidth() const { return width; }
 unsigned int GameMap::GetHeight() const { return height; }
+uint64_t GameMap::GetTotalChunks() const { return width * height; }
 
 void GameMap::Save(const char* fileName)
 {
@@ -38,7 +39,8 @@ void GameMap::Save(const char* fileName)
 	std::ofstream file(fileName, std::ios::binary);
 	if (file.is_open())
 	{
-		file << width << height;
+		file.write((char*)&width, sizeof(unsigned int));
+		file.write((char*)&height, sizeof(unsigned int));
 		file.write((char*)out, deflateStream.total_out);
 	}
 	file.close();
@@ -56,7 +58,8 @@ GameMap* GameMap::Load(const char* fileName)
 	if (file.is_open())
 	{
 		file.seekg(0, std::ios::beg);
-		file >> width >> height;
+		file.read((char*)&width, sizeof(unsigned int));
+		file.read((char*)&height, sizeof(unsigned int));
 
 		map = new GameMap(width, height);
 		in = new unsigned char[sizeof(Chunk) * (width * height)];

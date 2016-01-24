@@ -90,7 +90,7 @@
   <ItemGroup>
     <ClInclude Include="lodepng.h" />
     <ClInclude Include="Network\ClientData.h" />
-    <ClInclude Include="Network\MapInfo.h" />
+    <ClInclude Include="Network\MapData.h" />
     <ClInclude Include="Network\Packet.h" />
     <ClInclude Include="Network\Packets.h" />
     <ClInclude Include="Server.h" />
@@ -100,7 +100,7 @@
   <ItemGroup>
     <ClCompile Include="lodepng.cpp" />
     <ClCompile Include="Network\ClientData.cpp" />
-    <ClCompile Include="Network\MapInfo.cpp" />
+    <ClCompile Include="Network\MapData.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="ServerParameters.cpp" />

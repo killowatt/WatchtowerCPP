@@ -45,7 +45,23 @@ void Client::Update()
 	{
 		if (event.type == ENET_EVENT_TYPE_RECEIVE)
 		{
-			printf("RECEIVE");
+			ByteStream reader(event.packet->data, event.packet->dataLength);
+			unsigned char packetType = reader.ReadChar();
+			if (packetType == PacketType::ClientDataReceived)
+			{
+				printf("Client data received by server.\n");
+			}
+			if (packetType == PacketType::MapInfo)
+			{
+				printf("Received map info. \n");
+				MapInfo mapInfo = MapInfo::Read(reader);
+				std::cout << "Map Name: " << mapInfo.Name << "\n";
+				std::cout << "Total Chunks: " << mapInfo.TotalChunks << "\n";
+			}
+		}
+		else if (event.type == ENET_EVENT_TYPE_DISCONNECT)
+		{
+			printf("Disconnected.");
 		}
 	}
 }
@@ -89,8 +105,8 @@ bool Client::Connect(std::string address, unsigned short port) // TODO: make err
 	packet = enet_packet_create(stream.GetData(), stream.GetSize(),
 		ENET_PACKET_FLAG_RELIABLE);
 	enet_peer_send(ServerPeer, 0, packet);
-
-	//enet_packet_destroy(packet);
+	enet_host_flush(ClientHost);
+	enet_packet_destroy(packet);
 }
 
 Client::Client()

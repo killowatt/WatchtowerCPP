@@ -28,7 +28,7 @@ namespace Watchtower
 		void Update();
 
 		void ChangeMap(); // TODO:
-		void SendMap(const ENetPeer& peer);
+		void SendMap(ENetPeer* peer);
 
 		Server();
 	};

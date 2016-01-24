@@ -18,6 +18,7 @@ namespace Watchtower
 
 		unsigned int GetWidth() const;
 		unsigned int GetHeight() const;
+		uint64_t GetTotalChunks() const; // TODO: maybe we should always use cstdint
 
 		void Save(const char* fileName);
 		static GameMap* Load(const char* fileName);

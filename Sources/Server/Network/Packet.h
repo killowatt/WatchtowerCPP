@@ -11,7 +11,7 @@ namespace Watchtower
 			ClientData = 0,
 			ClientDataReceived = 1,
 			MapInfo = 2,
-			MapChunk = 3
+			MapData = 3
 		};
 	}
 	class Packet

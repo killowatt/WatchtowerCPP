@@ -112,7 +112,7 @@ void Server::Update()
 				std::cout << "Received player data. Name " << data.PlayerName << "\n";
 				SendMap(event.peer);
 			}
-
+			enet_packet_destroy(event.packet);
 		}
 		else if (event.type == ENET_EVENT_TYPE_DISCONNECT)
 			std::cout << "Client disconnected. " << event.peer->address.host;
@@ -122,16 +122,18 @@ void Server::Update()
 
 void Server::SendMap(ENetPeer* peer)
 {
-	unsigned int totalChunks = CurrentMap->GetWidth() * CurrentMap->GetHeight();
-	MapInfo mapInfo("Watchtower Test Map", totalChunks);
+	unsigned int totalChunks = CurrentMap->GetTotalChunks();
+	MapInfo mapInfo("Watchtower Test Map",
+		CurrentMap->GetWidth(), CurrentMap->GetHeight());
 	ENetPacket* packet = mapInfo.ToStream().ToPacket();
 	enet_peer_send(peer, 0, packet);
 	enet_host_flush(ServerHost);
-	enet_packet_destroy(packet);
 
 	for (int i = 0; i < CurrentMap->GetTotalChunks(); i++)
 	{
-
+		ENetPacket* packet = MapData::ToPacket(&CurrentMap->GetData()[i]);
+		enet_peer_send(peer, 0, packet);
+		enet_host_flush(ServerHost);
 	}
 }
 

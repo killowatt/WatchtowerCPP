@@ -56,8 +56,18 @@ void Client::Update()
 				printf("Received map info. \n");
 				MapInfo mapInfo = MapInfo::Read(reader);
 				std::cout << "Map Name: " << mapInfo.Name << "\n";
-				std::cout << "Total Chunks: " << mapInfo.TotalChunks << "\n";
+				std::cout << "Map Width: " << mapInfo.Width << "\n";
+				std::cout << "Map Width: " << mapInfo.Height << "\n";
+				CurrentMap = new GameMap(mapInfo.Width, mapInfo.Height);
+				Renderer
 			}
+			if (packetType == PacketType::MapData)
+			{
+				std::cout << "Chunk Packet #" << xyz << " received." << "\n";
+				MapData::Read(event.packet, &CurrentMap->GetData()[xyz]); // TODO: TRASH
+				xyz++;
+			}
+			enet_packet_destroy(event.packet);
 		}
 		else if (event.type == ENET_EVENT_TYPE_DISCONNECT)
 		{
@@ -106,12 +116,13 @@ bool Client::Connect(std::string address, unsigned short port) // TODO: make err
 		ENET_PACKET_FLAG_RELIABLE);
 	enet_peer_send(ServerPeer, 0, packet);
 	enet_host_flush(ClientHost);
-	enet_packet_destroy(packet);
 }
 
 Client::Client()
 {
 	Settings = GameSettings::Load();
+
+	CurrentMap = nullptr;
 
 	if (!glfwInit()) // GLFW failed to initialize.
 		throw 1; // TODO: error

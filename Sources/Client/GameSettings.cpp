@@ -4,7 +4,7 @@
 #include <Utilities.h>
 using namespace Watchtower;
 
-const std::string GameSettings::FILENAME = "GameSettings.ini";
+const std::string GameSettings::FILENAME = "Settings.ini";
 
 void GameSettings::Save()
 {

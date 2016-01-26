@@ -4,6 +4,7 @@
 #include <enet/enet.h>
 #include "GameSettings.h"
 #include <Server.h>
+#include "Graphics/Renderer.h"
 
 namespace Watchtower
 {
@@ -14,7 +15,10 @@ namespace Watchtower
 		static const unsigned short TICK_RATE = 64;
 
 		GLFWwindow* Window;
+		Renderer Renderer;
+
 		GameSettings Settings;
+		GameMap* CurrentMap;
 
 		ENetHost* ClientHost;
 		ENetPeer* ServerPeer;
@@ -22,6 +26,8 @@ namespace Watchtower
 		void Initialize();
 		void Update();
 		void Render();
+
+		int xyz = 0;
 
 		bool Connect(std::string address, unsigned short port = Server::DEFAULT_PORT);
 

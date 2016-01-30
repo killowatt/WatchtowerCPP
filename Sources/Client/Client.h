@@ -15,7 +15,7 @@ namespace Watchtower
 		static const unsigned short TICK_RATE = 64;
 
 		GLFWwindow* Window;
-		Renderer Renderer;
+		Renderer* Renderer;
 
 		GameSettings Settings;
 		GameMap* CurrentMap;
@@ -27,6 +27,8 @@ namespace Watchtower
 		void Update();
 		void Render();
 
+		bool DESTRUCTION = false;
+		bool fart = false;
 		int xyz = 0;
 
 		bool Connect(std::string address, unsigned short port = Server::DEFAULT_PORT);

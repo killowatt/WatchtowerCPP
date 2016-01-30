@@ -11,9 +11,4 @@ void Chunk::SetBlock(int x, int y, int z, Block block)
 	blocks[x + CHUNK_WIDTH * (y + CHUNK_HEIGHT * z)] = block;
 }
 
-Chunk::Chunk()
-{
-}
-Chunk::~Chunk()
-{
-}
+Chunk::Chunk() {}

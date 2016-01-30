@@ -16,6 +16,8 @@ void Client::Initialize()
 	getchar();
 	Connect("127.0.0.1");
 
+	glfwShowWindow(Window);
+
 	// Start the game loop.
 	Running = true;
 	const double MS_PER_UPDATE = 1.0 / TICK_RATE;
@@ -35,13 +37,15 @@ void Client::Initialize()
 			lag -= MS_PER_UPDATE;
 		}
 		Render();
+		glfwSwapBuffers(Window);
+		glfwPollEvents();
 	}
 }
 
 void Client::Update()
 {
 	ENetEvent event;
-	while (enet_host_service(ClientHost, &event, 5000) > 0)
+	while (enet_host_service(ClientHost, &event, 0) > 0)
 	{
 		if (event.type == ENET_EVENT_TYPE_RECEIVE)
 		{
@@ -59,13 +63,14 @@ void Client::Update()
 				std::cout << "Map Width: " << mapInfo.Width << "\n";
 				std::cout << "Map Width: " << mapInfo.Height << "\n";
 				CurrentMap = new GameMap(mapInfo.Width, mapInfo.Height);
-				Renderer
+				Renderer = new Watchtower::Renderer(CurrentMap);
 			}
 			if (packetType == PacketType::MapData)
 			{
 				std::cout << "Chunk Packet #" << xyz << " received." << "\n";
 				MapData::Read(event.packet, &CurrentMap->GetData()[xyz]); // TODO: TRASH
 				xyz++;
+				if (xyz >= 255) DESTRUCTION = true;
 			}
 			enet_packet_destroy(event.packet);
 		}
@@ -77,6 +82,18 @@ void Client::Update()
 }
 void Client::Render()
 {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	if (DESTRUCTION)
+	{
+		if (!fart)
+		{
+			Renderer->
+			Renderer->Update();
+			fart = true;
+		}
+		Renderer->mapRenderer.Render(*Renderer);
+	}
 }
 
 bool Client::Connect(std::string address, unsigned short port) // TODO: make errors PLEASE

@@ -18,6 +18,5 @@ namespace Watchtower
 		void SetBlock(int x, int y, int z, Block block);
 
 		Chunk();
-		~Chunk();
 	};
 }

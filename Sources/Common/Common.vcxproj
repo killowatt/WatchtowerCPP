@@ -90,10 +90,12 @@
     <ClInclude Include="Chunk.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="Error.h" />
     <ClInclude Include="Graphics\Color.h" />
     <ClInclude Include="ByteStream.h" />
     <ClInclude Include="Graphics\Rectangle.h" />
     <ClInclude Include="GameMap.h" />
+    <ClInclude Include="Log.h" />
     <ClInclude Include="Raycast.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
@@ -101,10 +103,12 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="Error.cpp" />
     <ClCompile Include="Graphics\Color.cpp" />
     <ClCompile Include="ByteStream.cpp" />
     <ClCompile Include="Graphics\Rectangle.cpp" />
     <ClCompile Include="GameMap.cpp" />
+    <ClCompile Include="Log.cpp" />
     <ClCompile Include="Raycast.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>

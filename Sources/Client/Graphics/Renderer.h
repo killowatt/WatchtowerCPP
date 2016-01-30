@@ -1,33 +1,48 @@
 #pragma once
 #include <GL/glew.h>
 #include <glm/gtc/matrix_transform.hpp>
-#include <GameMap.h>
+#include "../Client.h"
+#include "Camera.h"
 #include "VertexArray.h"
 #include "Shader.h"
-#include "Camera.h"
-#include "MapRenderer.h"
 
 namespace Watchtower
 {
+	class Client;
 	class Renderer
 	{
 	private:
-		Shader* currentShader;
+		struct RenderChunk
+		{
+			VertexArray VertexArray;
+			VertexBuffer Vertices;
+			VertexBuffer Colors;
+			VertexBuffer Normals;
+			glm::mat4 Transform;
+
+			void Generate(Chunk& chunk); // TODO:
+		};
+
 		Camera camera;
+		Shader* shader;
+		
+		GameMap* map;
+		RenderChunk* chunks;
 
 	public:
 		void Render(const VertexArray& vertexArray);
-		void Render(const VertexBuffer& vertexBuffer);
+		void RenderWorld();
 
-		MapRenderer mapRenderer; // TODO: temp?
+		void UpdateChunk(unsigned int offset);
+		void UpdateWorld();
 
-		void Update();
+		void SetCamera(Camera camera);
+		Camera& GetCamera();
 
 		void SetShader(Shader& shader);
 		Shader& GetShader();
 
-		Renderer();
-		Renderer(GameMap* mapPtrTemp);
+		Renderer(GameMap* map);
 		~Renderer();
 	};
 }

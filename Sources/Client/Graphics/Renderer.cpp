@@ -15,23 +15,29 @@ void Renderer::RenderWorld()
 {
 	for (int i = 0; i < map->GetTotalChunks(); i++)
 	{
+		glUseProgram(shader->GetProgram());
+		shader->Model = chunks[i].Transform;
+		shader->Update();
 		Render(chunks[i].VertexArray);
 	}
 }
 
-void Renderer::UpdateChunk(unsigned int offset)
+void Renderer::UpdateChunk(unsigned int x, unsigned int y)
 {
-	if (offset > map->GetTotalChunks())
+	if (x > map->GetWidth() || y > map->GetHeight())
 	{
 	} // TODO: throw error!!
 
-	chunks[offset].Generate(map->GetData()[offset]);
+	chunks[map->GetWidth() * y + x].Generate(map->GetChunk(x, y), x, y);
 }
 void Renderer::UpdateWorld()
 {
-	for (int i = 0; i < map->GetTotalChunks(); i++)
+	for (int x = 0; x < map->GetWidth(); x++)
 	{
-		chunks[i].Generate(map->GetData()[i]);
+		for (int y = 0; y < map->GetHeight(); y++)
+		{
+			chunks[map->GetWidth() * y + x].Generate(map->GetChunk(x, y), x, y);
+		}
 	}
 }
 
@@ -45,7 +51,6 @@ Renderer::Renderer(GameMap* map)
 {
 	this->map = map;
 	chunks = new RenderChunk[map->GetTotalChunks()];
-
 }
 Renderer::~Renderer()
 {

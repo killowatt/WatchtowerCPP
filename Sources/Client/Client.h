@@ -5,6 +5,7 @@
 #include "GameSettings.h"
 #include <Server.h>
 #include "Graphics/Renderer.h"
+#include "Assets/Shaders/BasicColorShader.h"
 
 namespace Watchtower
 {
@@ -16,6 +17,13 @@ namespace Watchtower
 
 		GLFWwindow* Window;
 		Renderer* Renderer;
+
+
+		BasicColorShader* shaderB;
+			float xTest;
+			double lastTime;
+			double currentTime;
+			float deltaTime;
 
 		GameSettings Settings;
 		GameMap* CurrentMap;

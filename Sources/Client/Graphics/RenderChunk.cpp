@@ -145,7 +145,7 @@ void GenerateBlockData(
 		AppendIndices(indices, vertices);
 	}
 }
-void Renderer::RenderChunk::Generate(Chunk& chunk)
+void Renderer::RenderChunk::Generate(Chunk& chunk, unsigned int x, unsigned int y)
 {
 	std::vector<float> vertices;
 	std::vector<float> colors;
@@ -208,4 +208,7 @@ void Renderer::RenderChunk::Generate(Chunk& chunk)
 	VertexArray.AttachBuffer(Vertices, 0);
 	VertexArray.AttachBuffer(Colors, 1);
 	VertexArray.AttachBuffer(Normals, 2);
+
+	Transform = glm::translate(glm::mat4(),
+		glm::vec3(x * Chunk::CHUNK_WIDTH, 0, y * Chunk::CHUNK_DEPTH));
 }

@@ -2,6 +2,11 @@
 #include <iostream>
 #include <ByteStream.h>
 #include <Network/Packets.h>
+
+
+#include <Raycast.h>
+
+
 using namespace Watchtower;
 
 void Client::Initialize()
@@ -41,7 +46,6 @@ void Client::Initialize()
 		glfwPollEvents();
 	}
 }
-
 void Client::Update()
 {
 	ENetEvent event;
@@ -69,8 +73,17 @@ void Client::Update()
 			{
 				std::cout << "Chunk Packet #" << xyz << " received." << "\n";
 				MapData::Read(event.packet, &CurrentMap->GetData()[xyz]); // TODO: TRASH
+				if (xyz >= 255)
+				{
+					Renderer->UpdateWorld();
+					DESTRUCTION = true;
+					Renderer->GetCamera().Rotation.y = 3.14159f / 2;
+					shaderB = new BasicColorShader(Renderer->GetCamera());
+					glUseProgram(shaderB->GetProgram());
+					shaderB->Initialize();
+					Renderer->SetShader(*shaderB);
+				}
 				xyz++;
-				if (xyz >= 255) DESTRUCTION = true;
 			}
 			enet_packet_destroy(event.packet);
 		}
@@ -79,6 +92,81 @@ void Client::Update()
 			printf("Disconnected.");
 		}
 	}
+
+	Camera& camera = Renderer->GetCamera();
+
+	currentTime = glfwGetTime();
+	deltaTime = float(currentTime - lastTime);
+	lastTime = currentTime;
+
+	float speed = 6.0f;
+	float mouseSpeed = 0.05f;
+
+	double xpos; // TODO: when we port this mouse code actually make it nice
+	double ypos;
+
+	if (glfwGetWindowAttrib(Window, GLFW_FOCUSED))
+	{
+		glfwGetCursorPos(Window, &xpos, &ypos);
+		glfwSetCursorPos(Window, 1280 / 2, 720 / 2);
+		//glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
+		camera.Rotation.x += mouseSpeed * deltaTime * float(1280 / 2 - xpos);
+		camera.Rotation.y += mouseSpeed * deltaTime * float(720 / 2 - ypos);
+
+		if (glfwGetKey(Window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+			speed = 12.0f;
+		else
+			speed = 6.0f;
+
+		// Move forward
+		if (glfwGetKey(Window, GLFW_KEY_W) == GLFW_PRESS)
+			camera.Position += camera.Direction * deltaTime * speed;
+
+		// Move backward
+		if (glfwGetKey(Window, GLFW_KEY_S) == GLFW_PRESS)
+			camera.Position -= camera.Direction * deltaTime * speed;
+
+		// Strafe right
+		if (glfwGetKey(Window, GLFW_KEY_D) == GLFW_PRESS)
+			camera.Position += camera.Right * deltaTime * speed;
+
+		// Strafe left
+		if (glfwGetKey(Window, GLFW_KEY_A) == GLFW_PRESS)
+			camera.Position -= camera.Right * deltaTime * speed;
+
+		// Go up
+		if (glfwGetKey(Window, GLFW_KEY_SPACE) == GLFW_PRESS)
+			camera.Position.y += deltaTime * speed;
+
+		// Go down
+		if (glfwGetKey(Window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+			camera.Position.y -= deltaTime * speed;
+
+		if (glfwGetKey(Window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+			Running = false;
+
+		if (glfwGetKey(Window, GLFW_KEY_H) == GLFW_PRESS)
+		{
+			camera.Rotation.x = 0;
+			camera.Rotation.y = 0;
+		}
+
+		camera.Update();
+
+
+		if (glfwGetMouseButton(Window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+		{
+			Raycast::RaycastBlock(camera.Direction * 8.0f, 8, false, camera.Position, CurrentMap);
+			Renderer->UpdateChunk(Raycast::chunkToUpdate.x, Raycast::chunkToUpdate.y);
+		}
+		else if (glfwGetMouseButton(Window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
+		{
+			Raycast::RaycastBlock(camera.Direction * 8.0f, 8, true, camera.Position, CurrentMap);
+			Renderer->UpdateChunk(Raycast::chunkToUpdate.x, Raycast::chunkToUpdate.y);
+		}
+
+	}
 }
 void Client::Render()
 {
@@ -86,13 +174,9 @@ void Client::Render()
 
 	if (DESTRUCTION)
 	{
-		if (!fart)
-		{
-			Renderer->
-			Renderer->Update();
-			fart = true;
-		}
-		Renderer->mapRenderer.Render(*Renderer);
+		Renderer->GetCamera().Update();
+		shaderB->Update();
+		Renderer->RenderWorld();
 	}
 }
 

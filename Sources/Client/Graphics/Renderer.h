@@ -1,10 +1,10 @@
 #pragma once
 #include <GL/glew.h>
 #include <glm/gtc/matrix_transform.hpp>
-#include "../Client.h"
 #include "Camera.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include <GameMap.h>
 
 namespace Watchtower
 {
@@ -20,20 +20,20 @@ namespace Watchtower
 			VertexBuffer Normals;
 			glm::mat4 Transform;
 
-			void Generate(Chunk& chunk); // TODO:
+			void Generate(Chunk& chunk, unsigned int x, unsigned int y); // TODO:
 		};
 
 		Camera camera;
 		Shader* shader;
 		
-		GameMap* map;
+		GameMap* map; // TODO: reconsider
 		RenderChunk* chunks;
 
 	public:
 		void Render(const VertexArray& vertexArray);
 		void RenderWorld();
 
-		void UpdateChunk(unsigned int offset);
+		void UpdateChunk(unsigned int x, unsigned int y);
 		void UpdateWorld();
 
 		void SetCamera(Camera camera);

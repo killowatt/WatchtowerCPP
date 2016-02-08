@@ -23,21 +23,20 @@ namespace Watchtower
 			void Generate(Chunk& chunk, unsigned int x, unsigned int y); // TODO:
 		};
 
-		Camera camera;
 		Shader* shader;
 		
 		GameMap* map; // TODO: reconsider
 		RenderChunk* chunks;
 
 	public:
+		Camera Camera;
+
 		void Render(const VertexArray& vertexArray);
+		void Render(const VertexArray& vertexArray, const glm::mat4& transform);
 		void RenderWorld();
 
 		void UpdateChunk(unsigned int x, unsigned int y);
 		void UpdateWorld();
-
-		void SetCamera(Camera camera);
-		Camera& GetCamera();
 
 		void SetShader(Shader& shader);
 		Shader& GetShader();

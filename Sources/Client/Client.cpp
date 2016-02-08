@@ -77,8 +77,8 @@ void Client::Update()
 				{
 					Renderer->UpdateWorld();
 					DESTRUCTION = true;
-					Renderer->GetCamera().Rotation.y = 3.14159f / 2;
-					shaderB = new BasicColorShader(Renderer->GetCamera());
+					Renderer->Camera.Rotation.y = 3.14159f / 2;
+					shaderB = new BasicColorShader(Renderer->Camera);
 					glUseProgram(shaderB->GetProgram());
 					shaderB->Initialize();
 					Renderer->SetShader(*shaderB);
@@ -93,7 +93,7 @@ void Client::Update()
 		}
 	}
 
-	Camera& camera = Renderer->GetCamera();
+	Camera& camera = Renderer->Camera;
 
 	currentTime = glfwGetTime();
 	deltaTime = float(currentTime - lastTime);
@@ -166,6 +166,7 @@ void Client::Update()
 			Renderer->UpdateChunk(Raycast::chunkToUpdate.x, Raycast::chunkToUpdate.y);
 		}
 
+		Renderer->Camera.Update();
 	}
 }
 void Client::Render()
@@ -174,8 +175,6 @@ void Client::Render()
 
 	if (DESTRUCTION)
 	{
-		Renderer->GetCamera().Update();
-		shaderB->Update();
 		Renderer->RenderWorld();
 	}
 }

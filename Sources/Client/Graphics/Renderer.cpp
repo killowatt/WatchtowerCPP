@@ -3,22 +3,35 @@ using namespace Watchtower;
 
 void Renderer::Render(const VertexArray& vertexArray)
 {
+	Render(vertexArray, glm::mat4());
+}
+void Renderer::Render(const VertexArray& vertexArray, const glm::mat4& transform)
+{
 	if (!shader)
 		return; // TODO: print warning no shader!!
 
-	glUseProgram(shader->GetProgram()); // TODO: see if we can set this one time in SetShader
+	glUseProgram(shader->GetProgram());
+	shader->Model = transform;
+	shader->Update();
+
 	glBindVertexArray(vertexArray.GetVertexArrayObject());
 	glDrawElements(GL_TRIANGLES, vertexArray.GetIndexBufferSize(),
 		GL_UNSIGNED_INT, nullptr);
 }
 void Renderer::RenderWorld()
 {
+	if (!shader)
+		return; // TODO: THIS JEEZ
+
 	for (int i = 0; i < map->GetTotalChunks(); i++)
 	{
 		glUseProgram(shader->GetProgram());
 		shader->Model = chunks[i].Transform;
 		shader->Update();
-		Render(chunks[i].VertexArray);
+
+		glBindVertexArray(chunks[i].VertexArray.GetVertexArrayObject());
+		glDrawElements(GL_TRIANGLES, chunks[i].VertexArray.GetIndexBufferSize(),
+			GL_UNSIGNED_INT, nullptr);
 	}
 }
 
@@ -40,9 +53,6 @@ void Renderer::UpdateWorld()
 		}
 	}
 }
-
-void Renderer::SetCamera(Camera camera) { this->camera = camera; }
-Camera& Renderer::GetCamera() { return camera; }
 
 void Renderer::SetShader(Shader& shader) { this->shader = &shader; }
 Shader& Renderer::GetShader() { return *shader; }
